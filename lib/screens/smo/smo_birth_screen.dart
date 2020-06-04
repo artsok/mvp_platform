@@ -52,7 +52,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                   onPressed: () =>
                       Navigator.pushNamed(context, SmoInfoScreen.routeName),
                   text: 'Получить полис ОМС для ребёнка',
-                  width: 360,
+                  width: 320,
                 ),
               ],
             ),

@@ -181,7 +181,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                   onPressed: () =>
                       Navigator.pushNamed(context, SmoFormScreen.routeName),
                   text: 'Подать заявление >',
-                  width: 300,
+                  width: 320,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 56.0),

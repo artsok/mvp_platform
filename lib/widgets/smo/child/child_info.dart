@@ -22,8 +22,7 @@ class ChildInfo extends StatelessWidget {
           SingleInfoItem('Имя', child.name),
           SingleInfoItem('Отчество', child.patronym),
           SingleInfoItem('Дата рождения', child.birthDate),
-          SingleInfoItem('СНИЛС', child.snils),
-          SingleInfoItem('Место рождения', child.birthPlace, last: true),
+          SingleInfoItem('Место рождения', child.birthPlace.substring(0,14), last: true),
         ],
       ),
     );

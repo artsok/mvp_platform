@@ -10,7 +10,6 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
 
-
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
 
@@ -90,23 +89,23 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                 width: 290,
                 child: Padding(
                   padding: const EdgeInsets.all(0.0),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          'Регион прикрепления: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(selectedInsuranceCompany.address),
-                      ],
-                    ),
-                  ),
+//По ТЗ убрал, но не удаляю
+//                  child: Container(
+//                    child: Column(
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+//                      children: <Widget>[
+//                        const Text(
+//                          'Регион прикрепления: ',
+//                          style: TextStyle(
+//                            fontWeight: FontWeight.bold,
+//                          ),
+//                        ),
+//                        Text(selectedInsuranceCompany.address),
+//                      ],
+//                    ),
+//                  ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Column(
@@ -119,7 +118,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                       ),
                     ),
                     DropdownButton(
-                      hint: const Text('Страховая компания'), //hint почему-то не отрабатывает
+                      hint: const Text('Страховая компания'),
+                      //hint почему-то не отрабатывает
                       onChanged: (name) {
                         setState(() {
                           selectedInsuranceCompany = InsuranceCompanies
@@ -131,7 +131,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                       items: InsuranceCompanies.insuranceCompanies
                           .map(
                             (company) => DropdownMenuItem(
-                              child: Container(width: 240, child: Text(company.name)),
+                              child: Container(
+                                  width: 240, child: Text(company.name)),
                               value: company.name,
                             ),
                           )
@@ -163,7 +164,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                   groupValue: insuranceType,
                   onChanged: (type) => setState(() => insuranceType = type),
                 ),
-                const Text('Электронный полис ОМС'),
+                const Text('Электронный'),
               ],
             ),
             Row(
@@ -173,9 +174,17 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                   groupValue: insuranceType,
                   onChanged: (type) => setState(() => insuranceType = type),
                 ),
-                Container(
-                    width: 240,
-                    child: const Text('Полис ОМС на материальном носителе')),
+                Container(width: 240, child: const Text('Пластиковый')),
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: InsuranceType.paper,
+                  groupValue: insuranceType,
+                  onChanged: (type) => setState(() => insuranceType = type),
+                ),
+                Container(width: 240, child: const Text('Бумажный')),
               ],
             ),
           ],
@@ -230,14 +239,28 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 56),
                 child: GosFlatButton(
+                  width: 320,
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) => CupertinoAlertDialog(
-                        title: Text(
-                          'Вы выбрали получение электронного полиса ОМС в ${selectedInsuranceCompany.name}',
+                        title: Column(
+                          children: [
+                            Text(
+                              'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany.name} Нажимая на кнопку «Да, согласен» Вы подтверждает согласие с условиями договора ${selectedInsuranceCompany.name}.',
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text(
+                                "Ознакомиться с договором",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                         actions: <Widget>[
                           CupertinoDialogAction(
@@ -245,7 +268,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                           CupertinoDialogAction(
-                            child: const Text('Да, подтверждаю'),
+                            child: const Text('Да, согласен'),
                             onPressed: () => Navigator.of(context).pushNamed(
                               SuccessfullSmoScreen.routeName,
                               arguments: SuccessfullSmoScreenArguments(

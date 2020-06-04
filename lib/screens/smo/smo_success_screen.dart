@@ -9,9 +9,11 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'dart:math';
 
 class SuccessfullSmoScreen extends StatelessWidget {
   static const routeName = '/successfull-smo-screen';
+  int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +28,9 @@ class SuccessfullSmoScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: const Text(
-                'Договор успешно заключен!',
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: Text(
+                'Заявление о получении полиса ОМС для ребёнка № $randomNumber принято',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
@@ -42,16 +44,12 @@ class SuccessfullSmoScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SingleInfoItem('Полис ОМС', '5152 0108 8793 0032'),
-                    SingleInfoItem('Ребенок', args.child.fullname),
-                    SingleInfoItem(
-                        'Регион прикрепления', 'Рязанская область, Россия'),
+                    SingleInfoItem('ФИО ребёнка', args.child.fullname),
+                    SingleInfoItem('Дата рождения', args.child.birthDate),
+                    SingleInfoItem('СНИЛС', args.child.snils),
+                    SingleInfoItem('Адрес проживания', args.child.address),
                     SingleInfoItem('СМО', args.insuranceCompany.name),
-                    SingleInfoItem(
-                      'Прикреплен к',
-                      'ГБУЗ г. Рязань "Городская поликлиника № 17 ДЗМ"',
-                      last: true,
-                    ),
+                    SingleInfoItem('Прикреплен к', 'ГБУЗ г. Рязань "Городская поликлиника № 17 ДЗМ"', last: true,),
                   ],
                 ),
               ),
@@ -84,12 +82,16 @@ class SuccessfullSmoScreen extends StatelessWidget {
               onPressed: () => Navigator.of(context).pop(),
             ),
             GosFlatButton(
-              text: 'Прикрепить ребенка к другому учреждению',
-              fontSize: 14,
-              backgroundColor: Colors.white,
-              onPressed: () => Navigator.of(context)
-                  .popUntil(ModalRoute.withName(HomeScreen.routeName)),
-            ),
+                text: 'Прикрепить ребенка к другому учреждению',
+                fontSize: 14,
+                backgroundColor: Colors.white,
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(HospitalInfoScreen.routeName);
+                  notifications.addNotification(GosNotification(
+                    message: 'Оформлен выбор страховой медицинской организации',
+                  ));
+                }),
           ],
         ),
       ),

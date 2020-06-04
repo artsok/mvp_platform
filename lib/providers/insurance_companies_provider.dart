@@ -4,12 +4,16 @@ import 'package:mvp_platform/models/insurance_company.dart';
 class InsuranceCompanies with ChangeNotifier {
   static final List<InsuranceCompany> insuranceCompanies = [
     InsuranceCompany(
-      'АО "Страховая компания "СОГАЗ-Мед"',
+      'АО «СОГАЗ Мед» СОГАЗ МЕД',
       'г.Калининград, Россия',
     ),
     InsuranceCompany(
-      'АО "Страховая компания "О-Мед"',
-      'г.Омск, Россия',
+      'АО "Страховая компания "Альфа-Страхование"',
+      'г.Калининград, Россия',
+    ),
+    InsuranceCompany(
+      'АО "Страховая компания "Сбербанк-Страхование"',
+      'г.Калининград, Россия',
     ),
   ];
 }

@@ -49,6 +49,7 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem('Дата рождения', child.birthDate),
           SingleInfoItem('СНИЛС', child.snils),
           SingleInfoItem('Место рождения', child.birthPlace, last: true),
+          SingleInfoItem('Адрес проживания', child.address, last: true),
         ],
       ),
     );

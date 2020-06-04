@@ -6,6 +6,7 @@ class Child {
   String patronym;
   String birthDate;
   String birthPlace;
+  String address;
   String snils;
 
   Child({
@@ -16,5 +17,6 @@ class Child {
     this.birthDate,
     this.snils,
     this.birthPlace,
+    this.address
   }) : fullname = '$surname $name $patronym';
 }

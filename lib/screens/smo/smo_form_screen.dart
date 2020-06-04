@@ -5,7 +5,7 @@ import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
-import 'package:mvp_platform/screens/smo/successfull_smo_screen.dart';
+import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';

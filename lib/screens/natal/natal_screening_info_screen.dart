@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
+import 'package:mvp_platform/screens/natal/natal_screening_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/wizards/med_wizard.dart';
 
-class HospitalInfoScreen extends StatefulWidget {
+class NatalScreeningInfoScreen extends StatefulWidget {
   static const routeName = '/med-info-screen';
 
   @override
-  _HospitalInfoScreenState createState() => _HospitalInfoScreenState();
+  _NatalScreeningInfoScreenState createState() => _NatalScreeningInfoScreenState();
 }
 
-class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
-  bool attachedToHospital = true;
+class _NatalScreeningInfoScreenState extends State<NatalScreeningInfoScreen> {
+  bool attachedToNatalScreening = true;
   InsuranceType insuranceType = InsuranceType.digital;
 
   @override
@@ -71,7 +71,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () => Navigator.pushNamed(
-                      context, HospitalFormScreen.routeName),
+                      context, NatalScreeningFormScreen.routeName),
                   text: 'Заполнить заявление',
                   width: 300,
                 ),

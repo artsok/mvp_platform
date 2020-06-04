@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
+import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
-
 
 class DoctorInfoScreen extends StatefulWidget {
   static const routeName = '/doctor-info-screen';
@@ -25,7 +25,8 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context)
+              .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
           'Запись на прием к врачу',
@@ -54,7 +55,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   ),
                   content: GestureDetector(
                     onTap: () => setState(
-                            () => attachedToHospital = !attachedToHospital),
+                        () => attachedToHospital = !attachedToHospital),
                     child: Container(
                       alignment: Alignment.centerLeft,
                       child: Row(

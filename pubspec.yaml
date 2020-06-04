@@ -1,0 +1,40 @@
+name: mvp_platform
+description: Mobile Platform Bootstrap
+
+flutter_launcher_name:
+  name: "Госуслуги"
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.3
+  intl: ^0.16.1
+  provider: ^4.1.2
+
+dev_dependencies:
+  flutter_launcher_name: "^0.0.1"
+  flutter_launcher_icons: "^0.7.5"
+#  cupertino_icons: ^0.1.3
+  flutter_svg: ^0.17.4
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon_ios.png"
+  image_path_android: "assets/launcher/icon_android.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/gos-main-logo.png
+    - assets/icons/phonedoscope.png
+    - assets/icons/notificationIcon.png

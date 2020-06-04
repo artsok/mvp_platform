@@ -8,7 +8,6 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
 
-
 class HospitalFormScreen extends StatefulWidget {
   static const routeName = '/med-form-screen';
 
@@ -43,26 +42,31 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
         ),
         content: Wrap(
           children: <Widget>[
-            DropdownButton(
-              hint: Container(
-                width: 265,
-                child: const Text('Мед.учреждение'),
-              ),
-              onChanged: (hospitalName) {
-                setState(() {
-                  selectedHospital = Hospitals.hospitals
-                      .firstWhere((c) => c.name == hospitalName);
-                });
-              },
-              value: selectedHospital.name,
-              items: Hospitals.hospitals
-                  .map(
-                    (hospital) => DropdownMenuItem(
-                  child: Container(width: 240, child: Text(hospital.name)),
-                  value: hospital.name,
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: DropdownButton(
+                hint: Container(
+                  width: 300,
+                  child: const Text('Мед.учреждение'),
                 ),
-              )
-                  .toList(),
+                onChanged: (hospitalName) {
+                  setState(() {
+                    selectedHospital = Hospitals.hospitals
+                        .firstWhere((c) => c.name == hospitalName);
+                  });
+                },
+                value: selectedHospital.name,
+                items: Hospitals.hospitals
+                    .map(
+                      (hospital) =>
+                      DropdownMenuItem(
+                        child:
+                        Container(width: 240, child: Text(hospital.name)),
+                        value: hospital.name,
+                      ),
+                )
+                    .toList(),
+              ),
             ),
           ],
         ),
@@ -102,7 +106,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Подача заявления о прикреплении к медицинскому учреждению',
+              'Прикрепление ребёнка к другой медицинской организации',
             ),
             Stepper(
               physics: ClampingScrollPhysics(),
@@ -124,28 +128,32 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Text(
-                          'Вы желаете обслуживаться в ${selectedHospital.name}',
-                        ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: const Text('Отменить'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                            child: const Text('Да, подтверждаю'),
-                            onPressed: () => Navigator.of(context).pushNamed(
-                              SuccessfulHospitalScreen.routeName,
-                              arguments: SuccessfulHospitalScreenArguments(
-                                selectedHospital,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Navigator
+                        .of(context)
+                        .pushNamed(SuccessfulHospitalScreen
+                        .routeName, arguments: SuccessfulHospitalScreenArguments(selectedHospital)
+//                    showDialog(
+//                      context: context,
+//                      builder: (context) => CupertinoAlertDialog(
+//                        title: Text(
+//                          'Вы желаете обслуживаться в ${selectedHospital.name}',
+//                        ),
+//                        actions: <Widget>[
+//                          CupertinoDialogAction(
+//                            child: const Text('Отменить'),
+//                            onPressed: () => Navigator.of(context).pop(),
+//                          ),
+//                          CupertinoDialogAction(
+//                            child: const Text('Да, подтверждаю'),
+//                            onPressed: () => Navigator.of(context).pushNamed(
+//                              SuccessfulHospitalScreen.routeName,
+//                              arguments: SuccessfulHospitalScreenArguments(
+//                                selectedHospital,
+//                              ),
+//                            ),
+//                          ),
+//                        ],
+//                      ),
                     );
                   },
                   text: 'Выбрать',

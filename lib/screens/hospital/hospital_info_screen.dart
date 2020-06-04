@@ -39,7 +39,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Выбор медицинского учреждения',
+              'Прикрепление ребёнка к медицинской организации',
             ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),

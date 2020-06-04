@@ -87,8 +87,13 @@ class SuccessfullSmoScreen extends StatelessWidget {
               text: 'Прикрепить ребенка к другому учреждению',
               fontSize: 14,
               backgroundColor: Colors.white,
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(HospitalInfoScreen.routeName),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(HospitalInfoScreen.routeName);
+                notifications.addNotification(GosNotification(
+                  message: 'Оформлен выбор страховой медицинской организации',
+                ));
+              }
             ),
           ],
         ),

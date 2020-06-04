@@ -63,10 +63,12 @@ class SuccessfulHospitalScreen extends StatelessWidget {
               onPressed: () {
                 notifications.addNotification(
                   GosNotification(
-                    message: 'Выбрано новое медицинское учреждение для дальнейшего обслуживания',
+                    message:
+                        'Выбрано новое медицинское учреждение для дальнейшего обслуживания',
                   ),
                 );
-                Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+                Navigator.of(context)
+                    .popUntil(ModalRoute.withName(HomeScreen.routeName));
               },
             ),
             SizedBox(height: 8.0),

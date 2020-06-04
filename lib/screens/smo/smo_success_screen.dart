@@ -88,7 +88,7 @@ class SuccessfullSmoScreen extends StatelessWidget {
               fontSize: 14,
               backgroundColor: Colors.white,
               onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(HospitalInfoScreen.routeName),
+                  .popUntil(ModalRoute.withName(HomeScreen.routeName)),
             ),
           ],
         ),

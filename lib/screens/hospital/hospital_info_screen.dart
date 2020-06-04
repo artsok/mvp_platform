@@ -39,7 +39,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Прикрепление ребёнка к медицинской организации',
+              'Прикрепление ребёнка к другой медицинской организации',
             ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),
@@ -72,8 +72,8 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () => Navigator.pushNamed(
                       context, HospitalFormScreen.routeName),
-                  text: 'Заполнить заявление',
-                  width: 300,
+                  text: 'Прикрепить >',
+                  width: 320,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

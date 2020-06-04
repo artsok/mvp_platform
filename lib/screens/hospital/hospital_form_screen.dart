@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/hospital_provider.dart';
-import 'package:mvp_platform/screens/hospital/successfull_hospital_screen.dart';
+import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';

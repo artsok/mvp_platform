@@ -13,6 +13,8 @@ import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/splash_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:mvp_platform/extensions/string_extensions.dart';
+
 
 void main() => runApp(MvpPlatform());
 
@@ -50,7 +52,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
             ),
           ),
           scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.indigo,
+          primarySwatch: Colors.indigo, //'0xFF2763AA'.colorFromHex().,
           textTheme: TextTheme(
             bodyText1: TextStyle(
               fontSize: 16,

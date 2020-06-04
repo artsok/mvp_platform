@@ -6,7 +6,7 @@ class GosNotifications with ChangeNotifier {
   List<GosNotification> _notifications = [
     GosNotification(
       message: 'Присвоен единый номер зарегистрированного лица, Иван И. Б.',
-      callback: (context) => Navigator.pushNamed(context, SmoBirthInfoScreen.routeName)
+      callback: (ctx) => Navigator.of(ctx).pushNamed(SmoBirthInfoScreen.routeName),
     ),
     GosNotification(
       message: 'Внесена запись акта о рождении ребенка, Иван И. Б.',

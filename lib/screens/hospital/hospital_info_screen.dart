@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
+import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
@@ -25,7 +26,8 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context)
+              .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
           'Подача заявления о прикреплении к медицинскому учреждению',

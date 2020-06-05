@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/hospital.dart';
+import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 class HospitalSuccessScreen extends StatelessWidget {
   static const routeName = '/hospital-success-screen';
+  int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,9 @@ class HospitalSuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: const Text(
-                'Заявка успешно оформлена',
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: Text(
+                'Заявление о прикреплении к медицинской организации № $randomNumber',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
@@ -41,14 +45,20 @@ class HospitalSuccessScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SingleInfoItem('Свидетельство о рождении',
+                        Children.children[0].birthCertificateId),
+                    SingleInfoItem('Фамилия, имя, отчество',
+                        Children.children[0].fullname),
+                    SingleInfoItem(
+                        'Дата рождения', Children.children[0].birthDate),
+                    SingleInfoItem('СНИЛС', Children.children[0].snils),
+                    SingleInfoItem(
+                        'Адрес проживания', Children.children[0].address),
                     SingleInfoItem('Полис ОМС', '5152 0108 8793 0032'),
-                    SingleInfoItem(
-                        'Регион прикрепления', 'Московская область, Россия'),
-                    SingleInfoItem(
-                        'Выбранное мед.учреждение', args.hospital.name),
+                    SingleInfoItem('Прикреплен к', args.hospital.name),
                     SingleInfoItem(
                       'Адрес пордазделения',
-                      'г. Москва, ул.Пестеля, д.6А',
+                      'г.Калининград, ул.Дзержинского, д.147',
                       last: true,
                     ),
                   ],
@@ -73,11 +83,11 @@ class HospitalSuccessScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 8.0),
-            GosFlatButton(
-              text: 'Отменить',
-              backgroundColor: Colors.white,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+//            GosFlatButton(
+//              text: 'Отменить',
+//              backgroundColor: Colors.white,
+//              onPressed: () => Navigator.of(context).pop(),
+//            ),
           ],
         ),
       ),

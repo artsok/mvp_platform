@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:flutter/rendering.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
@@ -38,7 +40,20 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Подача заявления о выборе страхового медицинского осмотра',
+              'Получение полиса ОМС для ребенка',
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Сроки оказания услуги:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Text("В соответствии с регламентом оказания услуги."),
+                ),
+              ],
             ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),
@@ -47,31 +62,43 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                       VoidCallback onStepCancel}) =>
                   Container(),
               steps: [
+//                UnfoldedStep(
+//                  title: Container(
+//                    width: 290,
+//                    child: const Text('Прикрепитесь к медицинской организации'),
+//                  ),
+//                  content: GestureDetector(
+//                    onTap: () => setState(
+//                        () => attachedToHospital = !attachedToHospital),
+//                    child: Container(
+//                      alignment: Alignment.centerLeft,
+//                      child: Row(
+//                        children: [
+//                          Checkbox(
+//                            value: attachedToHospital,
+//                            onChanged: (value) {
+//                              setState(() {
+//                                attachedToHospital = value;
+//                              });
+//                            },
+//                          ),
+//                          Text("Прикрепление уже есть")
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                  isActive: true,
+//                ),
                 UnfoldedStep(
                   title: Container(
                     width: 290,
-                    child: const Text('Прикрепитесь к медицинской организации'),
-                  ),
-                  content: GestureDetector(
-                    onTap: () => setState(
-                        () => attachedToHospital = !attachedToHospital),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: attachedToHospital,
-                            onChanged: (value) {
-                              setState(() {
-                                attachedToHospital = value;
-                              });
-                            },
-                          ),
-                          Text("Прикрепление уже есть")
-                        ],
-                      ),
+                    child: const Text(
+                      'Выберите страховую медицинскую организацию для вашего ребенка',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  content: Text(SmoWizard.points[3]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -94,7 +121,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                             onChanged: (type) =>
                                 setState(() => insuranceType = type),
                           ),
-                          const Text('Электронный полис ОМС'),
+                          const Text('Электронный'),
                         ],
                       ),
                       Row(
@@ -106,25 +133,22 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                                 setState(() => insuranceType = type),
                           ),
                           Container(
-                              width: 240,
-                              child: const Text(
-                                  'Полис ОМС на материальном носителе')),
+                              width: 240, child: const Text('Пластиковый')),
                         ],
                       ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: InsuranceType.paper,
+                            groupValue: insuranceType,
+                            onChanged: (type) =>
+                                setState(() => insuranceType = type),
+                          ),
+                          Container(width: 240, child: const Text('Бумажный')),
+                        ],
+                      )
                     ],
                   ),
-                  isActive: true,
-                ),
-                UnfoldedStep(
-                  title: Container(
-                    width: 290,
-                    child: const Text(
-                      'Выберите страховую медицинскую организацию для вашего ребенка',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  content: Text(SmoWizard.points[3]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -133,6 +157,15 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                     child: const Text('Выберите пункт выдачи полиса ОМС'),
                   ),
                   content: Text(SmoWizard.points[4]),
+                  isActive: true,
+                ),
+                UnfoldedStep(
+                  title: Container(
+                    width: 290,
+                    child: const Text(
+                        'Выберите удобное для вас медицинское учреждение'),
+                  ),
+                  content: Text(SmoWizard.points[5]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -149,8 +182,8 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () =>
                       Navigator.pushNamed(context, SmoFormScreen.routeName),
-                  text: 'Далее',
-                  width: 300,
+                  text: 'Подать заявление >',
+                  width: 320,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 56.0),

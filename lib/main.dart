@@ -5,15 +5,15 @@ import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
+import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
+import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/splash_screen.dart';
-import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MvpPlatform());
@@ -52,7 +52,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
             ),
           ),
           scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.indigo,
+          primarySwatch: Colors.indigo, //'0xFF2763AA'.colorFromHex().,
           textTheme: TextTheme(
             bodyText1: TextStyle(
               fontSize: 16,

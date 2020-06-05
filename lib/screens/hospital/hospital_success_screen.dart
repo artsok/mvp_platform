@@ -57,11 +57,11 @@ class HospitalSuccessScreen extends StatelessWidget {
                     SingleInfoItem('СНИЛС', Children.children[0].snils),
                     SingleInfoItem(
                         'Адрес проживания', Children.children[0].address),
-                    SingleInfoItem('Полис ОМС', '5152 0108 8793 0032'),
+                    SingleInfoItem('Страховая медицинская организация', "АО «СОГАЗ Мед» СОГАЗ МЕД, г.Калининград"),
                     SingleInfoItem('Прикреплен к', args.hospital.name),
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 38),
+                        padding: const EdgeInsets.only(top: 8),
                         child: Container(
                           constraints: BoxConstraints(
                             maxWidth: 400,
@@ -74,10 +74,13 @@ class HospitalSuccessScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SingleInfoItem(
-                      'Адрес пордазделения',
-                      'г.Калининград, ул.Дзержинского, д.147',
-                      last: true,
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: SingleInfoItem(
+                        'Адрес пордазделения',
+                        'г.Калининград, ул.Дзержинского, д.147',
+                        last: true,
+                      ),
                     ),
                   ],
                 ),
@@ -93,13 +96,19 @@ class HospitalSuccessScreen extends StatelessWidget {
                 notifications.addNotification(
                   GosNotification(
                     message:
-                        'Выбрано новое медицинское учреждение для дальнейшего обслуживания',
+                        'Полис ОМС для ребенка (Богатырев Иван Иванович) № 6351240828000236 выпущен',
+                  ),
+                );
+                notifications.addNotification(
+                  GosNotification(
+                    message:
+                    'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
                       message:
-                          'Приглашение на прохождение профилактического осмотра',
+                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 02.05.2020.',
                       callback: (context) => Navigator.of(context)
                           .pushNamed(DoctorInfoScreen.routeName)),
                 );

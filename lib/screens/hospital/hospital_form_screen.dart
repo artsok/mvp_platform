@@ -131,6 +131,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GosFlatButton(
+                  width: 320,
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () {

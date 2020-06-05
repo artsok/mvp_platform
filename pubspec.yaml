@@ -17,11 +17,13 @@ dependencies:
   cupertino_icons: ^0.1.3
   intl: ^0.16.1
   provider: ^4.1.2
+  flutter_svg: ^0.17.4
+
 
 dev_dependencies:
   flutter_launcher_name: "^0.0.1"
   flutter_launcher_icons: "^0.7.5"
-#  cupertino_icons: ^0.1.3
+  passcode_screen: 1.1.0
   flutter_svg: ^0.17.4
   flutter_test:
     sdk: flutter
@@ -38,5 +40,9 @@ flutter:
     - assets/images/gos-main-logo.png
     - assets/icons/phonedoscope.png
     - assets/icons/notificationIcon.png
+    - assets/icons/backdeletebackspace.png
     - assets/map/dekabristov-24.png
     - assets/map/snezhnaya-22.png
+    - assets/svg/icons8-search.svg
+    - assets/svg/backspace-arrow.svg
+    - assets/svg/finger-print.svg

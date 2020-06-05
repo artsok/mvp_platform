@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/screens/auth_pin_code.dart';
 
 import 'auth_screen.dart';
 import 'home_screen.dart';
@@ -25,7 +26,7 @@ class SplashPage extends StatelessWidget {
       if (authenticated) {
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       } else {
-        Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+        Navigator.pushReplacementNamed(context, AuthPinScreen.routeName);
       }
     });
 

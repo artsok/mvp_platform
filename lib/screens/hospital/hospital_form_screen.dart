@@ -38,7 +38,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
               padding: const EdgeInsets.only(top: 16),
               child: DropdownButton(
                 hint: Container(
-                  width: 300,
+                  width: 250,
                   child: const Text('Мед.учреждение'),
                 ),
                 onChanged: (hospitalName) {
@@ -112,7 +112,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Прикрепление ребёнка к другой медицинской организации',
+              'Прикрепление ребёнка к медицинской организации',
             ),
             Stepper(
               physics: ClampingScrollPhysics(),

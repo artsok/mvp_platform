@@ -39,7 +39,6 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ActInfo(selectedChild),

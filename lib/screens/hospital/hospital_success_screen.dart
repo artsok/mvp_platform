@@ -55,9 +55,9 @@ class HospitalSuccessScreen extends StatelessWidget {
                     SingleInfoItem(
                         'Дата рождения', Children.children[0].birthDate),
                     SingleInfoItem('СНИЛС', Children.children[0].snils),
+                    SingleInfoItem('Страховая медицинская организация', "АО «СОГАЗ Мед» СОГАЗ МЕД"),
                     SingleInfoItem(
                         'Адрес проживания', Children.children[0].address),
-                    SingleInfoItem('Страховая медицинская организация', "АО «СОГАЗ Мед» СОГАЗ МЕД, г.Калининград"),
                     SingleInfoItem('Прикреплен к', args.hospital.name),
                     Center(
                       child: Padding(
@@ -78,7 +78,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
                         'Адрес пордазделения',
-                        'г.Калининград, ул.Дзержинского, д.147',
+                        'г.Калининград, ул.Садовая д.7/13',
                         last: true,
                       ),
                     ),
@@ -116,7 +116,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     .popUntil(ModalRoute.withName(HomeScreen.routeName));
               },
             ),
-            SizedBox(height: 8.0),
+            SizedBox(height: 36.0),
 //            GosFlatButton(
 //              text: 'Отменить',
 //              backgroundColor: Colors.white,

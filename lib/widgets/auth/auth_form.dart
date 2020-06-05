@@ -3,6 +3,7 @@ import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/widgets/auth/number_or_email_tab.dart';
 import 'package:mvp_platform/widgets/auth/snils_tab.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class AuthForm extends StatefulWidget {
   @override
@@ -89,6 +90,8 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
             ),
             GosFlatButton(
               text: 'Войти',
+              textColor: Colors.white,
+              backgroundColor: '#2763AA'.colorFromHex(),
               width: double.infinity,
               height: 48.0,
               onPressed: () => Navigator.pushReplacementNamed(
@@ -100,6 +103,7 @@ class _AuthFormState extends State<AuthForm> with TickerProviderStateMixin {
             GosFlatButton(
               text: 'Я не знаю пароль',
               height: 48.0,
+              textColor: '#2763AA'.colorFromHex(),
               width: double.infinity,
               onPressed: () {},
               backgroundColor: Colors.white,

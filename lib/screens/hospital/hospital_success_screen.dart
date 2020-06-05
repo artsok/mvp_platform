@@ -3,6 +3,7 @@ import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
@@ -18,7 +19,7 @@ class HospitalSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DoctorSuccessScreenArguments args =
+    final HospitalSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
@@ -77,6 +78,13 @@ class HospitalSuccessScreen extends StatelessWidget {
                     message:
                         'Выбрано новое медицинское учреждение для дальнейшего обслуживания',
                   ),
+                );
+                notifications.addNotification(
+                  GosNotification(
+                      message:
+                          'Приглашение на прохождение профилактического осмотра',
+                      callback: (context) => Navigator.of(context)
+                          .pushNamed(DoctorInfoScreen.routeName)),
                 );
                 Navigator.of(context)
                     .popUntil(ModalRoute.withName(HomeScreen.routeName));

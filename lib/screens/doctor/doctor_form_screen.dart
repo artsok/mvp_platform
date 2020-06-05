@@ -11,6 +11,8 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/timestamp_picker.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+
 
 class DoctorFormScreen extends StatefulWidget {
   static final routeName = '/doctor-form-screen';
@@ -26,7 +28,7 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
 
   int currentStep = 0;
   bool complete = false;
-  DateTime selectedTime;
+  DateTime selectedTime = DateTime(2020, 06, 05, 17, 30);
 
   void selectTime(DateTime time) {
     setState(() {
@@ -227,14 +229,15 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 56),
                 child: GosFlatButton(
+                  width: 320,
                   textColor: Colors.white,
-//                  backgroundColor: '#2763AA'.colorFromHex(),
+                  backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (context) => CupertinoAlertDialog(
                         title: Text(
-                          'Вы выбрали дату для записи: 17 июня, 2020 г., вторник, ${selectedTime.hour}:${selectedTime.minute == 0 ? "00" : selectedTime.minute}',
+                          'Вы выбрали дату для записи: 16 июня, 2020 г., вторник, ${selectedTime.hour}:${selectedTime.minute == 0 ? "00" : selectedTime.minute}',
                         ),
                         actions: <Widget>[
                           CupertinoDialogAction(

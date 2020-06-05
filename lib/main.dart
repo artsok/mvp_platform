@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/screens/auth_pin_code.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
@@ -24,6 +25,7 @@ class MvpPlatform extends StatefulWidget {
 }
 
 class _MvpPlatformState extends State<MvpPlatform> {
+
   final gosNotifications = GosNotifications();
 
   @override
@@ -87,6 +89,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           SmoFormScreen.routeName: (ctx) => SmoFormScreen(),
           SmoSuccessScreen.routeName: (ctx) => SmoSuccessScreen(),
           SplashPage.routeName: (ctx) => SplashScreen(),
+          AuthPinScreen.routeName: (ctx) => AuthPinScreen(),
         },
       ),
     );

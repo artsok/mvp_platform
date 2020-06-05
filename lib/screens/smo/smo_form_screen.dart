@@ -138,7 +138,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
           ),
         ),
         state: StepState.complete,
-        isActive: false,
+        isActive: true,
       ),
       Step(
         title: Container(
@@ -182,7 +182,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             ),
           ],
         ),
-        isActive: false,
+        isActive: true,
         state: StepState.complete,
       ),
     ];
@@ -242,7 +242,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                         title: Column(
                           children: [
                             Text(
-                              'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany.name} Нажимая на кнопку «Да, согласен» Вы подтверждает согласие с условиями договора ${selectedInsuranceCompany.name}.',
+                              'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany.name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany.name}.',
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 16),

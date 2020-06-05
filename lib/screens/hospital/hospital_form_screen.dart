@@ -6,30 +6,23 @@ import 'package:mvp_platform/providers/hospital_provider.dart';
 import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 
 class HospitalFormScreen extends StatefulWidget {
-  static const routeName = '/med-form-screen';
+  static const routeName = '/hospital-form-screen';
 
   @override
   _HospitalFormScreenState createState() => _HospitalFormScreenState();
 }
 
 class _HospitalFormScreenState extends State<HospitalFormScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<_HospitalFormScreenState>();
-
-  bool _validatingInput = false;
-
-  void _startInputValidation() => setState(() => _validatingInput = true);
-
-  void _finishInputValidation() => setState(() => _validatingInput = false);
 
   Hospital selectedHospital = Hospitals.hospitals[0];
+  InsuranceType insuranceType = InsuranceType.digital;
+
   int currentStep = 0;
   bool complete = false;
-  InsuranceType insuranceType = InsuranceType.digital;
 
   @override
   Widget build(BuildContext context) {
@@ -138,8 +131,8 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                           CupertinoDialogAction(
                             child: const Text('Да, подтверждаю'),
                             onPressed: () => Navigator.of(context).pushNamed(
-                              SuccessfulHospitalScreen.routeName,
-                              arguments: SuccessfulHospitalScreenArguments(
+                              HospitalSuccessScreen.routeName,
+                              arguments: HospitalSuccessScreenArguments(
                                 selectedHospital,
                               ),
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/widgets/common/gos_button.dart';
@@ -22,6 +23,8 @@ class Services extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.healing),
                 title: const Text('Запись к врачу'),
+                onTap: () =>
+                    Navigator.pushNamed(context, DoctorInfoScreen.routeName),
               ),
               ListTile(
                 leading: Icon(Icons.description),

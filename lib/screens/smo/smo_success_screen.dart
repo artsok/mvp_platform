@@ -8,14 +8,14 @@ import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
-class SuccessfullSmoScreen extends StatelessWidget {
-  static const routeName = '/successfull-smo-screen';
+class SmoSuccessScreen extends StatelessWidget {
+  static const routeName = '/smo-success-screen';
 
   @override
   Widget build(BuildContext context) {
-    final SuccessfullSmoScreenArguments args =
+    final SmoSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
@@ -97,9 +97,9 @@ class SuccessfullSmoScreen extends StatelessWidget {
   }
 }
 
-class SuccessfullSmoScreenArguments {
+class SmoSuccessScreenArguments {
   final Child child;
   final InsuranceCompany insuranceCompany;
 
-  SuccessfullSmoScreenArguments(this.child, this.insuranceCompany);
+  SmoSuccessScreenArguments(this.child, this.insuranceCompany);
 }

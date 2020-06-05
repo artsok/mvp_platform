@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
 
-class SuccessfulHospitalScreen extends StatelessWidget {
-  static const routeName = '/successfull-med-screen';
+class HospitalSuccessScreen extends StatelessWidget {
+  static const routeName = '/hospital-success-screen';
 
   @override
   Widget build(BuildContext context) {
-    final SuccessfulHospitalScreenArguments args =
+    final DoctorSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
@@ -84,8 +85,8 @@ class SuccessfulHospitalScreen extends StatelessWidget {
   }
 }
 
-class SuccessfulHospitalScreenArguments {
+class HospitalSuccessScreenArguments {
   final Hospital hospital;
 
-  SuccessfulHospitalScreenArguments(this.hospital);
+  HospitalSuccessScreenArguments(this.hospital);
 }

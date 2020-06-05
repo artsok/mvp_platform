@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
+import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
+import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
@@ -73,16 +75,18 @@ class _MvpPlatformState extends State<MvpPlatform> {
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
+          DoctorInfoScreen.routeName: (ctx) => DoctorInfoScreen(),
+          DoctorFormScreen.routeName: (ctx) => DoctorFormScreen(),
+          DoctorSuccessScreen.routeName: (ctx) => DoctorSuccessScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
           HospitalInfoScreen.routeName: (ctx) => HospitalInfoScreen(),
           HospitalFormScreen.routeName: (ctx) => HospitalFormScreen(),
+          HospitalSuccessScreen.routeName: (ctx) => HospitalSuccessScreen(),
           SmoBirthInfoScreen.routeName: (ctx) => SmoBirthInfoScreen(),
           SmoInfoScreen.routeName: (ctx) => SmoInfoScreen(),
           SmoFormScreen.routeName: (ctx) => SmoFormScreen(),
+          SmoSuccessScreen.routeName: (ctx) => SmoSuccessScreen(),
           SplashPage.routeName: (ctx) => SplashScreen(),
-          SuccessfullSmoScreen.routeName: (ctx) => SuccessfullSmoScreen(),
-          SuccessfulHospitalScreen.routeName: (ctx) => SuccessfulHospitalScreen(),
-          DoctorInfoScreen.routeName: (ctx) => DoctorInfoScreen(),
         },
       ),
     );

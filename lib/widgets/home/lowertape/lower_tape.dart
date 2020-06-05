@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/lowertape_item.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/home/lowertape/tape_item.dart';
 
 class LowerTape extends StatelessWidget {

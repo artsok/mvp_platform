@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
-import 'package:mvp_platform/wizards/med_wizard.dart';
+import 'package:mvp_platform/wizards/hospital_wizard.dart';
 
 class HospitalInfoScreen extends StatefulWidget {
-  static const routeName = '/med-info-screen';
+  static const routeName = '/hospital-info-screen';
 
   @override
   _HospitalInfoScreenState createState() => _HospitalInfoScreenState();
@@ -55,7 +55,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
                       'Выберите предпочтительное для вас медицинское учреждение',
                     ),
                   ),
-                  content: Text(MedWizard.points[1]),
+                  content: Text(HospitalWizard.points[1]),
                   isActive: true,
                 ),
                 UnfoldedStep(

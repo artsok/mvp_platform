@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/typedefs/navigator_callback.dart';
+import 'package:mvp_platform/typedefs/callbacks.dart';
 
 class GosNotification {
   final String message;
   final IconData icon = CupertinoIcons.mail;
-  final DateTime date = DateTime.now();
+  DateTime date;
   NavigatorCallback callback = (ctx) {};
 
   GosNotification({
     @required this.message,
+    DateTime date,
     this.callback,
-  });
+  }) : date = date ?? DateTime.now();
 }

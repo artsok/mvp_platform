@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class ChildInfo extends StatelessWidget {
   final Child child;

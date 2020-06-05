@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/uppertape_item.dart';
 import 'package:mvp_platform/widgets/home/uppertape/tape_item.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class UpperTape extends StatelessWidget {
   final List<UpperTapeItem> items = [

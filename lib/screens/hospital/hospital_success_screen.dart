@@ -3,6 +3,7 @@ import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
@@ -18,20 +19,22 @@ class HospitalSuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DoctorSuccessScreenArguments args =
+    final HospitalSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
 
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 56,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
                 'Заявление о прикреплении к медицинской организации № $randomNumber',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
@@ -54,12 +57,30 @@ class HospitalSuccessScreen extends StatelessWidget {
                     SingleInfoItem('СНИЛС', Children.children[0].snils),
                     SingleInfoItem(
                         'Адрес проживания', Children.children[0].address),
-                    SingleInfoItem('Полис ОМС', '5152 0108 8793 0032'),
+                    SingleInfoItem('Страховая медицинская организация', "АО «СОГАЗ Мед» СОГАЗ МЕД, г.Калининград"),
                     SingleInfoItem('Прикреплен к', args.hospital.name),
-                    SingleInfoItem(
-                      'Адрес пордазделения',
-                      'г.Калининград, ул.Дзержинского, д.147',
-                      last: true,
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 400,
+                            maxHeight: 400,
+                          ),
+                          child: Image.asset(
+                            args.hospital.imagePath,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: SingleInfoItem(
+                        'Адрес пордазделения',
+                        'г.Калининград, ул.Дзержинского, д.147',
+                        last: true,
+                      ),
                     ),
                   ],
                 ),
@@ -75,8 +96,21 @@ class HospitalSuccessScreen extends StatelessWidget {
                 notifications.addNotification(
                   GosNotification(
                     message:
-                        'Выбрано новое медицинское учреждение для дальнейшего обслуживания',
+                        'Полис ОМС для ребенка (Богатырев Иван Иванович) № 6351240828000236 выпущен',
                   ),
+                );
+                notifications.addNotification(
+                  GosNotification(
+                    message:
+                    'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
+                  ),
+                );
+                notifications.addNotification(
+                  GosNotification(
+                      message:
+                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 02.05.2020.',
+                      callback: (context) => Navigator.of(context)
+                          .pushNamed(DoctorInfoScreen.routeName)),
                 );
                 Navigator.of(context)
                     .popUntil(ModalRoute.withName(HomeScreen.routeName));

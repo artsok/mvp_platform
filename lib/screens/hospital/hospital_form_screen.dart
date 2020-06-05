@@ -59,6 +59,21 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                     .toList(),
               ),
             ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 38),
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                    maxHeight: 400,
+                  ),
+                  child: Image.asset(
+                    selectedHospital.imagePath,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         state: StepState.complete,

@@ -25,14 +25,16 @@ class HospitalSuccessScreen extends StatelessWidget {
     final notifications = Provider.of<GosNotifications>(context);
 
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 56,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
                 'Заявление о прикреплении к медицинской организации № $randomNumber',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,
@@ -57,6 +59,21 @@ class HospitalSuccessScreen extends StatelessWidget {
                         'Адрес проживания', Children.children[0].address),
                     SingleInfoItem('Полис ОМС', '5152 0108 8793 0032'),
                     SingleInfoItem('Прикреплен к', args.hospital.name),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 38),
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: 400,
+                            maxHeight: 400,
+                          ),
+                          child: Image.asset(
+                            args.hospital.imagePath,
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
                     SingleInfoItem(
                       'Адрес пордазделения',
                       'г.Калининград, ул.Дзержинского, д.147',

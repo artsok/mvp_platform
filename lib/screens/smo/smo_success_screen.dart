@@ -32,6 +32,7 @@ class SmoSuccessScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
                 'Заявление о получении полиса ОМС для ребёнка № $randomNumber принято',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24.0,

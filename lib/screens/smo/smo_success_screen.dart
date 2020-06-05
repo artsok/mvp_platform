@@ -8,16 +8,17 @@ import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'dart:math';
 
-class SuccessfullSmoScreen extends StatelessWidget {
-  static const routeName = '/successfull-smo-screen';
+class SmoSuccessScreen extends StatelessWidget {
+  static const routeName = '/smo-success-screen';
   int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
-    final SuccessfullSmoScreenArguments args =
+    final SmoSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
@@ -49,7 +50,11 @@ class SuccessfullSmoScreen extends StatelessWidget {
                     SingleInfoItem('СНИЛС', args.child.snils),
                     SingleInfoItem('Адрес проживания', args.child.address),
                     SingleInfoItem('СМО', args.insuranceCompany.name),
-                    SingleInfoItem('Прикреплен к', 'ГБУЗ г. Рязань "Городская поликлиника № 17 ДЗМ"', last: true,),
+                    SingleInfoItem(
+                      'Прикреплен к',
+                      'ГБУЗ г. Рязань "Городская поликлиника № 17 ДЗМ"',
+                      last: true,
+                    ),
                   ],
                 ),
               ),
@@ -99,9 +104,9 @@ class SuccessfullSmoScreen extends StatelessWidget {
   }
 }
 
-class SuccessfullSmoScreenArguments {
+class SmoSuccessScreenArguments {
   final Child child;
   final InsuranceCompany insuranceCompany;
 
-  SuccessfullSmoScreenArguments(this.child, this.insuranceCompany);
+  SmoSuccessScreenArguments(this.child, this.insuranceCompany);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/lowertape_item.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class LowerTapeItems with ChangeNotifier {
   final List<LowerTapeItem> _items = [

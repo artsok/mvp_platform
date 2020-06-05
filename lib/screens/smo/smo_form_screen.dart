@@ -8,7 +8,7 @@ import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
@@ -18,21 +18,13 @@ class SmoFormScreen extends StatefulWidget {
 }
 
 class _SmoFormScreenState extends State<SmoFormScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<_SmoFormScreenState>();
-
-  bool _validatingInput = false;
-
-  void _startInputValidation() => setState(() => _validatingInput = true);
-
-  void _finishInputValidation() => setState(() => _validatingInput = false);
-
   Child selectedChild = Children.children[0];
   InsuranceCompany selectedInsuranceCompany =
       InsuranceCompanies.insuranceCompanies[0];
+  InsuranceType insuranceType = InsuranceType.digital;
+
   int currentStep = 0;
   bool complete = false;
-  InsuranceType insuranceType = InsuranceType.digital;
 
   @override
   Widget build(BuildContext context) {
@@ -270,8 +262,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                           CupertinoDialogAction(
                             child: const Text('Да, согласен'),
                             onPressed: () => Navigator.of(context).pushNamed(
-                              SuccessfullSmoScreen.routeName,
-                              arguments: SuccessfullSmoScreenArguments(
+                              SmoSuccessScreen.routeName,
+                              arguments: SmoSuccessScreenArguments(
                                 selectedChild,
                                 selectedInsuranceCompany,
                               ),

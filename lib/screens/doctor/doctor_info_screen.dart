@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
-import 'package:mvp_platform/models/enums/insurance_type.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/models/enums/service_type.dart';
+import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
+import 'package:mvp_platform/wizards/doctor_wizard.dart';
 
 class DoctorInfoScreen extends StatefulWidget {
   static const routeName = '/doctor-info-screen';
@@ -17,7 +18,7 @@ class DoctorInfoScreen extends StatefulWidget {
 
 class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
   bool attachedToHospital = true;
-  InsuranceType insuranceType = InsuranceType.digital;
+  ServiceType serviceType = ServiceType.digital;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
               .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
-          'Запись на прием к врачу',
+          'Запись на натальный скрининг',
           style: TextStyle(fontWeight: FontWeight.normal),
         ),
       ),
@@ -38,7 +39,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Запись на прием к врачу',
+              'Запись на натальный скрининг',
             ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),
@@ -51,7 +52,8 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   title: Container(
                     width: 290,
                     child: const Text(
-                        'Прекрепитесь к медицинской организации или попросите прикрепиться того, кого хотите записать на прием к врачу'),
+                      'Прикрепитесь к медицинской организации или попросите прикрепиться того, кого хотите записать на прием к врачу',
+                    ),
                   ),
                   content: GestureDetector(
                     onTap: () => setState(
@@ -76,6 +78,80 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   isActive: true,
                 ),
                 UnfoldedStep(
+                  title: Container(
+                    width: 290,
+                    child: const Text(
+                      'Выберите тип получения услуги',
+                    ),
+                  ),
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Radio(
+                            value: ServiceType.digital,
+                            groupValue: serviceType,
+                            onChanged: (type) =>
+                                setState(() => serviceType = type),
+                          ),
+                          const Text('Электронная запись'),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: ServiceType.personal,
+                            groupValue: serviceType,
+                            onChanged: (type) =>
+                                setState(() => serviceType = type),
+                          ),
+                          Container(
+                            width: 240,
+                            child: const Text('Личное посещение регистратуры'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  isActive: true,
+                ),
+                UnfoldedStep(
+                  title: Container(
+                    width: 290,
+                    child: const Text(
+                      'Запишитесь к специалисту в электронном виде',
+                    ),
+                  ),
+                  content: Text(DoctorWizard.points[3]),
+                  isActive: true,
+                ),
+                UnfoldedStep(
+                  title: Container(
+                    width: 290,
+                    child: const Text(
+                      'Получите медицинскую услугу',
+                    ),
+                  ),
+                  content: Text(DoctorWizard.points[4]),
+                  isActive: true,
+                ),
+                UnfoldedStep(
+                  title: Container(
+                    width: 290,
+                    child: const Text(
+                      'Экстренная помощь',
+                    ),
+                  ),
+                  content: Text(
+                    DoctorWizard.points[5],
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                  isActive: true,
+                ),
+                UnfoldedStep(
                   title: const Text('Будьте здоровы!'),
                   state: UnfoldedStepState.complete,
                   isActive: true,
@@ -88,13 +164,13 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () =>
-                      Navigator.pushNamed(context, SmoFormScreen.routeName),
+                      Navigator.pushNamed(context, DoctorFormScreen.routeName),
                   text: 'Записаться',
                   width: 300,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text("Это займет у вас не более 2 минут"),
+                  child: Text("Это займет у вас не более 5 минут"),
                 )
               ],
             ),

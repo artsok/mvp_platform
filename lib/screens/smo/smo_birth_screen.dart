@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/extensions/string_extensions.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/providers/children_provider.dart';

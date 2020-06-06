@@ -9,8 +9,86 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/Icon_button.dart';
 import 'package:passcode_screen/circle.dart';
 
-
 import 'package:flutter_svg/flutter_svg.dart';
+
+//class RootPage extends StatelessWidget {
+//  final double maxWidth;
+//  final double maxHeight;
+//
+//  RootPage(this.maxWidth, this.maxHeight, {Key key}) : super(key: key);
+//
+//  @override
+//  Widget build(BuildContext context) {
+////    checkUserAndNavigate(context).then((authenticated) {
+////      if (authenticated) {
+////        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+////      } else {
+////        Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+////      }
+////    });
+//
+//    return Scaffold(
+//      body: FutureBuilder<bool>(
+//        future: checkUserAndNavigate(context),
+//        builder: (ctx, userLoggedIn) => !userLoggedIn.hasData
+//            ? _Logo(maxWidth, maxHeight)
+//            : userLoggedIn.data
+//                ? Center(
+//                    child: Container(
+//                      width: 200,
+//                      height: 200,
+//                      color: Colors.blue,
+//                    ),
+//                  )
+//                : Center(
+//                    child: Container(
+//                      width: 200,
+//                      height: 200,
+//                      color: Colors.black,
+//                    ),
+//                  ),
+//      ),
+//    );
+//  }
+//
+//  Future<bool> checkUserAndNavigate(BuildContext context) async {
+//    return new Future<bool>.delayed(
+//      const Duration(seconds: 2),
+//      () => false,
+//    );
+//  }
+//}
+//
+//class _Logo extends StatelessWidget {
+//  final double maxWidth;
+//  final double maxHeight;
+//
+//  _Logo(this.maxWidth, this.maxHeight, {Key key}) : super(key: key);
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return LayoutBuilder(
+//      builder: (ctx, constraits) {
+//        final path = "assets/images/gos-main-logo.png";
+//        return Center(
+//          child: Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            children: <Widget>[
+//              Padding(
+//                padding: const EdgeInsets.all(20.0),
+//                child: Container(
+//                  width: constraits.maxWidth * maxWidth,
+//                  height: constraits.maxHeight * maxHeight,
+//                  child: Image.asset(path, fit: BoxFit.fitHeight),
+//                ),
+//              )
+//            ],
+//          ),
+//        );
+//      },
+//    );
+//  }
+//}
 
 class AuthPinScreen extends StatefulWidget {
   static const routeName = '/auth-pin-screen';
@@ -99,4 +177,3 @@ class _AuthPinScreenState extends State<AuthPinScreen> {
     super.dispose();
   }
 }
-

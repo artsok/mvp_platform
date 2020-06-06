@@ -144,7 +144,7 @@ class Keyboard extends StatelessWidget {
               ));
             },
             child: Center(
-              child: IconSvg('assets/svg/finger-print.svg'),
+              child: IconSvg('assets/svg/fingerprint.svg'),
             ),
           ),
         ),

@@ -13,7 +13,6 @@ import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
-
 class DoctorFormScreen extends StatefulWidget {
   static final routeName = '/doctor-form-screen';
 
@@ -28,7 +27,8 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
 
   int currentStep = 0;
   bool complete = false;
-  DateTime selectedTime = DateTime(2020, 06, 05, 17, 30);
+  DateTime selectedTime = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 30);
 
   void selectTime(DateTime time) {
     setState(() {
@@ -171,8 +171,10 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           ),
         ),
         content: TimestampPicker(
-          from: DateTime(2020, 1, 1, 16, 30),
-          to: DateTime(2020, 1, 1, 19, 45),
+          from: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 16, 30),
+          to: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 19, 45),
           interval: Duration(minutes: 15),
           callback: (time) => selectedTime = time,
         ),

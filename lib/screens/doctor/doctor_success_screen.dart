@@ -91,7 +91,7 @@ class DoctorSuccessScreen extends StatelessWidget {
                 notifications.addNotification(
                   GosNotification(
                     message: 'Запись на профилактический осмотр оформлена',
-                    date: args.time.add(Duration(hours: 5)),
+                    date: args.time.add(Duration(days: 1)),
                   ),
                 );
                 Navigator.of(context)

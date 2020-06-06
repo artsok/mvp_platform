@@ -15,7 +15,7 @@ class Services extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.healing),
+                leading: Icon(Icons.business),
                 title: const Text('Выбор медицинского учреждения'),
                 onTap: () =>
                     Navigator.pushNamed(context, HospitalInfoScreen.routeName),

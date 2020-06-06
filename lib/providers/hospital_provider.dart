@@ -4,8 +4,8 @@ import 'package:mvp_platform/models/hospital.dart';
 class Hospitals with ChangeNotifier {
   static final List<Hospital> hospitals = [
     Hospital(
-      'ГБУЗ г.Калининград "Городская поликлиника №7"',
-      'г.Калининград, ул.Декабристов, д.24',
+      'ГБУЗ "Городская детская поликлиника №4"',
+      'г.Калининград, ул.Садовая д.7/13',
       'assets/map/dekabristov-24.png',
     ),
     Hospital(

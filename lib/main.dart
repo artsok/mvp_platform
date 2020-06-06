@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
-import 'package:mvp_platform/providers/user_auth_provider.dart';
+import 'package:mvp_platform/screens/pin_screen.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
@@ -77,6 +77,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
+          PinScreen.routeName: (ctx) => PinScreen(),
           DoctorInfoScreen.routeName: (ctx) => DoctorInfoScreen(),
           DoctorFormScreen.routeName: (ctx) => DoctorFormScreen(),
           DoctorSuccessScreen.routeName: (ctx) => DoctorSuccessScreen(),

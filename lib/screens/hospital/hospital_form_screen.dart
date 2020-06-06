@@ -38,7 +38,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
               padding: const EdgeInsets.only(top: 16),
               child: DropdownButton(
                 hint: Container(
-                  width: 300,
+                  width: 250,
                   child: const Text('Мед.учреждение'),
                 ),
                 onChanged: (hospitalName) {
@@ -57,6 +57,21 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                       ),
                     )
                     .toList(),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 38),
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                    maxHeight: 400,
+                  ),
+                  child: Image.asset(
+                    selectedHospital.imagePath,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
             ),
           ],
@@ -97,7 +112,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Прикрепление ребёнка к другой медицинской организации',
+              'Прикрепление ребёнка к медицинской организации',
             ),
             Stepper(
               physics: ClampingScrollPhysics(),
@@ -116,6 +131,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GosFlatButton(
+                  width: 320,
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () {

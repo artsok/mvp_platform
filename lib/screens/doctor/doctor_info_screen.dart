@@ -166,7 +166,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                   onPressed: () =>
                       Navigator.pushNamed(context, DoctorFormScreen.routeName),
                   text: 'Записаться',
-                  width: 300,
+                  width: 320,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

@@ -17,7 +17,7 @@ class SingleInfoItem extends StatelessWidget {
     return Padding(
       padding: last
           ? const EdgeInsets.all(8.0)
-          : EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+          : const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
       child: Container(
         width: double.infinity,
         color: Colors.white,

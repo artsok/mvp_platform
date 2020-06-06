@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
-import 'package:mvp_platform/screens/auth_pin_code.dart';
+import 'package:mvp_platform/screens/pin_screen.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
@@ -14,7 +14,7 @@ import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
-import 'package:mvp_platform/screens/splash_screen.dart';
+import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MvpPlatform());
@@ -25,7 +25,6 @@ class MvpPlatform extends StatefulWidget {
 }
 
 class _MvpPlatformState extends State<MvpPlatform> {
-
   final gosNotifications = GosNotifications();
 
   @override
@@ -54,7 +53,8 @@ class _MvpPlatformState extends State<MvpPlatform> {
             ),
           ),
           scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.indigo, //'0xFF2763AA'.colorFromHex().,
+          primarySwatch: Colors.indigo,
+          //'0xFF2763AA'.colorFromHex().,
           textTheme: TextTheme(
             bodyText1: TextStyle(
               fontSize: 16,
@@ -73,10 +73,11 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SplashScreen(),
+        home: RootScreen(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
+          PinScreen.routeName: (ctx) => PinScreen(),
           DoctorInfoScreen.routeName: (ctx) => DoctorInfoScreen(),
           DoctorFormScreen.routeName: (ctx) => DoctorFormScreen(),
           DoctorSuccessScreen.routeName: (ctx) => DoctorSuccessScreen(),
@@ -84,12 +85,11 @@ class _MvpPlatformState extends State<MvpPlatform> {
           HospitalInfoScreen.routeName: (ctx) => HospitalInfoScreen(),
           HospitalFormScreen.routeName: (ctx) => HospitalFormScreen(),
           HospitalSuccessScreen.routeName: (ctx) => HospitalSuccessScreen(),
+          RootScreen.routeName: (ctx) => RootScreen(),
           SmoBirthInfoScreen.routeName: (ctx) => SmoBirthInfoScreen(),
           SmoInfoScreen.routeName: (ctx) => SmoInfoScreen(),
           SmoFormScreen.routeName: (ctx) => SmoFormScreen(),
           SmoSuccessScreen.routeName: (ctx) => SmoSuccessScreen(),
-          SplashPage.routeName: (ctx) => SplashScreen(),
-          AuthPinScreen.routeName: (ctx) => AuthPinScreen(),
         },
       ),
     );

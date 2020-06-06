@@ -46,25 +46,40 @@ class HospitalSuccessScreen extends StatelessWidget {
               width: 350,
               child: Card(
                 elevation: 5.0,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SingleInfoItem('Свидетельство о рождении',
-                          Children.children[0].birthCertificateId),
-                      SingleInfoItem('Фамилия, имя, отчество',
-                          Children.children[0].fullname),
-                      SingleInfoItem(
-                          'Дата рождения', Children.children[0].birthDate),
-                      SingleInfoItem('СНИЛС', Children.children[0].snils),
-                      SingleInfoItem('Страховая медицинская организация',
-                          "АО «СОГАЗ Мед» СОГАЗ МЕД"),
-                      SingleInfoItem(
-                          'Адрес проживания', Children.children[0].address),
-                      SingleInfoItem('Прикреплен к', args.hospital.name),
-                      SizedBox(height: 8),
-                      Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SingleInfoItem(
+                      'Свидетельство о рождении',
+                      Children.children[0].birthCertificateId,
+                    ),
+                    SingleInfoItem(
+                      'Фамилия, имя, отчество',
+                      Children.children[0].fullname,
+                    ),
+                    SingleInfoItem(
+                      'Дата рождения',
+                      Children.children[0].birthDate,
+                    ),
+                    SingleInfoItem(
+                      'СНИЛС',
+                      Children.children[0].snils,
+                    ),
+                    SingleInfoItem(
+                      'Страховая медицинская организация',
+                      "АО «СОГАЗ Мед» СОГАЗ МЕД",
+                    ),
+                    SingleInfoItem(
+                      'Адрес проживания',
+                      Children.children[0].address,
+                    ),
+                    SingleInfoItem(
+                      'Прикреплен к',
+                      args.hospital.name,
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8),
                         child: Container(
                           constraints: BoxConstraints(
                             maxWidth: 400,
@@ -76,12 +91,16 @@ class HospitalSuccessScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SingleInfoItem(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: SingleInfoItem(
                         'Адрес пордазделения',
                         'г.Калининград, ул.Садовая д.7/13',
+                        last: true,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -106,17 +125,21 @@ class HospitalSuccessScreen extends StatelessWidget {
                 );
                 notifications.addNotification(
                   GosNotification(
-                    message:
-                        'Приглашение Вашего ребенка на плановый профилактический осмотр, 02.05.2020.',
-                    callback: (context) => Navigator.of(context)
-                        .pushNamed(DoctorInfoScreen.routeName),
-                  ),
+                      message:
+                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 02.05.2020.',
+                      callback: (context) => Navigator.of(context)
+                          .pushNamed(DoctorInfoScreen.routeName)),
                 );
                 Navigator.of(context)
                     .popUntil(ModalRoute.withName(HomeScreen.routeName));
               },
             ),
             SizedBox(height: 36.0),
+//            GosFlatButton(
+//              text: 'Отменить',
+//              backgroundColor: Colors.white,
+//              onPressed: () => Navigator.of(context).pop(),
+//            ),
           ],
         ),
       ),

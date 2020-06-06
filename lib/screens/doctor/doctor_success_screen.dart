@@ -12,7 +12,8 @@ import 'dart:math';
 
 class DoctorSuccessScreen extends StatelessWidget {
   static const routeName = '/doctor-success-screen';
-  int randomNumber = new Random().nextInt(9000) + 10000;
+
+  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {

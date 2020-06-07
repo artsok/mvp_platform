@@ -13,6 +13,7 @@ class GosNotificationsTab extends StatefulWidget {
 }
 
 class _GosNotificationsTabState extends State<GosNotificationsTab> {
+
   @override
   Widget build(BuildContext context) {
 
@@ -20,9 +21,10 @@ class _GosNotificationsTabState extends State<GosNotificationsTab> {
       children: [
         Consumer<GosNotifications>(
           builder: (_, notifications, ch) => Expanded(
-            child: ListView(
-              children:
-                  notifications.items.map((n) => GosNotification(n)).toList(),
+            child: ListView.builder(
+              itemCount: notifications.items.length,
+              itemBuilder:(ctx, i) =>
+                GosNotification(notifications.items[i]),
             ),
           ),
         ),

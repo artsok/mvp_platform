@@ -25,16 +25,13 @@ class MvpPlatform extends StatefulWidget {
 }
 
 class _MvpPlatformState extends State<MvpPlatform> {
+
   final gosNotifications = GosNotifications();
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<GosNotifications>.value(
-          value: gosNotifications,
-        ),
-      ],
+    return ChangeNotifierProvider<GosNotifications>.value(
+      value: gosNotifications,
       child: MaterialApp(
         title: 'MVP Platform',
         theme: ThemeData(

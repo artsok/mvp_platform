@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mvp_platform/models/gos_notification.dart' as GosNotificationModel;
+import 'package:mvp_platform/models/gos_notification.dart'
+    as GosNotificationModel;
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 
 class GosNotification extends StatelessWidget {
   final GosNotificationModel.GosNotification notification;
@@ -19,12 +21,12 @@ class GosNotification extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Сегодня',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+              notification.date.humanizeDifference(),
+              style: TextStyle(fontSize: 12, color: Colors.black54),
             ),
             Text(
-              DateFormat('hh:MM').format(notification.date),
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+              DateFormat('HH:mm').format(notification.date),
+              style: TextStyle(fontSize: 12, color: Colors.black54),
             )
           ],
         ),

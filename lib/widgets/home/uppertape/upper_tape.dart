@@ -37,7 +37,7 @@ class UpperTape extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height: MediaQuery.of(context).size.height / 6,
       width: double.infinity,
       child: ListView.builder(
         shrinkWrap: true,

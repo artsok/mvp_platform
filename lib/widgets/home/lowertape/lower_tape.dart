@@ -19,13 +19,13 @@ class LowerTape extends StatelessWidget {
     ),
     new LowerTapeItem(
       name: 'Налоговая задолжность',
-      description: 'Это нужно затем-то затем-то и затем-то',
+      description: 'Оплачивайте налоговую задолжность.',
       color: '#3A72B5'.colorFromHex(),
       icon: Icons.description,
     ),
     new LowerTapeItem(
       name: 'Судебная задолжность',
-      description: 'Это нужно затем-то затем-то и затем-то',
+      description: 'Оплачивайте судебную задолжность.',
       color: '#3A72B5'.colorFromHex(),
       icon: Icons.email,
     ),

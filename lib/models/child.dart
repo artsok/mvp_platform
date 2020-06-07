@@ -8,6 +8,9 @@ class Child {
   String birthPlace;
   String address;
   String snils;
+  String recordBirthCertificate;
+  String parents;
+  String oms;
 
   Child({
     this.birthCertificateId,
@@ -17,6 +20,9 @@ class Child {
     this.birthDate,
     this.snils,
     this.birthPlace,
-    this.address
+    this.address,
+    this.recordBirthCertificate,
+    this.parents,
+    this.oms,
   }) : fullname = '$surname $name $patronym';
 }

@@ -47,10 +47,10 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
               children: [
                 GosFlatButton(
                   textColor: Colors.white,
-                  backgroundColor: '#2763AA'.colorFromHex(),
+                  backgroundColor: getGosBlueColor(),
                   onPressed: () =>
                       Navigator.pushNamed(context, SmoInfoScreen.routeName),
-                  text: 'Получить полис ОМС для ребёнка',
+                  text: 'Выберите Страховую компанию',
                   width: 320,
                 ),
               ],

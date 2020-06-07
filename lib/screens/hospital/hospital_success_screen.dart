@@ -51,8 +51,8 @@ class HospitalSuccessScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SingleInfoItem(
-                      'Свидетельство о рождении',
-                      Children.children[0].birthCertificateId,
+                      'Полис ОМС',
+                      Children.children[0].oms,
                     ),
                     SingleInfoItem(
                       'Фамилия, имя, отчество',
@@ -63,16 +63,12 @@ class HospitalSuccessScreen extends StatelessWidget {
                       Children.children[0].birthDate,
                     ),
                     SingleInfoItem(
-                      'СНИЛС',
-                      Children.children[0].snils,
+                      'Адрес проживания',
+                      Children.children[0].address,
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
                       "АО «СОГАЗ Мед» СОГАЗ МЕД",
-                    ),
-                    SingleInfoItem(
-                      'Адрес проживания',
-                      Children.children[0].address,
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
@@ -114,20 +110,30 @@ class HospitalSuccessScreen extends StatelessWidget {
               onPressed: () {
                 notifications.addNotification(
                   GosNotification(
+                    date: DateTime.now().add(new Duration(minutes: 1)),
                     message:
                         'Полис ОМС для ребенка (Богатырев Иван Иванович) № 6351240828000236 выпущен',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
+                    date: DateTime.now().add(new Duration(minutes: 4)),
+                    message:
+                    'Богатырев Иван Иванович прикреплен к страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
+                  ),
+                );
+                notifications.addNotification(
+                  GosNotification(
+                    date: DateTime.now().add(new Duration(minutes: 5)),
                     message:
                         'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
+                      date: DateTime.now().add(new Duration(minutes: 10)),
                       message:
-                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 02.05.2020.',
+                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 08.06.2020.',
                       callback: (context) => Navigator.of(context)
                           .pushNamed(DoctorInfoScreen.routeName)),
                 );

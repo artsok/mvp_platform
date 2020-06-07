@@ -30,8 +30,8 @@ class TapeItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.only(left: 8, top: 8),
-                        width: 110,
+                        padding: const EdgeInsets.only(left: 8, top: 4),
+                        width:  MediaQuery.of(context).size.height / 8,
                         child: Text(
                           item.name,
                           style: TextStyle(
@@ -41,7 +41,7 @@ class TapeItem extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Icon(
                           item.icon,
                           color: Colors.white,

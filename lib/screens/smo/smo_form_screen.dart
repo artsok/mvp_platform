@@ -110,26 +110,38 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    DropdownButton(
-                      hint: const Text('Страховая компания'),
-                      //hint почему-то не отрабатывает
-                      onChanged: (name) {
-                        setState(() {
-                          selectedInsuranceCompany = InsuranceCompanies
-                              .insuranceCompanies
-                              .firstWhere((c) => c.name == name);
-                        });
-                      },
-                      value: selectedInsuranceCompany.name,
-                      items: InsuranceCompanies.insuranceCompanies
-                          .map(
-                            (company) => DropdownMenuItem(
-                              child: Container(
-                                  width: 240, child: Text(company.name)),
-                              value: company.name,
-                            ),
-                          )
-                          .toList(),
+                    Builder(
+                      builder: (context) =>  DropdownButton(
+                        hint: const Text('Страховая компания'),
+                        //hint почему-то не отрабатывает
+                        onChanged: (name) {
+                          setState(() {
+                            selectedInsuranceCompany = InsuranceCompanies
+                                .insuranceCompanies
+                                .firstWhere((c) => c.name == name);
+
+                            //Т.к у мамы ребенка согаз, даем подсказу.
+                            if (selectedInsuranceCompany.name
+                                .toLowerCase()
+                                .contains("согаз")) {
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Вы также обслуживаетесь в компании ${selectedInsuranceCompany.name}"),
+                              ));
+                            }
+                          });
+                        },
+                        value: selectedInsuranceCompany.name,
+                        items: InsuranceCompanies.insuranceCompanies
+                            .map(
+                              (company) => DropdownMenuItem(
+                                child: Container(
+                                    width: 240, child: Text(company.name)),
+                                value: company.name,
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ],
                 ),
@@ -261,8 +273,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                           CupertinoDialogAction(
-                            child: const Text('Да, согласен'),
-                              onPressed: () => Navigator.of(context).pushNamed(HospitalInfoScreen.routeName)
+                              child: const Text('Да, согласен'),
+                              onPressed: () => Navigator.of(context)
+                                  .pushNamed(HospitalInfoScreen.routeName)
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(
@@ -271,9 +284,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 //                              ),
 //                            ),
 
-
-
-                          ),
+                              ),
                         ],
                       ),
                     );
@@ -288,3 +299,5 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
     );
   }
 }
+
+

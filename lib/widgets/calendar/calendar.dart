@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
-import 'package:provider/provider.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -35,23 +36,35 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting(locale);
     return Consumer<DoctorEvents>(
       builder: (_, events, __) => TableCalendar(
-        events: Map.fromIterable(
-          events.items,
-          key: (e) => e is DoctorEvent ? e.startsAt : null,
-          value: (e) => ['test', 'test2'],
-        ),
+        locale: locale,
+        events: events.items,
         calendarController: calendarController,
-        availableCalendarFormats: const {
-          CalendarFormat.month: '',
-        },
-        availableGestures: AvailableGestures.horizontalSwipe,
+        daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          weekendStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+        ),
         calendarStyle: CalendarStyle(
+          outsideDaysVisible: false,
+          highlightSelected: true,
+          weekdayStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          weekendStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
         ),
-        headerStyle: HeaderStyle(
-          centerHeaderTitle: true,
-        ),
+        headerStyle: HeaderStyle(),
       ),
     );
   }

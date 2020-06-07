@@ -20,6 +20,8 @@ import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:provider/provider.dart';
 
+const locale = 'ru';
+
 void main() => runApp(MvpPlatform());
 
 class MvpPlatform extends StatefulWidget {

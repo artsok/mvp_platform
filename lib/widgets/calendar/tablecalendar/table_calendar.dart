@@ -2,6 +2,7 @@ library table_calendar;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 part 'calendar.dart';

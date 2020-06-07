@@ -26,21 +26,21 @@ class _EventsScreenState extends State<EventsScreen> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: Consumer<DoctorEvents>(
-          builder: (_, events, __) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: const Text(
-                  'Богатырев Иван Иванович',
-                  style: TextStyle(fontSize: 20),
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: const Text(
+                'Богатырев Иван Иванович',
+                style: TextStyle(fontSize: 20),
               ),
-              Calendar(),
-              DoctorEventsList(events.items),
-            ],
-          ),
+            ),
+            Calendar(),
+            Consumer<DoctorEvents>(
+              builder: (_, events, __) => DoctorEventsList(events),
+            ),
+          ],
         ),
       ),
     );

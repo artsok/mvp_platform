@@ -18,6 +18,7 @@ import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/root_screen.dart';
+import 'package:mvp_platform/screens/test/http_connection_screen.dart';
 import 'package:provider/provider.dart';
 
 const locale = 'ru';
@@ -101,6 +102,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           SmoInfoScreen.routeName: (ctx) => SmoInfoScreen(),
           SmoFormScreen.routeName: (ctx) => SmoFormScreen(),
           SmoSuccessScreen.routeName: (ctx) => SmoSuccessScreen(),
+          HttpConnectionScreen.routeName: (ctx) => HttpConnectionScreen(),
         },
       ),
     );

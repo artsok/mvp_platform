@@ -23,6 +23,9 @@ extension DateTimeExtensions on DateTime {
     }
     return DateFormat('dd.MM.yyyy').format(this);
   }
+
+  DateTime roundToDay() => DateTime(this.year, this.month, this.day);
+
 //    if (diff.isIn(-9223372036854775808, -day * 365)) {
 //      humanizedDiff = 'более чем через год';
 //    } else if (diff.isIn(-day * 365, -hour * 26)) {

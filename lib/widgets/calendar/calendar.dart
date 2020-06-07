@@ -37,18 +37,10 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Consumer<DoctorEvents>(
       builder: (_, events, __) => TableCalendar(
-        events: Map.fromIterable(
-          events.items,
-          key: (e) => e is DoctorEvent ? e.startsAt : null,
-          value: (e) => ['test', 'test2'],
-        ),
+        events: events.items,
         calendarController: calendarController,
-        availableCalendarFormats: const {
-          CalendarFormat.month: '',
-        },
         availableGestures: AvailableGestures.horizontalSwipe,
-        calendarStyle: CalendarStyle(
-        ),
+        calendarStyle: CalendarStyle(),
         headerStyle: HeaderStyle(
           centerHeaderTitle: true,
         ),

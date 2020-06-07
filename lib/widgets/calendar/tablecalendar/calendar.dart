@@ -104,20 +104,6 @@ class TableCalendar extends StatefulWidget {
   /// `CalendarFormat` which will be displayed first.
   final CalendarFormat initialCalendarFormat;
 
-  /// `Map` of `CalendarFormat`s and `String` names associated with them.
-  /// Those `CalendarFormat`s will be used by internal logic to manage displayed format.
-  ///
-  /// To ensure proper vertical Swipe behavior, `CalendarFormat`s should be in descending order (eg. from biggest to smallest).
-  ///
-  /// For example:
-  /// ```dart
-  /// availableCalendarFormats: const {
-  ///   CalendarFormat.month: 'Month',
-  ///   CalendarFormat.week: 'Week',
-  /// }
-  /// ```
-  final Map<CalendarFormat, String> availableCalendarFormats;
-
   /// Used to show/hide Header.
   final bool headerVisible;
 
@@ -177,11 +163,6 @@ class TableCalendar extends StatefulWidget {
     this.endDay,
     this.weekendDays = const [DateTime.saturday, DateTime.sunday],
     this.initialCalendarFormat = CalendarFormat.month,
-    this.availableCalendarFormats = const {
-      CalendarFormat.month: 'Month',
-      CalendarFormat.twoWeeks: '2 weeks',
-      CalendarFormat.week: 'Week',
-    },
     this.headerVisible = true,
     this.enabledDayPredicate,
     this.rowHeight,
@@ -198,8 +179,6 @@ class TableCalendar extends StatefulWidget {
     this.headerStyle = const HeaderStyle(),
     this.builders = const CalendarBuilders(),
   })  : assert(calendarController != null),
-        assert(availableCalendarFormats.keys.contains(initialCalendarFormat)),
-        assert(availableCalendarFormats.length <= CalendarFormat.values.length),
         assert(weekendDays != null),
         assert(weekendDays.isNotEmpty
             ? weekendDays.every((day) => day >= DateTime.monday && day <= DateTime.sunday)
@@ -220,7 +199,6 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
       holidays: widget.holidays,
       initialDay: widget.initialSelectedDay,
       initialFormat: widget.initialCalendarFormat,
-      availableCalendarFormats: widget.availableCalendarFormats,
       useNextCalendarFormat: widget.headerStyle.formatButtonShowsNext,
       startingDayOfWeek: widget.startingDayOfWeek,
       selectedDayCallback: _selectedDayCallback,
@@ -377,11 +355,6 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
       ),
     ];
 
-    if (widget.headerStyle.formatButtonVisible && widget.availableCalendarFormats.length > 1) {
-      children.insert(2, const SizedBox(width: 8.0));
-      children.insert(3, _buildFormatButton());
-    }
-
     return Container(
       decoration: widget.headerStyle.decoration,
       margin: widget.headerStyle.headerMargin,
@@ -389,20 +362,6 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: children,
-      ),
-    );
-  }
-
-  Widget _buildFormatButton() {
-    return GestureDetector(
-      onTap: _toggleCalendarFormat,
-      child: Container(
-        decoration: widget.headerStyle.formatButtonDecoration,
-        padding: widget.headerStyle.formatButtonPadding,
-        child: Text(
-          widget.calendarController._getFormatButtonText(),
-          style: widget.headerStyle.formatButtonTextStyle,
-        ),
       ),
     );
   }

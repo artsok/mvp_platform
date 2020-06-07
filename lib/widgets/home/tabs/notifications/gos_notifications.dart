@@ -20,7 +20,7 @@ class _GosNotificationsTabState extends State<GosNotificationsTab> {
     return Column(
       children: [
         Consumer<GosNotifications>(
-          builder: (_, notifications, ch) => Expanded(
+          builder: (_, notifications, __) => Expanded(
             child: ListView.builder(
               itemCount: notifications.items.length,
               itemBuilder:(ctx, i) =>

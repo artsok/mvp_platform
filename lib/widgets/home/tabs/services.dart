@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
+import 'package:mvp_platform/screens/events/events_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/widgets/common/gos_button.dart';
@@ -31,6 +32,12 @@ class Services extends StatelessWidget {
                 title: const Text('Выбор СМО'),
                 onTap: () =>
                     Navigator.pushNamed(context, SmoInfoScreen.routeName),
+              ),
+              ListTile(
+                leading: Icon(Icons.calendar_today),
+                title: const Text('Календарь'),
+                onTap: () =>
+                    Navigator.pushNamed(context, EventsScreen.routeName),
               ),
             ],
           ),

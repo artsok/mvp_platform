@@ -5,6 +5,7 @@ import 'package:mvp_platform/impl/pass/circle.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 import 'package:mvp_platform/impl/pass/shake_curve.dart';
+import 'package:mvp_platform/utils/scale_factor.dart';
 
 import 'keyboard.dart';
 
@@ -107,14 +108,14 @@ class _PasscodeScreenState extends State<PasscodeScreen>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 16, bottom: 96),
+              padding: EdgeInsets.only(top: 16, bottom: ScaleFactor.scalingHeight(context, 9, 7)),
               child: Container(child: Text("Сбросить код доступа", style: TextStyle(color: getGosBlueColor(), fontWeight: FontWeight.w300),)),
             ),
             Column(
                   children: [
                     IntrinsicHeight(
                       child: Container(
-                        margin: const EdgeInsets.only(top: 20, left: 40, right: 40),
+                        margin: const EdgeInsets.only(top: 0, left: 40, right: 40),
                         child: Keyboard(
                           onDeleteCancelTap: _onDeleteCancelButtonPressed,
                           onKeyboardTap: _onKeyboardButtonPressed,

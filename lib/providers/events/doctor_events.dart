@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/providers/doctor_provider.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
@@ -17,6 +18,19 @@ class DoctorEvents with ChangeNotifier {
         description: 'Диспансерный прием (осмотр, консультация)',
       );
     }).toList();
+    events.add(DoctorEvent(
+      doctor: Doctors.doctors[1],
+      startsAt: DateTime.now().subtract(Duration(days: 5, hours: 1)),
+      endsAt: DateTime.now().subtract(Duration(days: 5)),
+      description: 'Консультация у трансгуманиста',
+    ));
+    events.add(DoctorEvent(
+      doctor: Doctors.doctors[1],
+      startsAt: DateTime.now().add(Duration(days: 9)),
+      endsAt: DateTime.now().add(Duration(days: 9, hours: 1, minutes: 30)),
+      eventState: EventState.approved,
+      description: 'Посещение хирурга',
+    ));
     events.forEach((event) {
       DateTime key = event.startsAt.roundToDay();
       if (_events.containsKey(key)) {
@@ -34,6 +48,7 @@ class DoctorEvents with ChangeNotifier {
   List<DoctorEvent> get allEvents {
     List<DoctorEvent> events = [];
     _events.forEach((k, v) => events.addAll(v));
+    events.sort((e1, e2) => e1.startsAt.compareTo(e2.startsAt));
     return events;
   }
 

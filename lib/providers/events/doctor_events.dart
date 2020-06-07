@@ -4,20 +4,36 @@ import 'package:mvp_platform/providers/doctor_provider.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 
 class DoctorEvents with ChangeNotifier {
-  final Map<DateTime, List<DoctorEvent>> _events = Map.fromIterable(
-    Doctors.doctors,
-    key: (d) => DateTime.now().add(Duration(days: 3)).roundToDay(),
-    value: (d) => [
-      DoctorEvent(
-        doctor: d,
-        startsAt: DateTime.now().add(Duration(days: 3)),
-        endsAt: DateTime.now().add(Duration(days: 3, hours: 1)),
-        description: 'Диспансерный прием (осмотр, консультация)',
-      )
-    ],
-  );
+  final Map<DateTime, List<DoctorEvent>> _events = {};
+
+  DoctorEvents() {
+    List<DoctorEvent> events = Doctors.doctors
+        .map((doctor) => DoctorEvent(
+              doctor: doctor,
+              startsAt: DateTime.now().add(Duration(days: 3)),
+              endsAt: DateTime.now().add(Duration(days: 3, hours: 1)),
+              description: 'Диспансерный прием (осмотр, консультация)',
+            ))
+        .toList();
+    events.forEach((event) {
+      DateTime key = event.startsAt.roundToDay();
+      if (_events.containsKey(key)) {
+        _events[key].add(event);
+        _events[key].sort((e1, e2) => e1.startsAt.compareTo(e2.startsAt));
+      } else {
+        _events.putIfAbsent(key, () => [event]);
+      }
+    });
+    notifyListeners();
+  }
 
   Map<DateTime, List<DoctorEvent>> get items => _events;
+
+  List<DoctorEvent> get allEvents {
+    List<DoctorEvent> events = [];
+    _events.forEach((k, v) => events.addAll(v));
+    return events;
+  }
 
   void addEvent(DoctorEvent event) {
     DateTime key = event.startsAt.roundToDay();
@@ -28,12 +44,6 @@ class DoctorEvents with ChangeNotifier {
       _events.putIfAbsent(key, () => [event]);
     }
     notifyListeners();
-  }
-
-  List<DoctorEvent> get allEvents {
-    List<DoctorEvent> events = [];
-    _events.forEach((k, v) => events.addAll(v));
-    return events;
   }
 
   bool removeEvent(DoctorEvent event) {

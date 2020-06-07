@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
-import 'package:provider/provider.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
+import 'package:provider/provider.dart';
 
 class Calendar extends StatefulWidget {
   @override

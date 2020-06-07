@@ -12,8 +12,6 @@ extension DateTimeExtensions on DateTime {
   String humanizeDifference() => this.humanizeDifferenceWith(DateTime.now());
 
   String humanizeDifferenceWith(DateTime date) {
-    print('DAY ${this.day}');
-    print('INPUT DAY ${date.day}');
     if (date.day - this.day == -1) {
       return 'Завтра';
     }

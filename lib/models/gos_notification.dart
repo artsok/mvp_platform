@@ -3,13 +3,21 @@ import 'package:mvp_platform/typedefs/callbacks.dart';
 
 class GosNotification {
   final String message;
-  final IconData icon = CupertinoIcons.mail;
   DateTime date;
-  NavigatorCallback callback = (ctx) {};
+  NavigatorCallback callback;
+  IconData icon;
 
-  GosNotification({
-    @required this.message,
+  GosNotification._(this.message, this.date, this.callback, this.icon);
+
+  factory GosNotification({
+    @required String message,
     DateTime date,
-    this.callback,
-  }) : date = date ?? DateTime.now();
+    NavigatorCallback callback,
+    IconData icon,
+  }) {
+    callback = callback ?? (ctx) {};
+    icon = icon ?? CupertinoIcons.mail;
+    date = date ?? DateTime.now();
+    return GosNotification._(message, date, callback, icon);
+  }
 }

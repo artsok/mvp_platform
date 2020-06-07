@@ -121,7 +121,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                             onChanged: (type) =>
                                 setState(() => insuranceType = type),
                           ),
-                          const Text('Электронный'),
+                          const Text('Цифровой'),
                         ],
                       ),
                       Row(
@@ -133,7 +133,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                                 setState(() => insuranceType = type),
                           ),
                           Container(
-                              width: 240, child: const Text('Пластиковый')),
+                              width: 240, child: const Text('Электронный')),
                         ],
                       ),
                       Row(
@@ -151,14 +151,14 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                   ),
                   isActive: true,
                 ),
-                UnfoldedStep(
-                  title: Container(
-                    width: 290,
-                    child: const Text('Выберите пункт выдачи полиса ОМС'),
-                  ),
-                  content: Text(SmoWizard.points[4]),
-                  isActive: true,
-                ),
+//                UnfoldedStep(
+//                  title: Container(
+//                    width: 290,
+//                    child: const Text('Выберите пункт выдачи полиса ОМС'),
+//                  ),
+//                  content: Text(SmoWizard.points[4]),
+//                  isActive: true,
+//                ),
                 UnfoldedStep(
                   title: Container(
                     width: 290,

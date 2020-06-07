@@ -22,7 +22,8 @@ class ChildInfo extends StatelessWidget {
           SingleInfoItem('Имя', child.name),
           SingleInfoItem('Отчество', child.patronym),
           SingleInfoItem('Дата рождения', child.birthDate),
-          SingleInfoItem('Место рождения', child.birthPlace.substring(0,13), last: true),
+          SingleInfoItem('Место рождения', child.birthPlace.substring(0, 13),
+              last: true),
         ],
       ),
     );
@@ -42,13 +43,17 @@ class ActInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SingleInfoItem(
-              '№ свидетельства о рождении', child.birthCertificateId),
           SingleInfoItem('Фамилия, имя, отество', child.fullname),
           SingleInfoItem('Дата рождения', child.birthDate),
-          SingleInfoItem('СНИЛС', child.snils),
           SingleInfoItem('Место рождения', child.birthPlace),
-          SingleInfoItem('Адрес проживания', child.address, last: true),
+          SingleInfoItem(
+              'Запись акта о рождении', child.recordBirthCertificate),
+          SingleInfoItem('Информация о родителях', child.parents),
+          SingleInfoItem('Место гос.регистрации', "-"),
+          SingleInfoItem('№ свидетельства о рождении', child.birthCertificateId),
+          SingleInfoItem('Номер полиса ОМС', child.oms, last: true)
+//          SingleInfoItem('СНИЛС', child.snils),
+//          SingleInfoItem('Адрес проживания', child.address, last: true),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class IconSvg extends StatelessWidget {
+
   final String path;
   final double height;
   final double width;

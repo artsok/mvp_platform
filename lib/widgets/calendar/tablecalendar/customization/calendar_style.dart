@@ -2,6 +2,7 @@ part of table_calendar;
 
 /// Class containing styling for `TableCalendar`'s content.
 class CalendarStyle {
+
   /// Style of foreground Text for regular weekdays.
   final TextStyle weekdayStyle;
 

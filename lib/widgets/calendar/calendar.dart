@@ -42,13 +42,29 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
         locale: locale,
         events: events.items,
         calendarController: calendarController,
+        daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          weekendStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+        ),
         calendarStyle: CalendarStyle(
           outsideDaysVisible: false,
           highlightSelected: true,
+          weekdayStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
+          weekendStyle: const TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+          ),
         ),
-        headerStyle: HeaderStyle(
-          centerHeaderTitle: true,
-        ),
+        headerStyle: HeaderStyle(),
       ),
     );
   }

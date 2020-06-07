@@ -292,7 +292,7 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
                 ? widget.headerStyle.titleTextBuilder(widget.calendarController.focusedDay, widget.locale)
                 : DateFormat.yMMMM(widget.locale).format(widget.calendarController.focusedDay),
             style: widget.headerStyle.titleTextStyle,
-            textAlign: widget.headerStyle.centerHeaderTitle ? TextAlign.center : TextAlign.start,
+            textAlign: TextAlign.center,
           ),
         ),
       ),
@@ -414,7 +414,9 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
         return Center(
           child: Text(
             weekdayString,
-            style: isWeekend ? widget.daysOfWeekStyle.weekendStyle : widget.daysOfWeekStyle.weekdayStyle,
+            style: isWeekend
+                ? widget.daysOfWeekStyle.weekendStyle
+                : widget.daysOfWeekStyle.weekdayStyle,
           ),
         );
       }).toList(),

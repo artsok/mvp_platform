@@ -1,18 +1,7 @@
 part of table_calendar;
 
-/// Class containing styling and configuration of `TableCalendar`'s header.
 class HeaderStyle {
-  /// Responsible for making title Text centered.
-  final bool centerHeaderTitle;
 
-  /// Use to customize header's title text (eg. with different `DateFormat`).
-  /// You can use `String` transformations to further customize the text.
-  /// Defaults to simple `'yMMMM'` format (eg. January 2019, February 2019, March 2019, etc.).
-  ///
-  /// Example usage:
-  /// ```dart
-  /// titleTextBuilder: (date, locale) => DateFormat.yM(locale).format(date),
-  /// ```
   final TextBuilder titleTextBuilder;
 
   /// Style for title Text (month-year) displayed in header.
@@ -49,7 +38,6 @@ class HeaderStyle {
   final BoxDecoration decoration;
 
   const HeaderStyle({
-    this.centerHeaderTitle = false,
     this.titleTextBuilder,
     this.titleTextStyle = const TextStyle(fontSize: 17.0),
     this.headerMargin,

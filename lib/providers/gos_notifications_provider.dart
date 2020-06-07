@@ -18,10 +18,6 @@ class GosNotifications with ChangeNotifier {
           'Услуга оказана «Получение сведений о состоянии индивидуального лицевого счета»',
       date: DateTime.now().subtract(Duration(days: 1)),
     ),
-//    GosNotification(
-//      message: 'Test notification',
-//      date: DateTime.now().subtract(Duration(days: 23)),
-//    ),
   ];
 
   List<GosNotification> get items => _notifications;

@@ -80,31 +80,9 @@ class _PinScreenState extends State<PinScreen> {
         shouldTriggerVerification: _verificationNotifier.stream,
         backgroundColor: Colors.white,
         cancelCallback: _onPasscodeCancelled,
+        bottomWidget: Padding(padding: EdgeInsets.only(bottom: 40)),
       ),
     );
-  }
-
-  _showLockScreen(BuildContext context,
-      {bool opaque,
-      CircleUIConfig circleUIConfig,
-      KeyboardUIConfig keyboardUIConfig}) {
-    Navigator.push(
-        context,
-        PageRouteBuilder(
-          opaque: opaque,
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              PasscodeScreen(
-            title: Text('Enter App Passcode'),
-            circleUIConfig: circleUIConfig,
-            keyboardUIConfig: keyboardUIConfig,
-            passwordEnteredCallback: _onPasscodeEntered,
-            cancelButton: Text('Cancel'),
-            deleteButton: Text('Delete'),
-            shouldTriggerVerification: _verificationNotifier.stream,
-            backgroundColor: Colors.black.withOpacity(0.8),
-            cancelCallback: _onPasscodeCancelled,
-          ),
-        ));
   }
 
   _onPasscodeEntered(String enteredPasscode) {

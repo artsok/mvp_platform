@@ -90,9 +90,9 @@ class _PasscodeScreenState extends State<PasscodeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: widget.backgroundColor ?? Colors.black.withOpacity(0.8),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             widget.title,
             Container(
@@ -107,35 +107,33 @@ class _PasscodeScreenState extends State<PasscodeScreen>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.only(top: 16, bottom: 96),
               child: Container(child: Text("Сбросить код доступа", style: TextStyle(color: getGosBlueColor(), fontWeight: FontWeight.w300),)),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IntrinsicHeight(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 20, left: 40, right: 40),
-                    child: Keyboard(
-                      onDeleteCancelTap: _onDeleteCancelButtonPressed,
-                      onKeyboardTap: _onKeyboardButtonPressed,
-                      shouldShowCancel: enteredPasscode.length == 0,
-                      cancelButton: widget.cancelButton,
-                      deleteButton: widget.deleteButton,
-                      fingerButton: widget.fingerButton,
-                      keyboardUIConfig: widget.keyboardUIConfig != null
-                          ? widget.keyboardUIConfig
-                          : KeyboardUIConfig(),
-                      digits: widget.digits,
+                  children: [
+                    IntrinsicHeight(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 20, left: 40, right: 40),
+                        child: Keyboard(
+                          onDeleteCancelTap: _onDeleteCancelButtonPressed,
+                          onKeyboardTap: _onKeyboardButtonPressed,
+                          shouldShowCancel: enteredPasscode.length == 0,
+                          cancelButton: widget.cancelButton,
+                          deleteButton: widget.deleteButton,
+                          fingerButton: widget.fingerButton,
+                          keyboardUIConfig: widget.keyboardUIConfig != null
+                              ? widget.keyboardUIConfig
+                              : KeyboardUIConfig(),
+                          digits: widget.digits,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
             widget.bottomWidget != null ? widget.bottomWidget : Container()
           ],
         ),
-      ),
     );
   }
 

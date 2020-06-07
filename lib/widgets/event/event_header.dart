@@ -80,14 +80,14 @@ class EventHeader extends StatelessWidget {
                         '${event.eventState.translate()}',
                         style: TextStyle(
                           fontSize: 12.0,
-                          color: event.eventState.colors().item2,
+                          color: event.eventState.colors().item3,
                         ),
                       ),
                       Text(
                         '${DateFormat(DateFormat.HOUR24_MINUTE).format(event.startsAt)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(event.endsAt)}',
                         style: TextStyle(
                           fontSize: 18.0,
-                          color: event.eventState.colors().item2,
+                          color: event.eventState.colors().item3,
                         ),
                       ),
                     ],

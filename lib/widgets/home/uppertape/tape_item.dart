@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/uppertape_item.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 
 class TapeItem extends StatelessWidget {
   final UpperTapeItem item;

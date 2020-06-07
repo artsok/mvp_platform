@@ -30,10 +30,7 @@ class TapeItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 8,
-                        ),
+                        padding: const EdgeInsets.only(left: 8, top: 8),
                         width: 110,
                         child: Text(
                           item.name,

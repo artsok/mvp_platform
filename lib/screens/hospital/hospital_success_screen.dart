@@ -1,21 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
-import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
-import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
 
 class HospitalSuccessScreen extends StatelessWidget {
   static const routeName = '/hospital-success-screen';
-  int randomNumber = new Random().nextInt(9000) + 10000;
+
+  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,9 @@ class HospitalSuccessScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 56,),
+            SizedBox(
+              height: 56,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
@@ -48,17 +50,34 @@ class HospitalSuccessScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SingleInfoItem('Свидетельство о рождении',
-                        Children.children[0].birthCertificateId),
-                    SingleInfoItem('Фамилия, имя, отчество',
-                        Children.children[0].fullname),
                     SingleInfoItem(
-                        'Дата рождения', Children.children[0].birthDate),
-                    SingleInfoItem('СНИЛС', Children.children[0].snils),
-                    SingleInfoItem('Страховая медицинская организация', "АО «СОГАЗ Мед» СОГАЗ МЕД"),
+                      'Свидетельство о рождении',
+                      Children.children[0].birthCertificateId,
+                    ),
                     SingleInfoItem(
-                        'Адрес проживания', Children.children[0].address),
-                    SingleInfoItem('Прикреплен к', args.hospital.name),
+                      'Фамилия, имя, отчество',
+                      Children.children[0].fullname,
+                    ),
+                    SingleInfoItem(
+                      'Дата рождения',
+                      Children.children[0].birthDate,
+                    ),
+                    SingleInfoItem(
+                      'СНИЛС',
+                      Children.children[0].snils,
+                    ),
+                    SingleInfoItem(
+                      'Страховая медицинская организация',
+                      "АО «СОГАЗ Мед» СОГАЗ МЕД",
+                    ),
+                    SingleInfoItem(
+                      'Адрес проживания',
+                      Children.children[0].address,
+                    ),
+                    SingleInfoItem(
+                      'Прикреплен к',
+                      args.hospital.name,
+                    ),
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8),
@@ -102,7 +121,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                 notifications.addNotification(
                   GosNotification(
                     message:
-                    'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
+                        'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
                   ),
                 );
                 notifications.addNotification(

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mvp_platform/widgets/home/lowertape/lower_tape.dart';
 import 'package:mvp_platform/widgets/home/tabs/tabs.dart';
 import 'package:mvp_platform/widgets/home/uppertape/upper_tape.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
+
   static const routeName = '/home-screen';
 
   HomeScreen({Key key}) : super(key: key);

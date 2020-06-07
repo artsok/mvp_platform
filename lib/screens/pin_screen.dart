@@ -9,20 +9,18 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/Icon_button.dart';
 import 'package:passcode_screen/circle.dart';
 
+class PinScreen extends StatefulWidget {
+  static const routeName = '/pin-screen';
 
-import 'package:flutter_svg/flutter_svg.dart';
-
-class AuthPinScreen extends StatefulWidget {
-  static const routeName = '/auth-pin-screen';
-
-  AuthPinScreen({Key key, this.title}) : super(key: key);
   final String title;
 
+  PinScreen({Key key, this.title}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => _AuthPinScreenState();
+  State<StatefulWidget> createState() => _PinScreenState();
 }
 
-class _AuthPinScreenState extends State<AuthPinScreen> {
+class _PinScreenState extends State<PinScreen> {
   final StreamController<bool> _verificationNotifier =
       StreamController<bool>.broadcast();
 
@@ -33,17 +31,18 @@ class _AuthPinScreenState extends State<AuthPinScreen> {
     return Scaffold(
       body: PasscodeScreen(
         passwordDigits: 4,
-        title: Text("Введите установленный код доступа"),
+        title: Text('Введите установленный код доступа'),
         //titleColor: Colors.grey,
         circleUIConfig: CircleUIConfig(
             borderColor: getGosBlueColor(),
             fillColor: getGosBlueColor(),
             circleSize: 10),
         keyboardUIConfig: KeyboardUIConfig(
-            digitBorderWidth: 1,
-            primaryColor: Colors.white,
-            deleteButtonTextStyle: TextStyle(color: Colors.grey, fontSize: 15),
-            digitTextStyle: TextStyle(fontSize: 38, color: getGosBlueColor())),
+          digitBorderWidth: 1,
+          primaryColor: Colors.white,
+          deleteButtonTextStyle: TextStyle(color: Colors.grey, fontSize: 15),
+          digitTextStyle: TextStyle(fontSize: 38, color: getGosBlueColor()),
+        ),
         passwordEnteredCallback: _onPasscodeEntered,
         cancelButton: IconSvg('assets/svg/backspace-arrow.svg'),
         deleteButton: IconSvg('assets/svg/backspace-arrow.svg'),
@@ -99,4 +98,3 @@ class _AuthPinScreenState extends State<AuthPinScreen> {
     super.dispose();
   }
 }
-

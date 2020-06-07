@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
@@ -5,16 +7,15 @@ import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
-import 'dart:math';
 
 class SmoSuccessScreen extends StatelessWidget {
   static const routeName = '/smo-success-screen';
-  int randomNumber = new Random().nextInt(9000) + 10000;
+
+  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {

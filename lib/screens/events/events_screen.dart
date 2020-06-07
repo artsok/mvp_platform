@@ -25,6 +25,7 @@ class _EventsScreenState extends State<EventsScreen> {
         title: const Text('Диспансерный учет'),
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 8.0),
         child: Consumer<DoctorEvents>(
           builder: (_, events, __) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,7 +38,7 @@ class _EventsScreenState extends State<EventsScreen> {
                 ),
               ),
               Calendar(),
-              DoctorEventsList(events.events),
+              DoctorEventsList(events.items),
             ],
           ),
         ),

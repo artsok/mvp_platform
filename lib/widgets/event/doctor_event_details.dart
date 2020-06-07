@@ -21,15 +21,27 @@ class DoctorEventDetails extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           event.doctor.name,
-                          style: TextStyle(fontSize: 24.0),
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(event.doctor.profession),
+                        SizedBox(height: 8.0),
+                        Text(
+                          event.description,
+                          style: TextStyle(fontSize: 20.0),
                         ),
                       ],
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.all(8.0),
                     width: 100.0,
                     height: 100.0,
                     child: ClipRRect(

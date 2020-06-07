@@ -80,7 +80,7 @@ class _PinScreenState extends State<PinScreen> {
         shouldTriggerVerification: _verificationNotifier.stream,
         backgroundColor: Colors.white,
         cancelCallback: _onPasscodeCancelled,
-        bottomWidget: Padding(padding: EdgeInsets.only(bottom: 40)),
+        bottomWidget: Padding(padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width / 20)),
       ),
     );
   }

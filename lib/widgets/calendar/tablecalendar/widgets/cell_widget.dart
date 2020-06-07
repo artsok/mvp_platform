@@ -8,6 +8,10 @@ class _CellWidget extends StatelessWidget {
   final bool isWeekend;
   final bool isOutsideMonth;
   final bool isHoliday;
+
+  final bool containsEvent;
+  final EventState eventState;
+
   final CalendarStyle calendarStyle;
 
   const _CellWidget({
@@ -19,6 +23,8 @@ class _CellWidget extends StatelessWidget {
     this.isWeekend = false,
     this.isOutsideMonth = false,
     this.isHoliday = false,
+    this.containsEvent = false,
+    this.eventState,
     @required this.calendarStyle,
   })  : assert(text != null),
         assert(calendarStyle != null),
@@ -39,6 +45,9 @@ class _CellWidget extends StatelessWidget {
   }
 
   Decoration _buildCellDecoration() {
+    if (eventState != null) {
+      return BoxDecoration(shape: BoxShape.circle, color: eventState.colors().item2);
+    }
     if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
       return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
     } else if (isToday && calendarStyle.highlightToday) {

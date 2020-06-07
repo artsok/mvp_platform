@@ -29,39 +29,8 @@ class CalendarStyle {
   /// Style of foreground Text for days outside of `startDay` - `endDay` Date range.
   final TextStyle unavailableStyle;
 
-  /// Background Color of selected day.
   final Color selectedColor;
-
-  /// Background Color of today.
   final Color todayColor;
-
-  /// Color of event markers placed on the bottom of every day containing events.
-  final Color markersColor;
-
-  /// General `Alignment` for event markers.
-  /// NOTE: `markersPositionBottom` defaults to `5.0`, so you might want to set it to `null` when using `markersAlignment`.
-  final Alignment markersAlignment;
-
-  /// `top` property of `Positioned` widget used for event markers.
-  final double markersPositionTop;
-
-  /// `bottom` property of `Positioned` widget used for event markers.
-  /// NOTE: This defaults to `5.0`, so you might occasionally want to set it to `null`.
-  final double markersPositionBottom;
-
-  /// `left` property of `Positioned` widget used for event markers.
-  final double markersPositionLeft;
-
-  /// `right` property of `Positioned` widget used for event markers.
-  final double markersPositionRight;
-
-  /// Maximum amount of event markers to be displayed.
-  final int markersMaxAmount;
-
-  /// Specifies whether or not days outside of current month should be displayed.
-  ///
-  /// Sometimes a fragment of previous month's last week (or next month's first week) appears in current month's view.
-  /// This property defines if those should be visible (eg. with custom style) or hidden.
   final bool outsideDaysVisible;
 
   /// Determines rendering priority for SelectedDay and Today.
@@ -74,11 +43,6 @@ class CalendarStyle {
 
   /// Padding of `TableCalendar`'s content.
   final EdgeInsets contentPadding;
-
-  /// Specifies if event markers rendered for a day cell can overflow cell's boundaries.
-  /// * `true` - Event markers will be drawn over the cell boundaries
-  /// * `false` - Event markers will not be drawn over the cell boundaries and will be clipped if they are too big
-  final bool canEventMarkersOverflow;
 
   /// Specifies whether or not SelectedDay should be highlighted.
   final bool highlightSelected;
@@ -98,18 +62,10 @@ class CalendarStyle {
     this.unavailableStyle = const TextStyle(color: const Color(0xFFBFBFBF)),
     this.selectedColor = const Color(0xFF5C6BC0), // Material indigo[400]
     this.todayColor = const Color(0xFF9FA8DA), // Material indigo[200]
-    this.markersColor = const Color(0xFF263238), // Material blueGrey[900]
-    this.markersAlignment = Alignment.bottomCenter,
-    this.markersPositionTop,
-    this.markersPositionBottom = 5.0,
-    this.markersPositionLeft,
-    this.markersPositionRight,
-    this.markersMaxAmount = 4,
     this.outsideDaysVisible = true,
     this.renderSelectedFirst = true,
     this.renderDaysOfWeek = true,
     this.contentPadding = const EdgeInsets.only(bottom: 4.0, left: 8.0, right: 8.0),
-    this.canEventMarkersOverflow = false,
     this.highlightSelected = true,
     this.highlightToday = true,
   });

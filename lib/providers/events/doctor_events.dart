@@ -7,14 +7,16 @@ class DoctorEvents with ChangeNotifier {
   final Map<DateTime, List<DoctorEvent>> _events = {};
 
   DoctorEvents() {
-    List<DoctorEvent> events = Doctors.doctors
-        .map((doctor) => DoctorEvent(
-              doctor: doctor,
-              startsAt: DateTime.now().add(Duration(days: 3)),
-              endsAt: DateTime.now().add(Duration(days: 3, hours: 1)),
-              description: 'Диспансерный прием (осмотр, консультация)',
-            ))
-        .toList();
+    int days = 2;
+    List<DoctorEvent> events = Doctors.doctors.map((doctor) {
+      days++;
+      return DoctorEvent(
+        doctor: doctor,
+        startsAt: DateTime.now().add(Duration(days: days)),
+        endsAt: DateTime.now().add(Duration(days: days, hours: 1)),
+        description: 'Диспансерный прием (осмотр, консультация)',
+      );
+    }).toList();
     events.forEach((event) {
       DateTime key = event.startsAt.roundToDay();
       if (_events.containsKey(key)) {

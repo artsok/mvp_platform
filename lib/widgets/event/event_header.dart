@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class EventHeader extends StatelessWidget {
   final DoctorEvent event;
@@ -10,6 +12,7 @@ class EventHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting(locale);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -34,14 +37,14 @@ class EventHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '${DateFormat(DateFormat.MONTH).format(event.startsAt)}',
+                          '${DateFormat(DateFormat.MONTH, locale).format(event.startsAt)}',
                           style: TextStyle(
                             fontSize: 18.0,
                             color: event.eventState.colors().item1,
                           ),
                         ),
                         Text(
-                          '(${DateFormat(DateFormat.WEEKDAY).format(event.startsAt)})',
+                          '(${DateFormat(DateFormat.WEEKDAY, locale).format(event.startsAt)})',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: event.eventState.colors().item1,

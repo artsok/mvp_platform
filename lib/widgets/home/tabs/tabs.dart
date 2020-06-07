@@ -43,7 +43,7 @@ class _TabsState extends State<Tabs> with TickerProviderStateMixin {
             tabs: tabs,
           ),
           Container(
-            height: screenHeight * 0.25,
+            height: screenHeight * 0.30,
             child: TabBarView(
               controller: tabController,
               children: <Widget>[

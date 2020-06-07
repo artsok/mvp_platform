@@ -22,6 +22,6 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return auth.authenticated ? HomeScreen() : AuthScreen();
+    return auth.authenticated ? HomeScreen() : PinScreen();
   }
 }

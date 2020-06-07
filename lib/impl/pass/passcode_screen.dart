@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:passcode_screen/circle.dart';
-import 'package:passcode_screen/shake_curve.dart';
+import 'package:mvp_platform/impl/pass/circle.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+
+import 'package:mvp_platform/impl/pass/shake_curve.dart';
 
 import 'keyboard.dart';
 
@@ -94,16 +96,22 @@ class _PasscodeScreenState extends State<PasscodeScreen>
           children: <Widget>[
             widget.title,
             Container(
-              margin: const EdgeInsets.only(top: 20, left: 60, right: 60),
-              height: 40,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _buildCircles(),
+              margin: const EdgeInsets.only(left: 150, right: 150),
+              //width: 100,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildCircles(),
+                ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Container(child: Text("Сбросить код доступа", style: TextStyle(color: getGosBlueColor(), fontWeight: FontWeight.w300),)),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 IntrinsicHeight(
                   child: Container(
@@ -190,7 +198,7 @@ class _PasscodeScreenState extends State<PasscodeScreen>
 
   _showValidation(bool isValid) {
     if (isValid) {
-      Navigator.maybePop(context).then((pop) => _validationCallback());
+      //Navigator.maybePop(context).then((pop) => _validationCallback());
     } else {
       controller.forward();
     }

@@ -23,7 +23,6 @@ dependencies:
 dev_dependencies:
   flutter_launcher_name: "^0.0.1"
   flutter_launcher_icons: "^0.7.5"
-  passcode_screen: 1.1.0
   flutter_test:
     sdk: flutter
 
@@ -45,3 +44,4 @@ flutter:
     - assets/svg/icons8-search.svg
     - assets/svg/backspace-arrow.svg
     - assets/svg/fingerprint.svg
+    - assets/svg/avatar.svg

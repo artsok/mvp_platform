@@ -7,10 +7,10 @@ class DoctorEvents with ChangeNotifier {
         doctor: d,
         startsAt: DateTime.now().add(Duration(days: 3)),
         endsAt: DateTime.now().add(Duration(days: 3, hours: 1)),
-        description: 'Обследование у доктора',
+        description: 'Диспансерный прием (осмотр, консультация)',
       )).toList();
 
-  List<DoctorEvent> get events => _events;
+  List<DoctorEvent> get items => _events;
 
   void addEvent(DoctorEvent event) {
     _events.add(event);

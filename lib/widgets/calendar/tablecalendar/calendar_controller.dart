@@ -5,22 +5,6 @@ const double _dxMin = -1.2;
 
 typedef void _SelectedDayCallback(DateTime day);
 
-/// Controller required for `TableCalendar`.
-///
-/// Should be created in `initState()`, and then disposed in `dispose()`:
-/// ```dart
-/// @override
-/// void initState() {
-///   super.initState();
-///   _calendarController = CalendarController();
-/// }
-///
-/// @override
-/// void dispose() {
-///   _calendarController.dispose();
-///   super.dispose();
-/// }
-/// ```
 class CalendarController {
   /// Currently focused day (used to determine which year/month should be visible).
   DateTime get focusedDay => _focusedDay;
@@ -75,7 +59,6 @@ class CalendarController {
   Map<DateTime, List> _holidays;
   DateTime _focusedDay;
   DateTime _selectedDay;
-  StartingDayOfWeek _startingDayOfWeek;
   ValueNotifier<List<DateTime>> _visibleDays;
   DateTime _previousFirstDay;
   DateTime _previousLastDay;
@@ -88,7 +71,6 @@ class CalendarController {
     @required Map<DateTime, List> events,
     @required Map<DateTime, List> holidays,
     @required DateTime initialDay,
-    @required StartingDayOfWeek startingDayOfWeek,
     @required _SelectedDayCallback selectedDayCallback,
     @required OnVisibleDaysChanged onVisibleDaysChanged,
     @required OnCalendarCreated onCalendarCreated,
@@ -96,7 +78,6 @@ class CalendarController {
   }) {
     _events = events;
     _holidays = holidays;
-    _startingDayOfWeek = startingDayOfWeek;
     _selectedDayCallback = selectedDayCallback;
     _includeInvisibleDays = includeInvisibleDays;
 
@@ -235,11 +216,11 @@ class CalendarController {
   }
 
   int _getDaysBefore(DateTime firstDay) {
-    return (firstDay.weekday + 7 - _getWeekdayNumber(_startingDayOfWeek)) % 7;
+    return (firstDay.weekday + 7 - DateTime.monday) % 7;
   }
 
   int _getDaysAfter(DateTime lastDay) {
-    int invertedStartingWeekday = 8 - _getWeekdayNumber(_startingDayOfWeek);
+    int invertedStartingWeekday = 8 - DateTime.monday;
 
     int daysAfter = 7 - ((lastDay.weekday + invertedStartingWeekday) % 7) + 1;
     if (daysAfter == 8) {

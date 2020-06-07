@@ -21,20 +21,6 @@ typedef bool EnabledDayPredicate(DateTime day);
 /// Available animations to update the `CalendarFormat` with.
 enum FormatAnimation { slide, scale }
 
-/// Available day of week formats. `TableCalendar` will start the week with chosen day.
-/// * `StartingDayOfWeek.monday`: Monday - Sunday
-/// * `StartingDayOfWeek.tuesday`: Tuesday - Monday
-/// * `StartingDayOfWeek.wednesday`: Wednesday - Tuesday
-/// * `StartingDayOfWeek.thursday`: Thursday - Wednesday
-/// * `StartingDayOfWeek.friday`: Friday - Thursday
-/// * `StartingDayOfWeek.saturday`: Saturday - Friday
-/// * `StartingDayOfWeek.sunday`: Sunday - Saturday
-enum StartingDayOfWeek { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
-
-int _getWeekdayNumber(StartingDayOfWeek weekday) {
-  return StartingDayOfWeek.values.indexOf(weekday) + 1;
-}
-
 /// Highly customizable, feature-packed Flutter Calendar with gestures, animations and multiple formats.
 class TableCalendar extends StatefulWidget {
   /// Controller required for `TableCalendar`.
@@ -103,11 +89,6 @@ class TableCalendar extends StatefulWidget {
   /// Animation to run when `CalendarFormat` gets changed.
   final FormatAnimation formatAnimation;
 
-  /// `TableCalendar` will start weeks with provided day.
-  /// Use `StartingDayOfWeek.monday` for Monday - Sunday week format.
-  /// Use `StartingDayOfWeek.sunday` for Sunday - Saturday week format.
-  final StartingDayOfWeek startingDayOfWeek;
-
   /// `HitTestBehavior` for every day cell inside `TableCalendar`.
   final HitTestBehavior dayHitTestBehavior;
 
@@ -148,7 +129,6 @@ class TableCalendar extends StatefulWidget {
     this.enabledDayPredicate,
     this.rowHeight,
     this.formatAnimation = FormatAnimation.slide,
-    this.startingDayOfWeek = StartingDayOfWeek.monday,
     this.dayHitTestBehavior = HitTestBehavior.deferToChild,
     this.simpleSwipeConfig = const SimpleSwipeConfig(
       verticalThreshold: 25.0,
@@ -178,7 +158,6 @@ class _TableCalendarState extends State<TableCalendar> with SingleTickerProvider
       events: widget.events,
       holidays: widget.holidays,
       initialDay: widget.initialSelectedDay,
-      startingDayOfWeek: widget.startingDayOfWeek,
       selectedDayCallback: _selectedDayCallback,
       onVisibleDaysChanged: widget.onVisibleDaysChanged,
       onCalendarCreated: widget.onCalendarCreated,

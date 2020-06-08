@@ -291,10 +291,11 @@ class _TableCalendarState extends State<TableCalendar>
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 if (widget.headerVisible) _buildHeader(),
-                Padding(
-                  padding: widget.calendarStyle.contentPadding,
-                  child: _buildCalendarContent(),
-                ),
+//                Padding(
+//                  padding: widget.calendarStyle.contentPadding,
+//                  child:
+                _buildCalendarContent(),
+//                ),
               ],
             ),
             Positioned(
@@ -431,7 +432,6 @@ class _TableCalendarState extends State<TableCalendar>
     }
 
     return Table(
-      // Makes this Table fill its parent horizontally
       defaultColumnWidth: FractionColumnWidth(1.0 / daysInWeek),
       children: children,
     );
@@ -481,7 +481,7 @@ class _TableCalendarState extends State<TableCalendar>
   // TableCell will have equal width and height
   Widget _buildTableCell(DateTime date) {
     return LayoutBuilder(
-      builder: (context, constraints) => ConstrainedBox(
+      builder: (_, constraints) => ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: widget.rowHeight ?? constraints.maxWidth,
           minHeight: widget.rowHeight ?? constraints.maxWidth,
@@ -532,6 +532,14 @@ class _TableCalendarState extends State<TableCalendar>
     final tIsToday = widget.calendarController.isToday(date);
     final eventState = widget.calendarController._getEventState(date);
     final tIsOutside = widget.calendarController._isExtraDay(date);
+
+    final hasEventOnPreviousDay =
+        widget.calendarController._hasEventOnPreviousDay(date) &&
+            widget.calendarStyle.outsideDaysVisible;
+    final hasEventOnNextDay =
+        widget.calendarController._hasEventOnNextDay(date) &&
+            widget.calendarStyle.outsideDaysVisible;
+
     final tIsHoliday = widget.calendarController.visibleHolidays
         .containsKey(_getHolidayKey(date));
     final tIsWeekend =
@@ -600,6 +608,8 @@ class _TableCalendarState extends State<TableCalendar>
         isWeekend: tIsWeekend,
         isOutsideMonth: tIsOutside,
         isHoliday: tIsHoliday,
+        hasEventOnPreviousDay: hasEventOnPreviousDay,
+        hasEventOnNextDay: hasEventOnNextDay,
         calendarStyle: widget.calendarStyle,
       );
     }

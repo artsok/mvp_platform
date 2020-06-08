@@ -31,6 +31,19 @@ class DoctorEvents with ChangeNotifier {
       eventState: EventState.approved,
       description: 'Посещение хирурга',
     ));
+    events.add(DoctorEvent(
+      doctor: Doctors.doctors[1],
+      startsAt: DateTime(2020, 6, 30, 18),
+      endsAt: DateTime(2020, 6, 30, 18, 30),
+      eventState: EventState.approved,
+      description: 'Посещение хирурга',
+    ));
+    events.add(DoctorEvent(
+      doctor: Doctors.doctors[1],
+      startsAt: DateTime(2020, 7, 1, 18),
+      endsAt: DateTime(2020, 7, 1, 18, 30),
+      description: 'Посещение хирурга',
+    ));
     events.forEach((event) {
       DateTime key = event.startsAt.roundToDay();
       if (_events.containsKey(key)) {

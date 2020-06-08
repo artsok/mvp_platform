@@ -14,6 +14,11 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
   AnimationController animationController;
   CalendarController calendarController;
 
+  final defaultTextStyle = const TextStyle(
+    fontSize: 17,
+    color: Colors.black,
+  );
+
   @override
   void initState() {
     super.initState();
@@ -43,26 +48,17 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
         events: events.items,
         calendarController: calendarController,
         daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle: const TextStyle(
-            fontSize: 17,
-            color: Colors.black,
-          ),
-          weekendStyle: const TextStyle(
-            fontSize: 17,
-            color: Colors.black,
-          ),
+          weekdayStyle: defaultTextStyle,
+          weekendStyle: defaultTextStyle,
         ),
         calendarStyle: CalendarStyle(
+          highlightToday: false,
+          selectedColor: null,
+          selectedStyle: defaultTextStyle,
           outsideDaysVisible: false,
           highlightSelected: true,
-          weekdayStyle: const TextStyle(
-            fontSize: 17,
-            color: Colors.black,
-          ),
-          weekendStyle: const TextStyle(
-            fontSize: 17,
-            color: Colors.black,
-          ),
+          weekdayStyle: defaultTextStyle,
+          weekendStyle: defaultTextStyle,
         ),
         headerStyle: HeaderStyle(),
       ),

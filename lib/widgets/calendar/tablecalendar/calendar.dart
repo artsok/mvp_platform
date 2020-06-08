@@ -271,16 +271,39 @@ class _TableCalendarState extends State<TableCalendar>
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          if (widget.headerVisible) _buildHeader(),
-          Padding(
-            padding: widget.calendarStyle.contentPadding,
-            child: _buildCalendarContent(),
+    return Container(
+      margin: const EdgeInsets.all(0.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black54,
+            blurRadius: 2.0,
+            offset: Offset(0.0, 2.0),
           ),
         ],
+      ),
+      child: LayoutBuilder(
+        builder: (_, constraints) => Stack(
+          overflow: Overflow.visible,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                if (widget.headerVisible) _buildHeader(),
+                Padding(
+                  padding: widget.calendarStyle.contentPadding,
+                  child: _buildCalendarContent(),
+                ),
+              ],
+            ),
+            Positioned(
+              bottom: -10,
+              left: constraints.maxWidth / 2 - 25,
+              child: const Pin(),
+            ),
+          ],
+        ),
       ),
     );
   }

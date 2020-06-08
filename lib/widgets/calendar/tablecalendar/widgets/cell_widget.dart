@@ -32,28 +32,45 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      decoration: _buildCellDecoration(),
-      margin: const EdgeInsets.all(6.0),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        style: _buildCellTextStyle(),
+    return LayoutBuilder(
+      builder: (_, constraints) => AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        decoration: _buildCellDecoration(constraints),
+        margin: const EdgeInsets.all(6.0),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: _buildCellTextStyle(),
+        ),
       ),
     );
   }
 
-  Decoration _buildCellDecoration() {
+  Decoration _buildCellDecoration(BoxConstraints constraints) {
     if (eventState != null) {
-      return BoxDecoration(shape: BoxShape.circle, color: eventState.colors().item2);
+      return BoxDecoration(
+        shape: BoxShape.circle,
+        color: eventState.colors().item2,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: constraints.maxWidth / 2,
+            offset: Offset(0.0, constraints.maxWidth / 3),
+          ),
+        ],
+      );
     }
-    if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
+    if (isSelected &&
+        calendarStyle.renderSelectedFirst &&
+        calendarStyle.highlightSelected) {
+      return BoxDecoration(
+          shape: BoxShape.circle, color: calendarStyle.selectedColor);
     } else if (isToday && calendarStyle.highlightToday) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.todayColor);
+      return BoxDecoration(
+          shape: BoxShape.circle, color: calendarStyle.todayColor);
     } else if (isSelected && calendarStyle.highlightSelected) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
+      return BoxDecoration(
+          shape: BoxShape.circle, color: calendarStyle.selectedColor);
     } else {
       return BoxDecoration(shape: BoxShape.circle);
     }
@@ -62,7 +79,9 @@ class _CellWidget extends StatelessWidget {
   TextStyle _buildCellTextStyle() {
     if (isUnavailable) {
       return calendarStyle.unavailableStyle;
-    } else if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
+    } else if (isSelected &&
+        calendarStyle.renderSelectedFirst &&
+        calendarStyle.highlightSelected) {
       return calendarStyle.selectedStyle;
     } else if (isToday && calendarStyle.highlightToday) {
       return calendarStyle.todayStyle;

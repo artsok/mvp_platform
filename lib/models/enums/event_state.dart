@@ -28,11 +28,11 @@ extension EventStateExtension on EventState {
   /// text, background, action button color
   Tuple3<Color, Color, Color> colors() {
     if (this == EventState.approved) {
-      return Tuple3(Colors.green[900], Colors.green[200], Colors.green[900]);
+      return Tuple3(Colors.green[900], Colors.green[100], Colors.green[900]);
     }
     if (this == EventState.canceled || this == EventState.planned) {
-      return Tuple3(Colors.red[800], Colors.red[200], Colors.blueAccent);
+      return Tuple3(Colors.red[800], Colors.deepOrange[100], Colors.blueAccent);
     }
-    return Tuple3(Colors.black54, Colors.black12, Colors.black54);
+    return Tuple3(Colors.black54, Colors.grey[300], Colors.black54);
   }
 }

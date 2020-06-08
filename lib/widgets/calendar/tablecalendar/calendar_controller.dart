@@ -13,10 +13,9 @@ class CalendarController {
   DateTime get selectedDay => _selectedDay;
 
   /// List of currently visible days.
-  List<DateTime> get visibleDays =>
-      !_includeInvisibleDays
-          ? _visibleDays.value.where((day) => !_isExtraDay(day)).toList()
-          : _visibleDays.value;
+  List<DateTime> get visibleDays => !_includeInvisibleDays
+      ? _visibleDays.value.where((day) => !_isExtraDay(day)).toList()
+      : _visibleDays.value;
 
   /// `Map` of currently visible events.
   Map<DateTime, List> get visibleEvents {
@@ -117,7 +116,8 @@ class CalendarController {
 
   /// Sets selected day to a given `value`.
   /// Use `runCallback: true` if this should trigger `OnDaySelected` callback.
-  void setSelectedDay(DateTime value, {
+  void setSelectedDay(
+    DateTime value, {
     bool isProgrammatic = true,
     bool animate = true,
     bool runCallback = false,
@@ -297,6 +297,19 @@ class CalendarController {
   bool _isWeekend(DateTime day, List<int> weekendDays) {
     return weekendDays.contains(day.weekday);
   }
+
+  Color _getEventColor(DateTime day) {
+    List<DoctorEvent> doctorEvents = _events[day.roundToDay()];
+    return doctorEvents == null ? null : doctorEvents[0].eventState.colors().item2;
+  }
+
+  bool _isEventDay(DateTime day) => _events.containsKey(day.roundToDay());
+
+  bool _hasEventOnPreviousDay(DateTime day) =>
+      _events.containsKey(day.subtract(Duration(days: 1)).roundToDay());
+
+  bool _hasEventOnNextDay(DateTime day) =>
+      _events.containsKey(day.add(Duration(days: 1)).roundToDay());
 
   EventState _getEventState(DateTime day) {
     List<DoctorEvent> doctorEvents = _events[day.roundToDay()];

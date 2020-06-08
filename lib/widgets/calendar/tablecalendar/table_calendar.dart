@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/widgets/calendar/tablecalendar/widgets/pin.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 

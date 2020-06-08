@@ -9,8 +9,9 @@ class _CellWidget extends StatelessWidget {
   final bool isOutsideMonth;
   final bool isHoliday;
 
-  final bool containsEvent;
   final EventState eventState;
+  final bool hasEventOnPreviousDay;
+  final bool hasEventOnNextDay;
 
   final CalendarStyle calendarStyle;
 
@@ -23,7 +24,8 @@ class _CellWidget extends StatelessWidget {
     this.isWeekend = false,
     this.isOutsideMonth = false,
     this.isHoliday = false,
-    this.containsEvent = false,
+    this.hasEventOnPreviousDay = false,
+    this.hasEventOnNextDay = false,
     this.eventState,
     @required this.calendarStyle,
   })  : assert(text != null),
@@ -32,28 +34,69 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      decoration: _buildCellDecoration(),
-      margin: const EdgeInsets.all(6.0),
-      alignment: Alignment.center,
-      child: Text(
-        text,
-        style: _buildCellTextStyle(),
+    return LayoutBuilder(
+      builder: (_, constraints) => AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        decoration: _buildCellDecoration(constraints),
+        margin: EdgeInsets.only(
+          top: 6.0,
+          bottom: 6.0,
+          left: hasEventOnPreviousDay && eventState != null ? 0.0 : 6.0,
+          right: hasEventOnNextDay && eventState != null ? 0.0 : 6.0,
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: _buildCellTextStyle(),
+        ),
       ),
     );
   }
 
-  Decoration _buildCellDecoration() {
+  Decoration _buildCellDecoration(BoxConstraints constraints) {
     if (eventState != null) {
-      return BoxDecoration(shape: BoxShape.circle, color: eventState.colors().item2);
+      return BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: hasEventOnPreviousDay
+              ? Radius.zero
+              : Radius.circular(constraints.maxWidth / 2),
+          bottomLeft: hasEventOnPreviousDay
+              ? Radius.zero
+              : Radius.circular(constraints.maxWidth / 2),
+          topRight: hasEventOnNextDay
+              ? Radius.zero
+              : Radius.circular(constraints.maxWidth / 2),
+          bottomRight: hasEventOnNextDay
+              ? Radius.zero
+              : Radius.circular(constraints.maxWidth / 2),
+        ),
+        color: eventState.colors().item2,
+        boxShadow: <BoxShadow>[
+//          BoxShadow(
+//            color: Colors.black12,
+//            blurRadius: constraints.maxWidth / 2,
+//            offset: Offset(0.0, constraints.maxWidth / 2),
+//          ),
+        ],
+      );
     }
-    if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
+    if (isSelected &&
+        calendarStyle.renderSelectedFirst &&
+        calendarStyle.highlightSelected) {
+      return BoxDecoration(
+        shape: BoxShape.circle,
+        color: calendarStyle.selectedColor,
+      );
     } else if (isToday && calendarStyle.highlightToday) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.todayColor);
+      return BoxDecoration(
+        shape: BoxShape.circle,
+        color: calendarStyle.todayColor,
+      );
     } else if (isSelected && calendarStyle.highlightSelected) {
-      return BoxDecoration(shape: BoxShape.circle, color: calendarStyle.selectedColor);
+      return BoxDecoration(
+        shape: BoxShape.circle,
+        color: calendarStyle.selectedColor,
+      );
     } else {
       return BoxDecoration(shape: BoxShape.circle);
     }
@@ -62,7 +105,9 @@ class _CellWidget extends StatelessWidget {
   TextStyle _buildCellTextStyle() {
     if (isUnavailable) {
       return calendarStyle.unavailableStyle;
-    } else if (isSelected && calendarStyle.renderSelectedFirst && calendarStyle.highlightSelected) {
+    } else if (isSelected &&
+        calendarStyle.renderSelectedFirst &&
+        calendarStyle.highlightSelected) {
       return calendarStyle.selectedStyle;
     } else if (isToday && calendarStyle.highlightToday) {
       return calendarStyle.todayStyle;

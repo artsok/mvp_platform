@@ -50,7 +50,6 @@ class _CalendarScreenState extends State<CalendarScreen>
     initializeDateFormatting(locale);
     return Scaffold(
       appBar: AppBar(
-        elevation: 5.0,
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
           onPressed: () => Navigator.of(context).pop(),

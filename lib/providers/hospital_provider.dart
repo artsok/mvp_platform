@@ -16,5 +16,3 @@ class Hospitals with ChangeNotifier {
     ),
   ];
 }
-
-//'г.Калининград, ул.Садовая д.7/13',

@@ -18,9 +18,6 @@ typedef String TextBuilder(DateTime date, dynamic locale);
 /// Signature for enabling days.
 typedef bool EnabledDayPredicate(DateTime day);
 
-/// Available animations to update the `CalendarFormat` with.
-enum FormatAnimation { slide, scale }
-
 /// Highly customizable, feature-packed Flutter Calendar with gestures, animations and multiple formats.
 class TableCalendar extends StatefulWidget {
   /// Controller required for `TableCalendar`.
@@ -86,9 +83,6 @@ class TableCalendar extends StatefulWidget {
   /// Used for setting the height of `TableCalendar`'s rows.
   final double rowHeight;
 
-  /// Animation to run when `CalendarFormat` gets changed.
-  final FormatAnimation formatAnimation;
-
   /// `HitTestBehavior` for every day cell inside `TableCalendar`.
   final HitTestBehavior dayHitTestBehavior;
 
@@ -107,9 +101,12 @@ class TableCalendar extends StatefulWidget {
   /// Set of Builders for `TableCalendar` to work with.
   final CalendarBuilders builders;
 
+  final DoctorEvents doctorEvents;
+
   TableCalendar({
     Key key,
     @required this.calendarController,
+    @required this.doctorEvents,
     this.locale,
     this.events = const {},
     this.holidays = const {},
@@ -128,7 +125,6 @@ class TableCalendar extends StatefulWidget {
     this.headerVisible = true,
     this.enabledDayPredicate,
     this.rowHeight,
-    this.formatAnimation = FormatAnimation.slide,
     this.dayHitTestBehavior = HitTestBehavior.deferToChild,
     this.simpleSwipeConfig = const SimpleSwipeConfig(
       verticalThreshold: 25.0,
@@ -138,7 +134,8 @@ class TableCalendar extends StatefulWidget {
     this.daysOfWeekStyle = const DaysOfWeekStyle(),
     this.headerStyle = const HeaderStyle(),
     this.builders = const CalendarBuilders(),
-  })  : assert(calendarController != null),
+  })
+      : assert(calendarController != null),
         assert(weekendDays != null),
         assert(weekendDays.isNotEmpty
             ? weekendDays.every(
@@ -208,8 +205,10 @@ class _TableCalendarState extends State<TableCalendar>
 
   void _onDayLongPressed(DateTime day) {
     if (widget.onDayLongPressed != null) {
-      widget.onDayLongPressed(day,
-          widget.calendarController.visibleEvents[_getEventKey(day)] ?? []);
+      widget.onDayLongPressed(
+        day,
+        widget.calendarController.visibleEvents[_getEventKey(day)] ?? [],
+      );
     }
   }
 
@@ -219,6 +218,7 @@ class _TableCalendarState extends State<TableCalendar>
     } else {
       _selectNext();
     }
+    widget.doctorEvents.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _onUnavailableDaySelected() {
@@ -247,8 +247,8 @@ class _TableCalendarState extends State<TableCalendar>
 
   bool _isDayUnavailable(DateTime day) {
     return (widget.startDay != null &&
-            day.isBefore(
-                widget.calendarController._normalizeDate(widget.startDay))) ||
+        day.isBefore(
+            widget.calendarController._normalizeDate(widget.startDay))) ||
         (widget.endDay != null &&
             day.isAfter(
                 widget.calendarController._normalizeDate(widget.endDay))) ||
@@ -284,27 +284,28 @@ class _TableCalendarState extends State<TableCalendar>
         ],
       ),
       child: LayoutBuilder(
-        builder: (_, constraints) => Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            Column(
-              mainAxisSize: MainAxisSize.min,
+        builder: (_, constraints) =>
+            Stack(
+              overflow: Overflow.visible,
               children: <Widget>[
-                if (widget.headerVisible) _buildHeader(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    if (widget.headerVisible) _buildHeader(),
 //                Padding(
 //                  padding: widget.calendarStyle.contentPadding,
 //                  child:
-                _buildCalendarContent(),
+                    _buildCalendarContent(),
 //                ),
+                  ],
+                ),
+                Positioned(
+                  bottom: -9,
+                  left: constraints.maxWidth / 2 - 25,
+                  child: const Pin(),
+                ),
               ],
             ),
-            Positioned(
-              bottom: -10,
-              left: constraints.maxWidth / 2 - 25,
-              child: const Pin(),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -324,9 +325,9 @@ class _TableCalendarState extends State<TableCalendar>
           child: Text(
             widget.headerStyle.titleTextBuilder != null
                 ? widget.headerStyle.titleTextBuilder(
-                    widget.calendarController.focusedDay, widget.locale)
+                widget.calendarController.focusedDay, widget.locale)
                 : DateFormat.yMMMM(widget.locale)
-                    .format(widget.calendarController.focusedDay),
+                .format(widget.calendarController.focusedDay),
             style: widget.headerStyle.titleTextStyle,
             textAlign: TextAlign.center,
           ),
@@ -352,31 +353,13 @@ class _TableCalendarState extends State<TableCalendar>
   }
 
   Widget _buildCalendarContent() {
-    if (widget.formatAnimation == FormatAnimation.slide) {
-      return AnimatedSize(
-        duration: Duration(milliseconds: 220),
-        curve: Curves.fastOutSlowIn,
-        alignment: Alignment(0, -1),
-        vsync: this,
-        child: _buildWrapper(),
-      );
-    } else {
-      return AnimatedSwitcher(
-        duration: const Duration(milliseconds: 350),
-        transitionBuilder: (child, animation) {
-          return SizeTransition(
-            sizeFactor: animation,
-            child: ScaleTransition(
-              scale: animation,
-              child: child,
-            ),
-          );
-        },
-        child: _buildWrapper(
-          key: ValueKey(this), // @TODO ?
-        ),
-      );
-    }
+    return AnimatedSize(
+      duration: Duration(milliseconds: 220),
+      curve: Curves.fastOutSlowIn,
+      alignment: Alignment(0, -1),
+      vsync: this,
+      child: _buildWrapper(),
+    );
   }
 
   Widget _buildWrapper({Key key}) {
@@ -440,12 +423,12 @@ class _TableCalendarState extends State<TableCalendar>
   TableRow _buildDaysOfWeek() {
     return TableRow(
       children:
-          widget.calendarController._visibleDays.value.take(7).map((date) {
+      widget.calendarController._visibleDays.value.take(7).map((date) {
         final weekdayString = widget.daysOfWeekStyle.dowTextBuilder != null
             ? widget.daysOfWeekStyle.dowTextBuilder(date, widget.locale)
             : DateFormat.E(widget.locale).format(date);
         final isWeekend =
-            widget.calendarController._isWeekend(date, widget.weekendDays);
+        widget.calendarController._isWeekend(date, widget.weekendDays);
 
         if (isWeekend && widget.builders.dowWeekendBuilder != null) {
           return widget.builders.dowWeekendBuilder(context, weekdayString);
@@ -454,20 +437,21 @@ class _TableCalendarState extends State<TableCalendar>
           return widget.builders.dowWeekdayBuilder(context, weekdayString);
         }
         return LayoutBuilder(
-          builder: (context, constraints) => ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: widget.rowHeight ?? constraints.maxWidth,
-              minHeight: widget.rowHeight ?? constraints.maxWidth,
-            ),
-            child: Center(
-              child: Text(
-                weekdayString,
-                style: isWeekend
-                    ? widget.daysOfWeekStyle.weekendStyle
-                    : widget.daysOfWeekStyle.weekdayStyle,
+          builder: (context, constraints) =>
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: widget.rowHeight ?? constraints.maxWidth,
+                  minHeight: widget.rowHeight ?? constraints.maxWidth,
+                ),
+                child: Center(
+                  child: Text(
+                    weekdayString,
+                    style: isWeekend
+                        ? widget.daysOfWeekStyle.weekendStyle
+                        : widget.daysOfWeekStyle.weekdayStyle,
+                  ),
+                ),
               ),
-            ),
-          ),
         );
       }).toList(),
     );
@@ -481,13 +465,14 @@ class _TableCalendarState extends State<TableCalendar>
   // TableCell will have equal width and height
   Widget _buildTableCell(DateTime date) {
     return LayoutBuilder(
-      builder: (_, constraints) => ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: widget.rowHeight ?? constraints.maxWidth,
-          minHeight: widget.rowHeight ?? constraints.maxWidth,
-        ),
-        child: _buildCell(date),
-      ),
+      builder: (_, constraints) =>
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: widget.rowHeight ?? constraints.maxWidth,
+              minHeight: widget.rowHeight ?? constraints.maxWidth,
+            ),
+            child: _buildCell(date),
+          ),
     );
   }
 
@@ -514,10 +499,12 @@ class _TableCalendarState extends State<TableCalendar>
 
     return GestureDetector(
       behavior: widget.dayHitTestBehavior,
-      onTap: () => _isDayUnavailable(date)
+      onTap: () =>
+      _isDayUnavailable(date)
           ? _onUnavailableDaySelected()
           : _selectDay(date),
-      onLongPress: () => _isDayUnavailable(date)
+      onLongPress: () =>
+      _isDayUnavailable(date)
           ? _onUnavailableDayLongPressed()
           : _onDayLongPressed(date),
       child: content,
@@ -543,7 +530,7 @@ class _TableCalendarState extends State<TableCalendar>
     final tIsHoliday = widget.calendarController.visibleHolidays
         .containsKey(_getHolidayKey(date));
     final tIsWeekend =
-        widget.calendarController._isWeekend(date, widget.weekendDays);
+    widget.calendarController._isWeekend(date, widget.weekendDays);
 
     final isUnavailable =
         widget.builders.unavailableDayBuilder != null && tIsUnavailable;

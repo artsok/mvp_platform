@@ -25,6 +25,7 @@ extension DateTimeExtensions on DateTime {
   }
 
   DateTime roundToDay() => DateTime(this.year, this.month, this.day);
+  DateTime roundToMonth() => DateTime(this.year, this.month);
 
 //    if (diff.isIn(-9223372036854775808, -day * 365)) {
 //      humanizedDiff = 'более чем через год';

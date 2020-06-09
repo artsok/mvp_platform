@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/events/detailed_event_screen.dart';
-import 'package:mvp_platform/screens/events/events_screen.dart';
+import 'package:mvp_platform/screens/events/calendar_screen.dart';
 import 'package:mvp_platform/screens/pin_screen.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
@@ -91,7 +91,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           DoctorInfoScreen.routeName: (ctx) => DoctorInfoScreen(),
           DoctorFormScreen.routeName: (ctx) => DoctorFormScreen(),
           DoctorSuccessScreen.routeName: (ctx) => DoctorSuccessScreen(),
-          EventsScreen.routeName: (ctx) => EventsScreen(),
+          CalendarScreen.routeName: (ctx) => CalendarScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
           HospitalInfoScreen.routeName: (ctx) => HospitalInfoScreen(),
           HospitalFormScreen.routeName: (ctx) => HospitalFormScreen(),

@@ -11,6 +11,9 @@ class Child {
   String recordBirthCertificate;
   String parents;
   String oms;
+  String gosRegistration;
+  String mother;
+  String father;
 
   Child({
     this.birthCertificateId,
@@ -24,5 +27,8 @@ class Child {
     this.recordBirthCertificate,
     this.parents,
     this.oms,
+    this.gosRegistration,
+    this.mother,
+    this.father
   }) : fullname = '$surname $name $patronym';
 }

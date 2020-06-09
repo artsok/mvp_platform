@@ -92,8 +92,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
-                        'Адрес пордазделения',
-                        'г.Калининград, ул.Садовая д.7/13',
+                        'Адрес пордазделения', args.hospital.address,
                         last: true,
                       ),
                     ),

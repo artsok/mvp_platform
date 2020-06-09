@@ -37,7 +37,7 @@ class SingleInfoItem extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                 ),
               ),
             ],

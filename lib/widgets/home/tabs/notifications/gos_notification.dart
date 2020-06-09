@@ -34,7 +34,7 @@ class GosNotification extends StatelessWidget {
           notification.message,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         ),
       ),
     );

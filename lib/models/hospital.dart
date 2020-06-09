@@ -1,7 +1,7 @@
 class Hospital {
-  String name;
-  String address;
-  String imagePath;
+  final String name;
+  final String address;
+  final String imagePath;
 
-  Hospital(this.name, this.address, this.imagePath);
+  const Hospital(this.name, this.address, this.imagePath);
 }

@@ -10,7 +10,7 @@ class Pin extends StatelessWidget {
       child: Container(
         color: Colors.lightBlue[800],
         width: 50,
-        height: 20,
+        height: 18,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

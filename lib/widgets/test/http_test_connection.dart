@@ -22,7 +22,7 @@ class TestHttpState extends State<TestHttpConnectionForm> {
   }
 
   _sendRequestPost() async {
-    _body = await Service.get();
+    Service().getHttp();
     setState(() {}); //reBuildWidget
   }
 

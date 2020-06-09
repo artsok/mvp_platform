@@ -59,5 +59,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.yandex.android:mapkit:3.4.0'
+    implementation 'com.yandex.android:search:3.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

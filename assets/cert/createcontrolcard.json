@@ -1,0 +1,55 @@
+{
+  "jsonrpc": "2.0",
+  "method": "execute",
+  "id": 1,
+  "params": {
+    "createControlCardParams": {
+      "medicalOrganizationId": null,
+      "clientId": "15",
+      "medicalOrganizationId": "555",
+      "number": "20/545",
+      "fillingDate": "2020-06-03",
+      "diagnosisName": "Нестабильная стенокардия",
+      "diagnosisCode": "I20.0",
+      "diagnosisEstablished": "FIRST",
+      "detectionType": "TREATMENT",
+      "doctorId": "1",
+      "diagnosisDate": "2020-06-03",
+      "observationStartDate": "2020-06-03",
+      "observationEndDate": null,
+      "observationEndReason": null,
+      "accompanyingIllnesses": null,
+      "visitsControl": [
+        {
+          "planDate": "2020-06-03T14:00:00",
+          "factDate": null,
+          "doctorId": "1",
+          "service": "узи сердца ребёнка"
+        },
+        {
+          "planDate": "2020-06-03T14:00:00",
+          "factDate": null,
+          "doctorId": null,
+          "service": null
+        }
+      ],
+      "changesInDiagnosis": [
+        {
+          "diagnosisDate": "2020-06-04",
+          "diagnosisName": "Волчанка",
+          "diagnosisCode": "VolchankaObyknovennaya",
+          "doctorId": "2"
+        }
+      ],
+      "treatmentActivities": [
+        {
+          "activity": "Прыжки, бег, приседания. 7 раз по 3 похода.",
+          "beginDate": "2020-06-04",
+          "endDate": null,
+          "completed": false,
+          "doctorId": "3"
+        }
+      ]
+    }
+  }
+}

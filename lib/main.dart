@@ -19,11 +19,21 @@ import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/test/http_connection_screen.dart';
+import 'package:mvp_platform/widgets/test/http_test_connection.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const locale = 'ru';
 
-void main() => runApp(MvpPlatform());
+void main() {
+  _addClientIdToSF();
+  runApp(MvpPlatform());
+}
+
+_addClientIdToSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('clientId', "15");
+}
 
 class MvpPlatform extends StatefulWidget {
   @override
@@ -83,7 +93,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: RootScreen(),
+        home: TestHttpConnectionForm(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),

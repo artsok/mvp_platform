@@ -23,11 +23,17 @@ dependencies:
   #  table_calendar: ^2.2.3
   tuple: ^1.0.3
   http: ^0.12.1
+  yandex_mapkit: ^0.3.8
+  dio: ^3.0.9
+  shared_preferences: 0.5.7+3
+  dataclass: 0.3.0+1
 
 
 dev_dependencies:
+  build_runner: 1.9.0
   flutter_launcher_name: "^0.0.1"
   flutter_launcher_icons: "^0.7.5"
+  dataclass_generator: "0.3.0+1"
   flutter_test:
     sdk: flutter
 
@@ -52,3 +58,10 @@ flutter:
     - assets/svg/fingerprint.svg
     - assets/svg/avatar.svg
     - assets/json/createcontrolcard.json
+    - assets/cert/rootCA.crt
+    - assets/cert/rootCA.key
+    - assets/cert/client.example.crt
+    - assets/cert/client.example.key
+    - assets/cert/ingress.foms_correct.crt
+    - assets/cert/ingress.foms_correct.key
+    - assets/cert/chain.crt

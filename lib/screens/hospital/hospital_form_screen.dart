@@ -8,6 +8,8 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
+
+//Выбрана ближайшая к месту жительства детская поликлинника
 class HospitalFormScreen extends StatefulWidget {
   static const routeName = '/hospital-form-screen';
 

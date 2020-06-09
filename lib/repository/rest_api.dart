@@ -100,6 +100,8 @@ class Service {
       return httpClient;
     };
 
+
+
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",

@@ -26,8 +26,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 const locale = 'ru';
 
 void main() {
-  _addClientIdToSF();
   runApp(MvpPlatform());
+  _addClientIdToSF();
 }
 
 _addClientIdToSF() async {
@@ -93,7 +93,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: TestHttpConnectionForm(),
+        home: RootScreen(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
@@ -117,4 +117,5 @@ class _MvpPlatformState extends State<MvpPlatform> {
       ),
     );
   }
+
 }

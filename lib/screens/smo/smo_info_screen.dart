@@ -40,7 +40,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Получение полиса ОМС для ребенка',
+              'Выбор страховой компании',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

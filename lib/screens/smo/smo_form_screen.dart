@@ -104,8 +104,26 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ваша страховая компания:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4, bottom: 16),
+                          child: const Text(
+                            'АО «СОГАЗ Мед» СОГАЗ МЕД',
+                          ),
+                        ),
+                      ],
+
+                    ),
                     const Text(
-                      'Страховая компания: ',
+                      'Страховая компания ребёнка: ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
@@ -152,51 +170,51 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
         state: StepState.complete,
         isActive: true,
       ),
-      Step(
-        title: Container(
-          width: 280,
-          child: const Text(
-            'Пожалуйста, выберите желаемую форму полиса ОМС',
-          ),
-        ),
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.digital,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                const Text('Электронный'),
-              ],
-            ),
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.material,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                Container(width: 240, child: const Text('Пластиковый')),
-              ],
-            ),
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.paper,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                Container(width: 240, child: const Text('Бумажный')),
-              ],
-            ),
-          ],
-        ),
-        isActive: true,
-        state: StepState.complete,
-      ),
+//      Step(
+//        title: Container(
+//          width: 280,
+//          child: const Text(
+//            'Пожалуйста, выберите желаемую форму полиса ОМС',
+//          ),
+//        ),
+//        content: Column(
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          children: <Widget>[
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.digital,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                const Text('Электронный'),
+//              ],
+//            ),
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.material,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                Container(width: 240, child: const Text('Пластиковый')),
+//              ],
+//            ),
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.paper,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                Container(width: 240, child: const Text('Бумажный')),
+//              ],
+//            ),
+//          ],
+//        ),
+//        isActive: true,
+//        state: StepState.complete,
+//      ),
     ];
 
     void goTo(int step) {

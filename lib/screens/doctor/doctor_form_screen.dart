@@ -205,14 +205,14 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           icon: Icon(CupertinoIcons.back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Запись на натальный скрининг'),
+        title: const Text('Запись на профилактический осмотр'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Запись на натальный скрининг',
+              'Запись на профилактический осмотр',
             ),
             Stepper(
               physics: ClampingScrollPhysics(),

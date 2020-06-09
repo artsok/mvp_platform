@@ -49,7 +49,7 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem(
               'Запись акта о рождении', child.recordBirthCertificate),
           SingleInfoItem('Информация о родителях', child.parents),
-          SingleInfoItem('Место гос.регистрации', "-"),
+          SingleInfoItem('Место гос.регистрации', ""),
           SingleInfoItem('№ свидетельства о рождении', child.birthCertificateId),
           SingleInfoItem('Номер полиса ОМС', child.oms, last: true)
 //          SingleInfoItem('СНИЛС', child.snils),

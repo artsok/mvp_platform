@@ -188,12 +188,14 @@ class _TableCalendarState extends State<TableCalendar>
     setState(() {
       widget.calendarController._selectPrevious();
     });
+    widget.doctorEvents.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectNext() {
     setState(() {
       widget.calendarController._selectNext();
     });
+    widget.doctorEvents.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectDay(DateTime day) {
@@ -218,7 +220,6 @@ class _TableCalendarState extends State<TableCalendar>
     } else {
       _selectNext();
     }
-    widget.doctorEvents.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _onUnavailableDaySelected() {

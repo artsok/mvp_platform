@@ -48,7 +48,7 @@ class DoctorEventDetails extends StatelessWidget {
                       child: Image.asset(event.doctor.photoPath),
                       borderRadius: BorderRadius.circular(50.0),
                     ),
-                  )
+                  ),
                 ],
               ),
       ),

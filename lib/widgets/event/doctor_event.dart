@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart' as EventModel;
+import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/widgets/event/doctor_event_details.dart';
 import 'package:mvp_platform/widgets/event/event_header.dart';
 
@@ -11,11 +12,18 @@ class DoctorEvent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        EventHeader(event),
-        DoctorEventDetails(event),
-      ],
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(
+        context,
+        DoctorVisitDetailsScreen.routeName,
+        arguments: DoctorVisitDetailsScreenArguments(event),
+      ),
+      child: Column(
+        children: <Widget>[
+          EventHeader(event),
+          DoctorEventDetails(event),
+        ],
+      ),
     );
   }
 }

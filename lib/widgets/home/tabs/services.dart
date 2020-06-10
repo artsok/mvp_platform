@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
-import 'package:mvp_platform/screens/events/events_screen.dart';
+import 'package:mvp_platform/screens/events/calendar_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
@@ -51,7 +51,7 @@ class Services extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
                 onTap: () =>
-                    Navigator.pushNamed(context, EventsScreen.routeName),
+                    Navigator.pushNamed(context, CalendarScreen.routeName),
               ),
             ],
           ),

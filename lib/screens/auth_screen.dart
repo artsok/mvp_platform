@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/widgets/auth/auth_form.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth-screen';

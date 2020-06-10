@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/providers/user_auth_provider.dart';
-import 'package:mvp_platform/screens/auth_screen.dart';
-import 'package:mvp_platform/screens/events/events_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/pin_screen.dart';
 

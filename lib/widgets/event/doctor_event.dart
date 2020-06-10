@@ -21,11 +21,14 @@ class DoctorEvent extends StatelessWidget {
       ),
       child: ChangeNotifierProvider.value(
         value: event,
-        child: Column(
-          children: <Widget>[
-            EventHeader(),
-            DoctorEventDetails(),
-          ],
+        child: ChangeNotifierProvider.value(
+          value: event.doctor,
+          child: Column(
+            children: <Widget>[
+              EventHeader(),
+              DoctorEventDetails(),
+            ],
+          ),
         ),
       ),
     );

@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/models/enums/rate.dart';
 
 class RatePopupMenuButton extends StatelessWidget {
   final VoidCallback callback;
-  final IconData icon;
-  final Color color;
+  final Rate rate;
 
   const RatePopupMenuButton({
     @required this.callback,
-    @required this.icon,
-    this.color = Colors.black,
+    @required this.rate,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Icon(
-        icon,
-        color: color,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop(rate.value);
+        callback();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Icon(
+          rate.icon,
+          color: rate.color
+        ),
       ),
     );
   }

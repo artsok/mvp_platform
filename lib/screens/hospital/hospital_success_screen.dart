@@ -132,7 +132,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                   GosNotification(
                       date: DateTime.now().add(new Duration(minutes: 10)),
                       message:
-                          'Городская детская больница № 4 приглашает вашего ребенка на плановый профилактический осмотр, 02.05.2020',
+                          'Городская детская поликлиника № 4 приглашает вашего ребенка на плановый профилактический осмотр, 02.05.2020',
                       callback: (context) => Navigator.of(context)
                           .pushNamed(DoctorInfoScreen.routeName)),
                 );

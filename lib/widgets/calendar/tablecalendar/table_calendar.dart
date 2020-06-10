@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/widgets/pin.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';

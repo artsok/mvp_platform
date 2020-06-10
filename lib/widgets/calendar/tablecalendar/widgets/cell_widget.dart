@@ -9,7 +9,6 @@ class _CellWidget extends StatelessWidget {
   final bool isOutsideMonth;
   final bool isHoliday;
 
-  final EventState eventState;
   final bool hasEventOnPreviousDay;
   final bool hasEventOnNextDay;
 
@@ -26,7 +25,6 @@ class _CellWidget extends StatelessWidget {
     this.isHoliday = false,
     this.hasEventOnPreviousDay = false,
     this.hasEventOnNextDay = false,
-    this.eventState,
     @required this.calendarStyle,
   })  : assert(text != null),
         assert(calendarStyle != null),
@@ -34,10 +32,14 @@ class _CellWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final event = Provider.of<DoctorEvent>(context);
+    final eventState = event?.eventState;
+
     return LayoutBuilder(
       builder: (_, constraints) => AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        decoration: _buildCellDecoration(constraints),
+        decoration: _buildCellDecoration(constraints, eventState),
         margin: EdgeInsets.only(
           top: 6.0,
           bottom: 6.0,
@@ -53,7 +55,7 @@ class _CellWidget extends StatelessWidget {
     );
   }
 
-  Decoration _buildCellDecoration(BoxConstraints constraints) {
+  Decoration _buildCellDecoration(BoxConstraints constraints, EventState eventState) {
     if (eventState != null) {
       return BoxDecoration(
         borderRadius: BorderRadius.only(

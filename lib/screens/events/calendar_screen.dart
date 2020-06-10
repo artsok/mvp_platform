@@ -107,8 +107,10 @@ class _CalendarScreenState extends State<CalendarScreen>
               builder: (_, events, __) => ListView.builder(
                 key: listKey,
                 itemCount: events.eventsOfMonth.length,
-                itemBuilder: (context, i) =>
-                    EventWidget.DoctorEvent(events.eventsOfMonth[i]),
+                itemBuilder: (context, i) => ChangeNotifierProvider.value(
+                  value: events.eventsOfMonth[i],
+                  child: EventWidget.DoctorEvent(events.eventsOfMonth[i]),
+                ),
               ),
             ),
           ),

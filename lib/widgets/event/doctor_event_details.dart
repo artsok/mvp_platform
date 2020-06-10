@@ -5,12 +5,12 @@ import 'package:mvp_platform/providers/events/doctor_events.dart';
 import 'package:provider/provider.dart';
 
 class DoctorEventDetails extends StatelessWidget {
-  final DoctorEvent event;
-
-  DoctorEventDetails(this.event);
 
   @override
   Widget build(BuildContext context) {
+
+    final event = Provider.of<DoctorEvent>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
@@ -60,19 +60,16 @@ class DoctorEventDetails extends StatelessWidget {
                           style: TextStyle(fontSize: 20.0),
                         ),
                       ),
-                      Consumer<DoctorEvents>(
-                        builder: (BuildContext context, DoctorEvents value,
-                            Widget child) {
-                          return Padding(
+                      if (event.eventState == EventState.complete)
+                        GestureDetector(
+                          onTap: () {
+                            event.eventState = EventState.approved;
+                          },
+                          child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: PopupMenuButton(
-                              itemBuilder: (BuildContext context) {
-
-                              },
-                            ),
-                          );
-                        },
-                      ),
+                            child: Text('оценить'),
+                          ),
+                        ),
                     ],
                   ),
                 ],

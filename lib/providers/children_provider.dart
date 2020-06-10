@@ -8,7 +8,7 @@ class Children with ChangeNotifier {
         surname: 'Богатырев',
         name: 'Иван',
         patronym: 'Иванович',
-        birthDate: "04.05.2020",
+        birthDate: "20.03.2020",
         snils: "533-573-394 97",
         birthPlace: "г.Калининград, Калининградская область, Россия",
         address: "г.Калининград, ул.Горького, д.26, кв.17",

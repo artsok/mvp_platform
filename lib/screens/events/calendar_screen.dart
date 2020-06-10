@@ -72,6 +72,7 @@ class _CalendarScreenState extends State<CalendarScreen>
               child: TableCalendar(
                 locale: locale,
                 events: events.items,
+                initialSelectedDay: DateTime(2020, 5, 9),
                 doctorEvents: events,
                 calendarController: calendarController,
                 daysOfWeekStyle: DaysOfWeekStyle(

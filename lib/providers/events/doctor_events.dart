@@ -9,7 +9,7 @@ class DoctorEvents with ChangeNotifier {
   final Map<DateTime, List<DoctorEvent>> _events = {};
   final List<DoctorEvent> _eventsOfMonth = [];
 
-  DateTime activeMonth = DateTime.now().roundToMonth();
+  DateTime activeMonth = DateTime(2020, 5);
 
   DoctorEvents() {
     List<DoctorEvent> events = [];

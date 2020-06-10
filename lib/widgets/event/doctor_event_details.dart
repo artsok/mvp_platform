@@ -84,45 +84,42 @@ class DoctorEventDetails extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    RatePopupMenu(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 4.0),
-                                        child: Row(
-                                          children: <Widget>[
-                                            RatePopupMenuButton(
-                                              callback: () => doctor.rating =
-                                                  Rate.rate1.value.toDouble(),
-                                              rate: Rate.rate1,
-                                            ),
-                                            RatePopupMenuButton(
-                                              callback: () => doctor.rating =
-                                                  Rate.rate2.value.toDouble(),
-                                              rate: Rate.rate2,
-                                            ),
-                                            RatePopupMenuButton(
-                                              callback: () => doctor.rating =
-                                                  Rate.rate3.value.toDouble(),
-                                              rate: Rate.rate3,
-                                            ),
-                                            RatePopupMenuButton(
-                                              callback: () => doctor.rating =
-                                                  Rate.rate4.value.toDouble(),
-                                              rate: Rate.rate4,
-                                            ),
-                                            RatePopupMenuButton(
-                                              callback: () => doctor.rating =
-                                                  Rate.rate5.value.toDouble(),
-                                              rate: Rate.rate5,
-                                            ),
-                                          ],
-                                        ),
+                                itemBuilder: (BuildContext context) => [
+                                  RatePopupMenu(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: Row(
+                                        children: <Widget>[
+                                          RatePopupMenuButton(
+                                            callback: () => doctor.rating =
+                                                Rate.rate1.value.toDouble(),
+                                            rate: Rate.rate1,
+                                          ),
+                                          RatePopupMenuButton(
+                                            callback: () => doctor.rating =
+                                                Rate.rate2.value.toDouble(),
+                                            rate: Rate.rate2,
+                                          ),
+                                          RatePopupMenuButton(
+                                            callback: () => doctor.rating =
+                                                Rate.rate3.value.toDouble(),
+                                            rate: Rate.rate3,
+                                          ),
+                                          RatePopupMenuButton(
+                                            callback: () => doctor.rating =
+                                                Rate.rate4.value.toDouble(),
+                                            rate: Rate.rate4,
+                                          ),
+                                          RatePopupMenuButton(
+                                            callback: () => doctor.rating =
+                                                Rate.rate5.value.toDouble(),
+                                            rate: Rate.rate5,
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ];
-                                },
+                                  ),
+                                ],
                               );
                             },
                           ),

@@ -19,18 +19,19 @@ class DoctorEvent extends StatelessWidget {
         DoctorVisitDetailsScreen.routeName,
         arguments: DoctorVisitDetailsScreenArguments(event),
       ),
-      child: ChangeNotifierProvider.value(
-        value: event,
-        child: ChangeNotifierProvider.value(
-          value: event.doctor,
-          child: Column(
-            children: <Widget>[
-              EventHeader(),
-              DoctorEventDetails(),
+      child:
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider.value(value: event),
+              ChangeNotifierProvider.value(value: event.doctor),
             ],
+            child: Column(
+              children: <Widget>[
+                EventHeader(),
+                DoctorEventDetails(),
+              ],
+            ),
           ),
-        ),
-      ),
     );
   }
 }

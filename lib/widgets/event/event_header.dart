@@ -9,6 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 class EventHeader extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
@@ -96,14 +97,10 @@ class EventHeader extends StatelessWidget {
                                 ),
                               ),
                               if (doctor.rating != 0.0)
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Icon(
-                                    Rate.values[doctor.rating.toInt() - 1].icon,
-                                    color: Rate
-                                        .values[doctor.rating.toInt() - 1]
-                                        .color,
-                                  ),
+                                Icon(
+                                  Rate.values[doctor.rating.toInt() - 1].icon,
+                                  color: Rate
+                                      .values[doctor.rating.toInt() - 1].color,
                                 ),
                             ],
                           );

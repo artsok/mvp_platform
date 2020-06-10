@@ -51,7 +51,9 @@ flutter:
         - asset: assets/fonts/AppIcons.ttf
   assets:
     - assets/images/gos-main-logo.png
-    - assets/images/doctor.jpg
+    - assets/images/doctor-bezrukov.jpg
+    - assets/images/doctor-2.jpg
+    - assets/images/doctor-3.jpg
     - assets/icons/phonedoscope.png
     - assets/icons/notificationIcon.png
     - assets/icons/backdeletebackspace.png

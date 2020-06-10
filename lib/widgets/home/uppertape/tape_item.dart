@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/uppertape_item.dart';
-import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/utils/scale_factor.dart';
 
 class TapeItem extends StatelessWidget {
+
   final UpperTapeItem item;
 
   TapeItem(this.item);
@@ -11,7 +11,7 @@ class TapeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, SmoBirthInfoScreen.routeName),
+      onTap: () => item.navigatorCallback(context),
       child: SizedBox(
         width: 180.0,
         child: Padding(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
+import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
 import 'package:mvp_platform/widgets/event/doctor_event.dart' as EventWidget;
 import 'package:provider/provider.dart';
@@ -70,6 +71,15 @@ class _CalendarScreenState extends State<CalendarScreen>
             builder: (_, events, __) => Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: TableCalendar(
+                onDaySelected: (day, events) {
+                  if (events.isNotEmpty) {
+                    Navigator.pushNamed(
+                      context,
+                      DoctorVisitDetailsScreen.routeName,
+                      arguments: DoctorVisitDetailsScreenArguments(events[0]),
+                    );
+                  }
+                },
                 locale: locale,
                 events: events.items,
                 initialSelectedDay: DateTime(2020, 5, 9),

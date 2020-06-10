@@ -60,7 +60,9 @@ class VisitStateHeader extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
-                  AppIcons.home,
+                  event.eventState == EventState.planned
+                      ? Icons.event
+                      : Icons.check_circle_outline,
                   color: event.eventState.colors().item1,
                 ),
               ),

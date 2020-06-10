@@ -1,14 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
+import 'package:mvp_platform/res/app_icons.dart';
+import 'package:mvp_platform/widgets/common/popup_menu.dart';
+import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
 import 'package:provider/provider.dart';
 
 class DoctorEventDetails extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     final event = Provider.of<DoctorEvent>(context);
 
     return Padding(
@@ -65,9 +67,55 @@ class DoctorEventDetails extends StatelessWidget {
                           onTap: () {
                             event.eventState = EventState.approved;
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('оценить'),
+                          child: PopupMenuButton(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'Оцените услугу',
+                                style: TextStyle(
+                                  color: Colors.blue[600],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            itemBuilder: (BuildContext context) {
+                              return [
+                                RatePopupMenu(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        RatePopupMenuButton(
+                                          callback: () {},
+                                          icon: Icons.looks_one,
+                                          color: Colors.red[500],
+                                        ),
+                                        RatePopupMenuButton(
+                                          callback: () {},
+                                          icon: Icons.looks_two,
+                                          color: Colors.orange[500],
+                                        ),
+                                        RatePopupMenuButton(
+                                          callback: () {},
+                                          icon: Icons.looks_3,
+                                          color: Colors.yellow[600],
+                                        ),
+                                        RatePopupMenuButton(
+                                          callback: () {},
+                                          icon: Icons.looks_4,
+                                          color: Colors.lime[500],
+                                        ),
+                                        RatePopupMenuButton(
+                                          callback: () {},
+                                          icon: Icons.looks_5,
+                                          color: Colors.green[500],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ];
+                            },
                           ),
                         ),
                     ],

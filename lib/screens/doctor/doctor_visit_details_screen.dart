@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/doctor.dart';
+import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/hospital.dart';
-import 'package:mvp_platform/res/app_icons.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
 
 class DoctorVisitDetailsScreen extends StatelessWidget {
   static final routeName = '/doctor-visit-details-screen';

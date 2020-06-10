@@ -4,6 +4,13 @@ class MedicalOrganization {
   String address;
   String phone;
 
+  MedicalOrganization.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    address = json['address'];
+    phone = json['phone'];
+  }
+
   MedicalOrganization({String id, String name, String address, String phone}) {
     this.id = id;
     this.name = name;

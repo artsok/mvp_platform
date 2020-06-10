@@ -6,15 +6,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:mvp_platform/repository/dto/person.dart';
+import 'package:mvp_platform/repository/request/request_dto.dart';
 import 'package:mvp_platform/utils/app_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class URLS {
   static const String BASE_URL =
-      'http://ds-ingressgateway-unsec.foms-2.apps.ocp-public.sbercloud.ru';
+      'https://ds-ingressgateway.foms-2.apps.ocp-public.sbercloud.ru';
 
   static const String PATH = 'foms-client';
+}
+
+Future<String> getClientId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('clientId');
 }
 
 Future<String> loadJson(String jsonFileName) async {
@@ -28,11 +34,6 @@ class Service {
 
   factory Service() {
     return _instance;
-  }
-
-  getStringValuesSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('clientId');
   }
 
   Future<String> getHttp() async {
@@ -73,7 +74,7 @@ class Service {
     }
   }
 
-  static Future<dynamic> getVisitsByClient(String clientId) async {
+  Future<dynamic> controlCardVisitInfo() async {
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))
@@ -100,13 +101,16 @@ class Service {
       return httpClient;
     };
 
-
+    var requestDto = RequestDto(
+        method: "getVisitsByClient",
+        id: 1,
+        params: Params(clientId: await getClientId()));
 
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
-          data: (await loadJson("createcontrolcard.json")));
-      return response;
+          data: requestDto.toJson());
+      return response.data;
     } catch (e) {
       return "No Internet connection";
     }

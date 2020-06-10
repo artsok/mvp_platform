@@ -12,75 +12,27 @@ class DoctorEvents with ChangeNotifier {
   DateTime activeMonth = DateTime.now().roundToMonth();
 
   DoctorEvents() {
-    int days = 2;
-    List<DoctorEvent> events = Doctors.doctors.map((doctor) {
-      days++;
-      return DoctorEvent(
-        doctor: doctor,
-        startsAt: DateTime.now().add(Duration(days: days)),
-        endsAt: DateTime.now().add(Duration(days: days, hours: 1)),
-        description: 'Диспансерный прием (осмотр, консультация)',
-      );
-    }).toList();
+    List<DoctorEvent> events = [];
     events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime.now().subtract(Duration(days: 6, hours: 1)),
-      endsAt: DateTime.now().subtract(Duration(days: 6)),
-      description: 'Консультация у трансгуманиста',
+      doctor: Doctors.doctors[0],
+      startsAt: DateTime(2020, 05, 02, 14, 15),
+      endsAt: DateTime(2020, 05, 02, 14, 45),
+      eventState: EventState.complete,
+      description: 'Посещение кардиолога первое - Постановка на Д учет - Является первой явкой по Д-учету',
     ));
     events.add(DoctorEvent(
       doctor: Doctors.doctors[1],
-      startsAt: DateTime.now().add(Duration(days: 9)),
-      endsAt: DateTime.now().add(Duration(days: 9, hours: 1, minutes: 30)),
+      startsAt: DateTime(2020, 05, 10, 10, 15),
+      endsAt: DateTime(2020, 05, 10, 11),
       eventState: EventState.approved,
-      description: 'Посещение хирурга',
+      description: 'Ультразвуковое исследование',
     ));
     events.add(DoctorEvent(
       doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 6, 30, 18),
-      endsAt: DateTime(2020, 6, 30, 18, 30),
-      eventState: EventState.approved,
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 7, 1, 18),
-      endsAt: DateTime(2020, 7, 1, 18, 30),
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 6, 1, 18),
-      endsAt: DateTime(2020, 6, 1, 18, 30),
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 5, 31, 18),
-      endsAt: DateTime(2020, 5, 31, 18, 30),
-      eventState: EventState.approved,
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 6, 21, 18),
-      endsAt: DateTime(2020, 6, 21, 18, 30),
-      eventState: EventState.approved,
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 6, 22, 18),
-      endsAt: DateTime(2020, 6, 22, 18, 30),
-      eventState: EventState.approved,
-      description: 'Посещение хирурга',
-    ));
-    events.add(DoctorEvent(
-      doctor: Doctors.doctors[1],
-      startsAt: DateTime(2020, 6, 23, 18),
-      endsAt: DateTime(2020, 6, 23, 18, 30),
-      eventState: EventState.approved,
-      description: 'Посещение хирурга',
+      startsAt: DateTime(2020, 05, 11),
+      endsAt: DateTime(2020, 05, 11),
+      eventState: EventState.planned,
+      description: 'Посещение кардиолога в рамках Д-учета',
     ));
     events.forEach((event) {
       DateTime key = event.startsAt.roundToDay();

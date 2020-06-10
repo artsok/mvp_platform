@@ -9,7 +9,7 @@ class Hospitals with ChangeNotifier {
       'assets/map/dekabristov-24.png',
     ),
     Hospital(
-      'ГБУЗ г.Калининград "Городская больница № 2"',
+      'ГБУЗ г.Калининград "Городская детская поликлиника №4"',
       'г.Калининград, ул.Дзержинского, д.147',
       'assets/map/snezhnaya-22.png',
     ),

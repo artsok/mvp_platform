@@ -60,20 +60,5 @@ extension RateExtension on Rate {
     }
   }
 
-  static Rate getRateByValue(int value) {
-    switch (value) {
-      case 1:
-        return Rate.rate1;
-      case 2:
-        return Rate.rate2;
-      case 3:
-        return Rate.rate3;
-      case 4:
-        return Rate.rate4;
-      case 5:
-        return Rate.rate5;
-      default:
-        throw Exception('Rate enum only supports values: [1, 5]');
-    }
-  }
+  static Rate getRateByValue(int value) => Rate.values[value - 1];
 }

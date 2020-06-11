@@ -11,7 +11,7 @@ class VisitsInfoData with ChangeNotifier {
   List<VisitExt> visitsOfMonth = [];
   ResponseStatus responseStatus;
 
-  DateTime activeMonth = DateTime.now().roundToMonth();
+  DateTime activeMonth;
 
   void setActiveMonth(DateTime date) {
     if (date.roundToMonth() != activeMonth) {

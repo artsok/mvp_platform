@@ -54,7 +54,7 @@ class _CalendarScreenState extends State<CalendarScreen>
     return MultiProvider(
       providers: [
         FutureProvider(create: (_) => visitsInfo.fetchData()),
-        FutureProvider(create: (_) => visitsInfo.data),
+        ChangeNotifierProvider.value(value: visitsInfo.data),
       ],
       child: Scaffold(
         appBar: AppBar(

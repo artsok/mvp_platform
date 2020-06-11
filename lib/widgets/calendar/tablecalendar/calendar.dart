@@ -101,12 +101,12 @@ class TableCalendar extends StatefulWidget {
   /// Set of Builders for `TableCalendar` to work with.
   final CalendarBuilders builders;
 
-  final DoctorEvents doctorEvents;
+  final Client client;
 
   TableCalendar({
     Key key,
     @required this.calendarController,
-    @required this.doctorEvents,
+    @required this.client,
     this.locale,
     this.events = const {},
     this.holidays = const {},
@@ -228,16 +228,16 @@ class _TableCalendarState extends State<TableCalendar>
     setState(() {
       widget.calendarController._selectPrevious();
     });
-    widget.doctorEvents
-        .setActiveMonth(widget.calendarController.visibleDays[15]);
+//    widget.doctorEvents
+//        .setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectNext() {
     setState(() {
       widget.calendarController._selectNext();
     });
-    widget.doctorEvents
-        .setActiveMonth(widget.calendarController.visibleDays[15]);
+//    widget.doctorEvents
+//        .setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectDay(DateTime day) {

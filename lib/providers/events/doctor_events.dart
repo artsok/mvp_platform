@@ -61,7 +61,6 @@ class DoctorEvents with ChangeNotifier {
     return events;
   }
 
-  List<DoctorEvent> get eventsOfMonth => _eventsOfMonth;
 
   void setActiveMonth(DateTime date) {
     if (date.roundToMonth() != activeMonth) {

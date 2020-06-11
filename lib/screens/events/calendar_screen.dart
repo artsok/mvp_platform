@@ -70,10 +70,15 @@ class _CalendarScreenState extends State<CalendarScreen>
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            Consumer<DoctorEvents>(
-              builder: (_, events, __) => Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: TableCalendar(
+            Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
+              if (visitsInfo == null) {
+                return CupertinoActivityIndicator(radius: 25.0);
+              } else {
+                switch (visitsInfo.data.responseStatus) {
+                  case ResponseStatus.success:
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: TableCalendar(
 //                  onDaySelected: (day, events) {
 //                    if (events.isNotEmpty) {
 //                      Navigator.pushNamed(
@@ -83,33 +88,47 @@ class _CalendarScreenState extends State<CalendarScreen>
 //                      );
 //                    }
 //                  },
-                  locale: locale,
-                  events: events.items,
-                  initialSelectedDay: DateTime(2020, 5, 9),
-                  doctorEvents: events,
-                  calendarController: calendarController,
-                  daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle: defaultTextStyle,
-                    weekendStyle: defaultTextStyle,
-                  ),
-                  calendarStyle: CalendarStyle(
-                    highlightToday: false,
-                    selectedColor: null,
-                    selectedStyle: defaultTextStyle,
-                    outsideDaysVisible: true,
-                    highlightSelected: false,
-                    weekdayStyle: defaultTextStyle,
-                    weekendStyle: defaultTextStyle,
-                  ),
-                  headerStyle: HeaderStyle(),
-                ),
-              ),
-            ),
+                        locale: locale,
+                        events: visitsInfo.data.getDateTimeToVisitsList(),
+                        initialSelectedDay: DateTime(2020, 5, 9),
+                        client: visitsInfo.data.client,
+                        calendarController: calendarController,
+                        daysOfWeekStyle: DaysOfWeekStyle(
+                          weekdayStyle: defaultTextStyle,
+                          weekendStyle: defaultTextStyle,
+                        ),
+                        calendarStyle: CalendarStyle(
+                          highlightToday: false,
+                          selectedColor: null,
+                          selectedStyle: defaultTextStyle,
+                          outsideDaysVisible: true,
+                          highlightSelected: false,
+                          weekdayStyle: defaultTextStyle,
+                          weekendStyle: defaultTextStyle,
+                        ),
+                        headerStyle: HeaderStyle(),
+                      ),
+                    );
+                  case ResponseStatus.error:
+                    return Center(
+                      child: const Text(
+                        'Ошибка при загрузке данных',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  default:
+                    return CupertinoActivityIndicator(radius: 25.0);
+                }
+              }
+            }),
             Expanded(
               child: Consumer<VisitsInfoProvider>(
                 builder: (_, visitsInfoData, __) {
                   if (visitsInfoData == null) {
-                    return CupertinoActivityIndicator(radius: 50.0);
+                    return CupertinoActivityIndicator(radius: 25.0);
                   } else {
                     switch (visitsInfoData.data.responseStatus) {
                       case ResponseStatus.success:

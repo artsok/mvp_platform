@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
-import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 
 class VisitsInfoProvider extends ChangeNotifier {
@@ -46,7 +45,7 @@ class VisitsInfoProvider extends ChangeNotifier {
 //      print('Error: $error');
 //      return false;
 //    });
-//    await Future.delayed(Duration(seconds: 2), () {});
+    await Future.delayed(Duration(seconds: 2), () {});
     final jsonData = json.decode("""{
   "jsonrpc": "2.0",
   "id": 1,

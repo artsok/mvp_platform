@@ -46,7 +46,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                                     ),
                                   ),
                                 Text(
-                                  '${visit.doctor.firstName == null ? '' : visit.doctor.firstName }${visit.doctor.midName == null ? '' : visit.doctor.midName}',
+                                  '${visit.doctor.firstName == null ? '' : '${visit.doctor.firstName} '}${visit.doctor.midName == null ? '' : visit.doctor.midName}',
                                   style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                         width: 80.0,
                         height: 80.0,
                         child: ClipRRect(
-                          child: Image.asset('assets/images/doctor.jpg'),
+                          child: Image.asset(visit.doctor.photoPath),
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                       ),

@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
+import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/widgets/pin.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
-import 'package:mvp_platform/providers/events/doctor_events.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 part 'calendar.dart';
 part 'calendar_controller.dart';

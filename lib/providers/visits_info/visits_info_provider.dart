@@ -20,20 +20,15 @@ class VisitsInfoProvider extends ChangeNotifier {
 
   Future<VisitsInfoProvider> fetchData() async {
     _data.responseStatus = null;
+    List<VisitInfo> allVisitsInfo = await _fetchData();
+    Client client = allVisitsInfo
+        .firstWhere((visitInfo) => visitInfo.client.id == null)
+        .client;
+    _data.client = client;
+    allVisitsInfo.forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
+    _data.setActiveMonth(DateTime.now());
+    _data.responseStatus = ResponseStatus.success;
     notifyListeners();
-    try {
-      List<VisitInfo> allVisitsInfo = await _fetchData();
-      Client client = allVisitsInfo
-          .firstWhere((visitInfo) => visitInfo.client.id == null)
-          .client;
-      _data.client = client;
-      allVisitsInfo
-          .forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
-      _data.responseStatus = ResponseStatus.success;
-      notifyListeners();
-    } on Exception catch (e, stackTrace) {
-      print('Error: $e\n$stackTrace');
-    }
     return this;
   }
 

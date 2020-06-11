@@ -35,9 +35,6 @@ class _CellWidget extends StatelessWidget {
 
     final visit = Provider.of<VisitExt>(context);
     final visitStatus = visit?.status?.toString()?.toVisitStatus();
-    if (visitStatus != null) {
-      print('test');
-    }
 
     return LayoutBuilder(
       builder: (_, constraints) => AnimatedContainer(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/widgets/pin.dart';

@@ -1,9 +1,10 @@
 import 'package:mvp_platform/repository/response/dto/person.dart';
 
+import 'package:mvp_platform/models/enums/gender.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'client/birth_act.dart';
 import 'client/birth_certificate.dart';
 import 'client/birth_place.dart';
-import 'client/gender_enum.dart';
 import 'client/identity.dart';
 import 'client/legal_representative.dart';
 import 'client/parent.dart';
@@ -11,7 +12,8 @@ import 'client/policy.dart';
 import 'client/registration.dart';
 
 class Client extends Person {
-  GenderEnum gender;
+
+  Gender _gender;
   DateTime birthDate;
   String phone;
   String email;
@@ -30,15 +32,8 @@ class Client extends Person {
   Registration registration;
   BirthCertificate birthCertificate;
 
-  GenderEnum parseEnum(String value) {
-    if (value.contains("MALE")) {
-      return GenderEnum.MALE;
-    }
-    return GenderEnum.FEMALE;
-  }
-
   Client.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    gender = json['gender'] != null ? parseEnum(json['gender']) : null;
+    _gender = (json['gender'] as String)?.toGender();
     birthDate =
         json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
     phone = json['phone'] != null ? json['phone'] : null;
@@ -78,13 +73,9 @@ class Client extends Person {
         : null;
   }
 
-  GenderEnum getGender() {
-    return gender;
-  }
+  Gender get getGender => _gender;
 
-  void setGender(GenderEnum gender) {
-    this.gender = gender;
-  }
+  set gender(Gender gender) => _gender = gender;
 
   DateTime getBirthDate() {
     return birthDate;
@@ -227,7 +218,7 @@ class Client extends Person {
       String firstName,
       String midName,
       String lastName,
-      GenderEnum gender,
+      Gender gender,
       DateTime birthDate,
       String registrationAddress,
       String phone,

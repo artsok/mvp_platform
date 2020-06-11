@@ -3,7 +3,7 @@ import 'package:mvp_platform/repository/response/dto/person.dart';
 class Doctor extends Person {
   String specialty;
 
-  Doctor() : super() {}
+  Doctor() : super();
 
   String getSpecialty() {
     return specialty;

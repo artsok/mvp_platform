@@ -1,15 +1,14 @@
+import 'dart:async' show Future;
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import 'package:mvp_platform/repository/request/request_dto.dart';
 import 'package:mvp_platform/utils/app_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class URLS {
   static const String BASE_URL =
@@ -28,9 +27,9 @@ Future<String> loadJson(String jsonFileName) async {
 }
 
 class Service {
-  Service._privateConstructor() {}
+  Service._();
 
-  static final Service _instance = Service._privateConstructor();
+  static final Service _instance = Service._();
 
   factory Service() {
     return _instance;

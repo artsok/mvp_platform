@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
 class GosFlatButton extends StatelessWidget {
-  String text;
-  VoidCallback onPressed;
+
+  final String text;
+  final VoidCallback onPressed;
+  final double height;
+  final EdgeInsetsGeometry margin;
+  final double fontSize;
   double width = -1.0;
-  double height;
   Color textColor = Colors.white;
   Color backgroundColor;
-  EdgeInsetsGeometry margin;
-  double fontSize;
 
   GosFlatButton({
     @required this.text,
     this.onPressed,
-    this.width,
     this.height,
-    this.textColor,
-    this.backgroundColor,
     this.margin,
     this.fontSize = 16,
+    this.width,
+    this.textColor,
+    this.backgroundColor,
     Key key,
   }) : super(key: key);
 

@@ -6,10 +6,10 @@ import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
-import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
-import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
+import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
+import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
@@ -29,8 +29,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Step> steps = [
-      Step(
+    List<UnfoldedStep> steps = [
+      UnfoldedStep(
         title: Container(
           width: 290,
           child: const Text(
@@ -63,10 +63,10 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             ChildInfo(selectedChild),
           ],
         ),
-        state: StepState.complete,
+        state: UnfoldedStepState.complete,
         isActive: true,
       ),
-      Step(
+      UnfoldedStep(
         title: Container(
           width: 290,
           child: const Text(
@@ -149,10 +149,10 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             ],
           ),
         ),
-        state: StepState.complete,
+        state: UnfoldedStepState.complete,
         isActive: true,
       ),
-      Step(
+      UnfoldedStep(
         title: Container(
           width: 280,
           child: const Text(
@@ -195,7 +195,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
           ],
         ),
         isActive: true,
-        state: StepState.complete,
+        state: UnfoldedStepState.complete,
       ),
     ];
 
@@ -227,17 +227,17 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Stepper(
+            UnfoldedStepper(
+              firstStep: 2,
               physics: ClampingScrollPhysics(),
               controlsBuilder: (BuildContext context,
                       {VoidCallback onStepContinue,
                       VoidCallback onStepCancel}) =>
                   Container(),
               steps: steps,
-              currentStep: currentStep,
-              onStepContinue: nextStep,
-              onStepCancel: cancelStep,
-              onStepTapped: (step) => goTo(step),
+//              onStepContinue: nextStep,
+//              onStepCancel: cancelStep,
+//              onStepTapped: (step) => goTo(step),
             ),
             Align(
               alignment: Alignment.center,

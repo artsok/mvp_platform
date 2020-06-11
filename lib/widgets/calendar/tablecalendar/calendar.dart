@@ -147,10 +147,23 @@ class TableCalendar extends StatefulWidget {
 }
 
 class _TableCalendarState extends State<TableCalendar>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
+  bool _collapsed = false;
+  double height;
+  double opacity = 1.0;
+  AnimationController animationController;
+  Animation<double> calendarHeightAnimation;
+  Animation<double> calendarOpacityAnimation;
+  GlobalKey calendarKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
+
+    animationController = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
 
     widget.calendarController._init(
       events: widget.events,
@@ -161,6 +174,34 @@ class _TableCalendarState extends State<TableCalendar>
       onCalendarCreated: widget.onCalendarCreated,
       includeInvisibleDays: widget.calendarStyle.outsideDaysVisible,
     );
+
+    calendarOpacityAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Interval(0, 1, curve: Curves.ease),
+      ),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (calendarHeightAnimation == null) {
+        final calendarContext = calendarKey.currentContext;
+        double height = 460.0;
+        if (calendarContext != null) {
+          final box = calendarContext.findRenderObject() as RenderBox;
+          height = box.size.height;
+        }
+        calendarHeightAnimation = Tween<double>(
+          begin: height,
+          end: 18.0,
+        ).animate(CurvedAnimation(
+          parent: animationController,
+          curve: Interval(0, 1, curve: Curves.ease),
+        ));
+      }
+    });
   }
 
   @override
@@ -271,10 +312,28 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
+  void _toggleCalendar() {
+    setState(() {
+      _collapsed = !_collapsed;
+      if (!_collapsed) {
+        print('Opening calendar');
+        height = null;
+        opacity = 1.0;
+      } else {
+        print('Collapsing calendar');
+        height = 18.0;
+        opacity = 0.0;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
       margin: const EdgeInsets.all(0.0),
+      duration: const Duration(seconds: 1),
+      curve: Curves.ease,
+      height: height,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
@@ -285,29 +344,42 @@ class _TableCalendarState extends State<TableCalendar>
           ),
         ],
       ),
-      child: LayoutBuilder(
-        builder: (_, constraints) => Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (widget.headerVisible) _buildHeader(),
+        child: LayoutBuilder(
+          key: calendarKey,
+          builder: (_, constraints) => Stack(
+            overflow: Overflow.visible,
+            children: <Widget>[
+              SingleChildScrollView(
+                child: AnimatedOpacity(
+                  duration: const Duration(seconds: 1),
+                  opacity: opacity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      if (widget.headerVisible) _buildHeader(),
 //                Padding(
 //                  padding: widget.calendarStyle.contentPadding,
 //                  child:
-                _buildCalendarContent(),
+                      _buildCalendarContent(),
 //                ),
-              ],
-            ),
-            Positioned(
-              bottom: -9,
-              left: constraints.maxWidth / 2 - 25,
-              child: const Pin(),
-            ),
-          ],
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -9,
+                left: constraints.maxWidth / 2 - 25,
+                child: GestureDetector(
+                  onTap: () {
+                    print('Calendar pin tapped');
+                    _toggleCalendar();
+                  },
+                  child: const Pin(),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 
@@ -600,7 +672,8 @@ class _TableCalendarState extends State<TableCalendar>
   }
 
   DoctorEvent getFirstEventOfDay(DateTime date) {
-    Map<DateTime, List<DoctorEvent>> events = widget.events as Map<DateTime, List<DoctorEvent>>;
+    Map<DateTime, List<DoctorEvent>> events =
+        widget.events as Map<DateTime, List<DoctorEvent>>;
     DoctorEvent event;
     List<DoctorEvent> dayEvents = events[date.roundToDay()];
     if (dayEvents != null && dayEvents.isNotEmpty) {

@@ -24,7 +24,6 @@ class _CalendarScreenState extends State<CalendarScreen>
   @override
   void initState() {
     super.initState();
-
     calendarController = CalendarController();
     animationController = AnimationController(
       vsync: this,
@@ -104,15 +103,15 @@ class _CalendarScreenState extends State<CalendarScreen>
           ),
           Expanded(
             child: Consumer<DoctorEvents>(
-              builder: (_, events, __) => ListView.builder(
-                key: listKey,
-                itemCount: events.eventsOfMonth.length,
-                itemBuilder: (context, i) => ChangeNotifierProvider.value(
-                  value: events.eventsOfMonth[i],
-                  child: EventWidget.DoctorEvent(events.eventsOfMonth[i]),
+                builder: (_, events, __) => ListView.builder(
+                  key: listKey,
+                  itemCount: events.eventsOfMonth.length,
+                  itemBuilder: (context, i) => ChangeNotifierProvider.value(
+                    value: events.eventsOfMonth[i],
+                    child: EventWidget.DoctorEvent(events.eventsOfMonth[i]),
+                  ),
                 ),
               ),
-            ),
           ),
         ],
       ),

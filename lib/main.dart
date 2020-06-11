@@ -33,7 +33,7 @@ void main() {
 
 _addClientIdToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('clientId', "15");
+  await prefs.setString('clientId', "1005");
 }
 
 class MvpPlatform extends StatefulWidget {
@@ -94,7 +94,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HttpConnectionScreen(),
+        home: RootScreen(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),

@@ -38,7 +38,6 @@ class Service {
 
   Future<String> getHttp() async {
     //loadJson("createcontrolcard.json").then((value) => print(value));
-
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))

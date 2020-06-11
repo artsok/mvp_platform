@@ -14,10 +14,13 @@ class VisitInfo {
   Client client;
 
   VisitInfo.fromJson(Map<String, dynamic> json) {
-    controlCardId = json['controlCardId'];
-    medicalOrganization =
-        MedicalOrganization.fromJson(json['medicalOrganization']);
+    controlCardId =
+        json['controlCardId'] != null ? json['controlCardId'] : null;
+    medicalOrganization = json['medicalOrganization'] != null
+        ? MedicalOrganization.fromJson(json['medicalOrganization'])
+        : null;
     visits = (json['visits'] as List).map((i) => VisitExt.fromJson(i)).toList();
+    client = json['client'] != null ? Client.fromJson(json['client']) : null;
   }
 
   MedicalOrganization getMedicalOrganization() {
@@ -61,6 +64,11 @@ class VisitInfo {
   }
 
   VisitInfo() {}
+
+  @override
+  String toString() {
+    return 'VisitInfo{controlCardId: $controlCardId, medicalOrganization: $medicalOrganization, visits: $visits, client: $client}';
+  }
 }
 
 class VisitExt extends VisitBase {
@@ -73,7 +81,8 @@ class VisitExt extends VisitBase {
     rating = json['rating'];
     status = json['status'];
     doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
-    service = json['service'] != null ? Service.fromJson(json['service']) : null;
+    service =
+        json['service'] != null ? Service.fromJson(json['service']) : null;
   }
 
   ByteData getRating() {
@@ -108,11 +117,17 @@ class VisitExt extends VisitBase {
     this.service = service;
   }
 
-  VisitExt(String id, DateTime planDate, DateTime factDate,
-      Service service, Doctor doctor, ByteData rating, String status) : super.all(id, planDate, factDate) {
+  VisitExt(String id, DateTime planDate, DateTime factDate, Service service,
+      Doctor doctor, ByteData rating, String status)
+      : super.all(id, planDate, factDate) {
     this.rating = rating;
     this.status = status;
     this.doctor = doctor;
     this.service = service;
+  }
+
+  @override
+  String toString() {
+    return 'VisitExt{rating: $rating, status: $status, doctor: $doctor, service: $service}';
   }
 }

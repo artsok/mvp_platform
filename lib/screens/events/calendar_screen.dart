@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
+import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
 import 'package:mvp_platform/widgets/doctor_visit_item/doctor_visit_item.dart';
 import 'package:provider/provider.dart';
@@ -81,15 +82,18 @@ class _CalendarScreenState extends State<CalendarScreen>
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: TableCalendar(
-//                  onDaySelected: (day, events) {
-//                    if (events.isNotEmpty) {
-//                      Navigator.pushNamed(
-//                        context,
-//                        DoctorVisitDetailsScreen.routeName,
-//                        arguments: DoctorVisitDetailsScreenArguments(events[0]),
-//                      );
-//                    }
-//                  },
+                        onDaySelected: (day, visits) {
+                          if (visits.isNotEmpty) {
+                            Navigator.pushNamed(
+                              context,
+                              DoctorVisitDetailsScreen.routeName,
+                              arguments: DoctorVisitDetailsScreenArguments(
+                                visitsInfo.data.client,
+                                visits[0],
+                              ),
+                            );
+                          }
+                        },
                         locale: locale,
                         events: visitsInfo.data.getDateTimeToVisitsList(),
                         client: visitsInfo.data.client,
@@ -140,8 +144,8 @@ class _CalendarScreenState extends State<CalendarScreen>
                               .length,
                           itemBuilder: (context, i) =>
                               ChangeNotifierProvider.value(
-                            value:
-                                visitsInfoData.data.getVisitsOfMonth(2020, 6)[i],
+                            value: visitsInfoData.data
+                                .getVisitsOfMonth(2020, 6)[i],
                             child: DoctorVisitItem(
                               visitsInfoData.data.client,
                               visitsInfoData.data.getVisitsOfMonth(2020, 6)[i],

@@ -27,15 +27,10 @@ class TestHttpState extends State<TestHttpConnectionForm> {
   }
 
   _sendRequestPost() async {
-    _body = await Service().getMedicalOrganizations();
-    final jsonData = json.decode(_body);
-    var map = Map<String, dynamic>.from(jsonData);
-    List<MedicalOrganization> list = map["result"]
-        .map<MedicalOrganization>((i) => MedicalOrganization.fromJson(i))
-        .toList();
-
-    developer.log('$list');
-
+//    _body = await Service().changeVisit("6837082304388071426",
+//        "2020-06-08T14:00:00", 3003, 4001, "serviceNotified");
+    //final jsonData = json.decode(_body);
+    //var map = Map<String, dynamic>.from(jsonData);
     setState(() {}); //reBuildWidget
   }
 

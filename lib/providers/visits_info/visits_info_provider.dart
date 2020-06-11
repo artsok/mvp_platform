@@ -32,7 +32,7 @@ class VisitsInfoProvider extends ChangeNotifier {
     return this;
   }
 
-  VisitsInfoData get data => _data;
+  Future<VisitsInfoData> getData() async => _data;
 
   Future<List<VisitInfo>> _fetchData() async {
     String response = await Service().getVisitsByClient();

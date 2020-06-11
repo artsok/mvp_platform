@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Person extends ChangeNotifier {
 
@@ -6,12 +7,18 @@ class Person extends ChangeNotifier {
   String firstName;
   String midName;
   String lastName;
+  String photoPath;
 
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : null;
     firstName = json['firstName'] != null ? json['firstName'] : null;
     midName = json['midName'] !=null ? json['midName'] : null;
     lastName = json['lastName'] != null ? json['lastName'] : null;
+    if (lastName == 'Закруткина') {
+      photoPath = 'assets/images/doctor-2.jpg';
+    } else {
+      photoPath = 'assets/images/doctor.jpg';
+    }
   }
 
   Person();

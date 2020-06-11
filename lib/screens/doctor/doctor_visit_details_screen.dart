@@ -252,7 +252,7 @@ class DoctorInfo extends StatelessWidget {
                 Container(
                   width: 95.0,
                   height: 95.0,
-                  child: Image.asset('assets/images/doctor.jpg'),
+                  child: Image.asset(visit.doctor.photoPath),
                 )
               ],
             ),

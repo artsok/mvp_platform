@@ -64,7 +64,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                         width: 80.0,
                         height: 80.0,
                         child: ClipRRect(
-                          child: Image.asset('assets/images/doctor.jpg'),
+                          child: Image.asset(visit.doctor.photoPath),
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                       ),

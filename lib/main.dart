@@ -28,12 +28,19 @@ const locale = 'ru';
 void main() {
   runApp(MvpPlatform());
   _addClientIdToSF();
+  _addBirthActIdToSF();
 }
 
 _addClientIdToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('clientId', "1005");
 }
+
+_addBirthActIdToSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('birthActId', "10054555");
+}
+
 
 class MvpPlatform extends StatefulWidget {
   @override

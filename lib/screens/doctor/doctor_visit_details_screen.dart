@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mvp_platform/models/doctor.dart';
-import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
-import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/popup_menu.dart';
 import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:provider/provider.dart';
 
 class DoctorVisitDetailsScreen extends StatelessWidget {

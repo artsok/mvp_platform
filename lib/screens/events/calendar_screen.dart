@@ -109,7 +109,7 @@ class _CalendarScreenState extends State<CalendarScreen>
               child: Consumer<VisitsInfoProvider>(
                 builder: (_, visitsInfoData, __) {
                   if (visitsInfoData == null) {
-                    return CupertinoActivityIndicator(radius: 50.0);
+                    return CupertinoActivityIndicator(radius: 25.0);
                   } else {
                     switch (visitsInfoData.data.responseStatus) {
                       case ResponseStatus.success:

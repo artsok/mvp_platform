@@ -46,7 +46,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                                     ),
                                   ),
                                 Text(
-                                  '${visit.doctor.firstName == null ? '' : visit.doctor.firstName}${visit.doctor.midName == null ? '' : visit.doctor.midName}',
+                                  '${visit.doctor.firstName == null ? '' : visit.doctor.firstName }${visit.doctor.midName == null ? '' : visit.doctor.midName}',
                                   style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,

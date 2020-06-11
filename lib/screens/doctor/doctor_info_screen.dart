@@ -30,7 +30,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
               .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
-          'Запись на натальный скрининг',
+          'Запись на профилактический осмотр',
           style: TextStyle(fontWeight: FontWeight.normal),
         ),
       ),
@@ -39,7 +39,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Запись на натальный скрининг',
+              'Запись на профилактический осмотр',
             ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),

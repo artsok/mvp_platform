@@ -245,8 +245,8 @@ class DoctorInfo extends StatelessWidget {
             ),
           ),
           Container(
-            width: 100.0,
-            height: 100.0,
+            width: 95.0,
+            height: 95.0,
             child: Image.asset(doctor.photoPath),
           )
         ],
@@ -256,13 +256,13 @@ class DoctorInfo extends StatelessWidget {
 }
 
 class HospitalInfo extends StatelessWidget {
-  final hospital = const Hospital(
+  final hospital = Hospital(
     'ГБУЗ "Городская детская поликлиника №4"',
     'г.Калининград, ул.Садовая д.7/13',
     'assets/map/dekabristov-24.png',
   );
 
-  const HospitalInfo({Key key}) : super(key: key);
+  HospitalInfo({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

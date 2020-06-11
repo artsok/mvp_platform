@@ -41,6 +41,19 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
               'assets/icons/notificationIcon.png',
               'Прикрепление ребёнка к медицинской организации',
             ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Сроки оказания услуги:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
+                  child: Text("В соответствии с регламентом оказания услуги."),
+                ),
+              ],
+            ),
             UnfoldedStepper(
               physics: ClampingScrollPhysics(),
               controlsBuilder: (BuildContext context,

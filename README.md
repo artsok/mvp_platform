@@ -40,3 +40,15 @@ cd to ios folder and run
 ```text
 pod install
 ```
+
+
+2. 
+```text
+    Code Signing Error: No profiles for 'com.example.myApp' were found:  Xcode couldn't find any iOS App Development
+    provisioning profiles matching 'com.example.myApp'.
+```
+
+Open XCode, Run Project.
+```
+open ios/Runner.xcworkspace
+```

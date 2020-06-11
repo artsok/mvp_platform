@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/gos_button.dart';
 import 'package:mvp_platform/widgets/home/tabs/notifications/gos_notification.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class _GosNotificationsTabState extends State<GosNotificationsTab> {
             size: 12,
             width: 170,
             icon: Icons.arrow_forward_ios,
-            iconColor: Colors.indigo,
+            iconColor: getGosBlueColor(),
           ),
         )
       ],

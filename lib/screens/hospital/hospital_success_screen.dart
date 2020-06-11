@@ -92,8 +92,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
-                        'Адрес пордазделения',
-                        'г.Калининград, ул.Садовая д.7/13',
+                        'Адрес пордазделения', args.hospital.address,
                         last: true,
                       ),
                     ),
@@ -112,28 +111,28 @@ class HospitalSuccessScreen extends StatelessWidget {
                   GosNotification(
                     date: DateTime.now().add(new Duration(minutes: 1)),
                     message:
-                        'Полис ОМС для ребенка (Богатырев Иван Иванович) № 6351240828000236 выпущен',
+                        'Полис ОМС для ребенка Богатырев Иван Иванович № 6351240828000236 выпущен',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
                     date: DateTime.now().add(new Duration(minutes: 4)),
                     message:
-                    'Богатырев Иван Иванович прикреплен к страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
+                    'Богатырев Иван Иванович застрахован в страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
                     date: DateTime.now().add(new Duration(minutes: 5)),
                     message:
-                        'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ КАЛИНИНГРАДСКОЙ ОБЛАСТИ «ГОРОДСКАЯ БОЛЬНИЦА №2»',
+                        'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ г.Калининград "Городская детская больница № 4"',
                   ),
                 );
                 notifications.addNotification(
                   GosNotification(
                       date: DateTime.now().add(new Duration(minutes: 10)),
                       message:
-                          'Приглашение Вашего ребенка на плановый профилактический осмотр, 08.06.2020.',
+                          'Городская детская поликлиника № 4 приглашает вашего ребенка на плановый профилактический осмотр, 02.05.2020',
                       callback: (context) => Navigator.of(context)
                           .pushNamed(DoctorInfoScreen.routeName)),
                 );

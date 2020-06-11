@@ -59,9 +59,10 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                     .toList(),
               ),
             ),
+            Text(selectedHospital.messageInfo ?? "", style: TextStyle(fontSize: 10),),
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(top: 38),
+                padding: const EdgeInsets.only(top: 28),
                 child: Container(
                   constraints: BoxConstraints(
                     maxWidth: 400,
@@ -186,7 +187,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
 //                      ),
                         );
                   },
-                  text: 'Выбрать',
+                  text: 'Выбрать >',
                 ),
               ),
             ),

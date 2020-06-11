@@ -21,7 +21,7 @@ class SmoFormScreen extends StatefulWidget {
 class _SmoFormScreenState extends State<SmoFormScreen> {
   Child selectedChild = Children.children[0];
   InsuranceCompany selectedInsuranceCompany =
-      InsuranceCompanies.insuranceCompanies[0];
+  InsuranceCompanies.insuranceCompanies[0];
   InsuranceType insuranceType = InsuranceType.digital;
 
   int currentStep = 0;
@@ -41,9 +41,10 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
           children: <Widget>[
             DropdownButton(
               hint: Container(
-                  width: 265,
+                  width: 243,
+                  height: 60,
                   child:
-                      const Text('Фамилия, имя, отчество новорожденного(-ой)')),
+                  const Text('Фамилия, имя, отчество новорожденного(-ой)')),
               onChanged: (fullname) {
                 setState(() {
                   selectedChild = Children.children
@@ -53,17 +54,17 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
               value: selectedChild.fullname,
               items: Children.children
                   .map(
-                    (child) => DropdownMenuItem(
+                    (child) =>
+                    DropdownMenuItem(
                       child: Text(child.fullname),
                       value: child.fullname,
                     ),
-                  )
+              )
                   .toList(),
             ),
             ChildInfo(selectedChild),
           ],
         ),
-        state: UnfoldedStepState.complete,
         isActive: true,
       ),
       UnfoldedStep(
@@ -100,48 +101,68 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Ваша страховая компания:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4, bottom: 16),
+                          child: const Text(
+                            'АО «СОГАЗ Мед» СОГАЗ МЕД',
+                          ),
+                        ),
+                      ],
+                    ),
                     const Text(
-                      'Страховая компания: ',
+                      'Страховая компания ребёнка: ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Builder(
-                      builder: (context) =>  DropdownButton(
-                        hint: const Text('Страховая компания'),
-                        //hint почему-то не отрабатывает
-                        onChanged: (name) {
-                          setState(() {
-                            selectedInsuranceCompany = InsuranceCompanies
-                                .insuranceCompanies
-                                .firstWhere((c) => c.name == name);
+                      builder: (context) =>
+                          DropdownButton(
+                            hint: const Text('Страховая компания'),
+                            //hint почему-то не отрабатывает
+                            onChanged: (name) {
+                              setState(() {
+                                selectedInsuranceCompany = InsuranceCompanies
+                                    .insuranceCompanies
+                                    .firstWhere((c) => c.name == name);
 
-                            //Т.к у мамы ребенка согаз, даем подсказу.
-                            if (selectedInsuranceCompany.name
-                                .toLowerCase()
-                                .contains("согаз")) {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    "Вы также обслуживаетесь в компании ${selectedInsuranceCompany.name}"),
-                              ));
-                            }
-                          });
-                        },
-                        value: selectedInsuranceCompany.name,
-                        items: InsuranceCompanies.insuranceCompanies
-                            .map(
-                              (company) => DropdownMenuItem(
-                                child: Container(
-                                    width: 240, child: Text(company.name)),
-                                value: company.name,
-                              ),
+                                //Т.к у мамы ребенка согаз, даем подсказу. Убрал. не нужно по ТЗ
+//                                if (selectedInsuranceCompany.name
+//                                    .toLowerCase()
+//                                    .contains("согаз")) {
+//                                  Scaffold.of(context).showSnackBar(SnackBar(
+//                                    content: Text(
+//                                        "Вы также обслуживаетесь в компании ${selectedInsuranceCompany
+//                                            .name}"),
+//                                  ));
+//                                }
+                              });
+                            },
+                            value: selectedInsuranceCompany.name,
+                            items: InsuranceCompanies.insuranceCompanies
+                                .map(
+                                  (company) =>
+                                  DropdownMenuItem(
+                                    child: Container(
+                                        width: 240, child: Text(company.name)),
+                                    value: company.name,
+                                  ),
                             )
-                            .toList(),
-                      ),
+                                .toList(),
+                          ),
                     ),
                   ],
                 ),
@@ -149,54 +170,53 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             ],
           ),
         ),
-        state: UnfoldedStepState.complete,
         isActive: true,
       ),
-      UnfoldedStep(
-        title: Container(
-          width: 280,
-          child: const Text(
-            'Пожалуйста, выберите желаемую форму полиса ОМС',
-          ),
-        ),
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.digital,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                const Text('Электронный'),
-              ],
-            ),
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.material,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                Container(width: 240, child: const Text('Пластиковый')),
-              ],
-            ),
-            Row(
-              children: [
-                Radio(
-                  value: InsuranceType.paper,
-                  groupValue: insuranceType,
-                  onChanged: (type) => setState(() => insuranceType = type),
-                ),
-                Container(width: 240, child: const Text('Бумажный')),
-              ],
-            ),
-          ],
-        ),
-        isActive: true,
-        state: UnfoldedStepState.complete,
-      ),
+//      Step(
+//        title: Container(
+//          width: 280,
+//          child: const Text(
+//            'Пожалуйста, выберите желаемую форму полиса ОМС',
+//          ),
+//        ),
+//        content: Column(
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          children: <Widget>[
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.digital,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                const Text('Электронный'),
+//              ],
+//            ),
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.material,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                Container(width: 240, child: const Text('Пластиковый')),
+//              ],
+//            ),
+//            Row(
+//              children: [
+//                Radio(
+//                  value: InsuranceType.paper,
+//                  groupValue: insuranceType,
+//                  onChanged: (type) => setState(() => insuranceType = type),
+//                ),
+//                Container(width: 240, child: const Text('Бумажный')),
+//              ],
+//            ),
+//          ],
+//        ),
+//        isActive: true,
+//        state: StepState.complete,
+//      ),
     ];
 
     void goTo(int step) {
@@ -228,11 +248,10 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
         child: Column(
           children: <Widget>[
             UnfoldedStepper(
-              firstStep: 2,
               physics: ClampingScrollPhysics(),
               controlsBuilder: (BuildContext context,
-                      {VoidCallback onStepContinue,
-                      VoidCallback onStepCancel}) =>
+                  {VoidCallback onStepContinue,
+                    VoidCallback onStepCancel}) =>
                   Container(),
               steps: steps,
 //              onStepContinue: nextStep,
@@ -250,32 +269,37 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Column(
-                          children: [
-                            Text(
-                              'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany.name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany.name}.',
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Text(
-                                "Ознакомиться с договором",
-                                style: TextStyle(
-                                  fontSize: 12,
+                      builder: (context) =>
+                          CupertinoAlertDialog(
+                            title: Column(
+                              children: [
+                                Text(
+                                  'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany
+                                      .name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany
+                                      .name}.',
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 16),
+                                  child: Text(
+                                    "Ознакомиться с договором",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                child: const Text('Отменить'),
+                                onPressed: () => Navigator.of(context).pop(),
                               ),
-                            )
-                          ],
-                        ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: const Text('Отменить'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                              child: const Text('Да, согласен'),
-                              onPressed: () => Navigator.of(context)
-                                  .pushNamed(HospitalInfoScreen.routeName)
+                              CupertinoDialogAction(
+                                  child: const Text('Да, согласен'),
+                                  onPressed: () =>
+                                      Navigator.of(context)
+                                          .pushNamed(
+                                          HospitalInfoScreen.routeName)
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(
@@ -285,12 +309,13 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 //                            ),
 
                               ),
-                        ],
-                      ),
+                            ],
+                          ),
                     );
                   },
-                  text: 'Оформить',
+                  text: 'Оформить >',
                 ),
+
               ),
             ),
           ],

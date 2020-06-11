@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
@@ -28,7 +30,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
           onPressed: () => Navigator.of(context)
-              .popUntil(ModalRoute.withName(HomeScreen.routeName)),
+              .popUntil(ModalRoute.withName(SmoBirthInfoScreen.routeName)),
         ),
         title: const Text(
           'Подача заявления о выборе Страхового медицинского осмотра',
@@ -39,7 +41,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Получение полиса ОМС для ребенка',
+              'Выбор страховой компании',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,7 +189,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 56.0),
-                  child: Text("Это займет у вас не более 5 минут"),
+                  child: Text("Это займет у вас не более 2 минут"),
                 )
               ],
             ),

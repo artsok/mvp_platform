@@ -148,17 +148,18 @@ class TableCalendar extends StatefulWidget {
 
 class _TableCalendarState extends State<TableCalendar>
     with TickerProviderStateMixin {
-  bool _collapsed = false;
-  double height;
+  bool collapsed = false;
   double opacity = 1.0;
   AnimationController animationController;
   Animation<double> calendarHeightAnimation;
   Animation<double> calendarOpacityAnimation;
-  GlobalKey calendarKey = GlobalKey();
+  GlobalKey calendarKey;
 
   @override
   void initState() {
     super.initState();
+
+    calendarKey = GlobalKey();
 
     animationController = AnimationController(
       duration: const Duration(seconds: 1),
@@ -185,23 +186,22 @@ class _TableCalendarState extends State<TableCalendar>
       ),
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (calendarHeightAnimation == null) {
-        final calendarContext = calendarKey.currentContext;
-        double height = 460.0;
-        if (calendarContext != null) {
-          final box = calendarContext.findRenderObject() as RenderBox;
-          height = box.size.height;
-        }
-        calendarHeightAnimation = Tween<double>(
-          begin: height,
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+  }
+
+  void _afterLayout(_) {
+    if (calendarHeightAnimation == null) {
+      setState(() {
+        final RenderBox renderBox = calendarKey.currentContext.findRenderObject();
+        calendarHeightAnimation = calendarHeightAnimation = Tween<double>(
+          begin: renderBox.size.height,
           end: 18.0,
         ).animate(CurvedAnimation(
           parent: animationController,
           curve: Interval(0, 1, curve: Curves.ease),
         ));
-      }
-    });
+      });
+    }
   }
 
   @override
@@ -312,58 +312,73 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
-  void _toggleCalendar() {
+  Future<void> _toggleCalendar() async {
     setState(() {
-      _collapsed = !_collapsed;
-      if (!_collapsed) {
+      collapsed = !collapsed;
+    });
+    try {
+      if (!collapsed) {
         print('Opening calendar');
-        height = null;
-        opacity = 1.0;
+        await animationController.forward();
       } else {
         print('Collapsing calendar');
-        height = 18.0;
-        opacity = 0.0;
+        await animationController.reverse();
       }
-    });
+    } on TickerCanceled {}
   }
+
+//  void _toggleCalendar() {
+//    setState(() {
+//      collapsed = !collapsed;
+//    });
+//    if (collapsed) {
+//      animationController.forward();
+//    } else {
+//      animationController.reverse();
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      margin: const EdgeInsets.all(0.0),
-      duration: const Duration(seconds: 1),
-      curve: Curves.ease,
-      height: height,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black54,
-            blurRadius: 2.0,
-            offset: Offset(0.0, 2.0),
-          ),
-        ],
-      ),
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (BuildContext context, Widget child) {
+        return child;
+      },
+      child: Container(
+        height: calendarHeightAnimation == null
+            ? null
+            : calendarHeightAnimation.value,
+        margin: const EdgeInsets.all(0.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 2.0,
+              offset: Offset(0.0, 2.0),
+            ),
+          ],
+        ),
         child: LayoutBuilder(
-          key: calendarKey,
           builder: (_, constraints) => Stack(
             overflow: Overflow.visible,
             children: <Widget>[
-              SingleChildScrollView(
-                child: AnimatedOpacity(
-                  duration: const Duration(seconds: 1),
-                  opacity: opacity,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      if (widget.headerVisible) _buildHeader(),
+              Opacity(
+                opacity: calendarHeightAnimation == null
+                    ? 1.0
+                    : calendarOpacityAnimation.value,
+                child: Column(
+                  key: calendarKey,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    if (widget.headerVisible) _buildHeader(),
 //                Padding(
 //                  padding: widget.calendarStyle.contentPadding,
 //                  child:
-                      _buildCalendarContent(),
+                    _buildCalendarContent(),
 //                ),
-                    ],
-                  ),
+                  ],
                 ),
               ),
               Positioned(
@@ -380,6 +395,7 @@ class _TableCalendarState extends State<TableCalendar>
             ],
           ),
         ),
+      ),
     );
   }
 

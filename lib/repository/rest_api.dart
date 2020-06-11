@@ -32,7 +32,7 @@ Future<String> loadJson(String jsonFileName) async {
 }
 
 class Service {
-  Service._privateConstructor() {}
+  Service._privateConstructor();
 
   static final Service _instance = Service._privateConstructor();
 

@@ -43,7 +43,7 @@ class Service {
     this.serviceType = serviceType;
   }
 
-  Service() {}
+  Service();
 
   Service.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : null;

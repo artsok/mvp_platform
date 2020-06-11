@@ -63,7 +63,7 @@ class VisitInfo {
     this.client = client;
   }
 
-  VisitInfo() {}
+  VisitInfo();
 
   @override
   String toString() {

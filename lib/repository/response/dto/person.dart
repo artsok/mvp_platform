@@ -11,7 +11,7 @@ class Person {
     lastName = json['lastName'] != null ? json['lastName'] : null;
   }
 
-  Person() {}
+  Person();
 
   String getFirstName() {
     return firstName;

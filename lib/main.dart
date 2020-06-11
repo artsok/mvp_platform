@@ -101,7 +101,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HttpConnectionScreen(),
+        home: SmoBirthInfoScreen(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),

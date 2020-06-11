@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class Doctor {
+class Doctor with ChangeNotifier {
   String profession;
   String name;
   String photoPath;
-  double rating;
+  double _rating;
 
-  Doctor._(this.profession, this.name, this.photoPath, this.rating);
+  Doctor._(this.profession, this.name, this.photoPath, this._rating);
 
   factory Doctor({
     @required String profession,
@@ -17,7 +17,7 @@ class Doctor {
     assert(profession != null && profession.isNotEmpty);
     assert(name != null && name.isNotEmpty);
     photoPath = photoPath ?? 'assets/images/doctor.jpg';
-    return Doctor._(profession, name, photoPath, -1);
+    return Doctor._(profession, name, photoPath, 0.0);
   }
 
   @override
@@ -29,4 +29,12 @@ class Doctor {
 
   @override
   int get hashCode => profession.hashCode + name.hashCode;
+
+
+  double get rating => _rating;
+
+  set rating(double value) {
+    _rating = value.toDouble();
+    notifyListeners();
+  }
 }

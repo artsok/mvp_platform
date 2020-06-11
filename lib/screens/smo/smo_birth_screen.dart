@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
-import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
-import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
-import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
-import 'package:mvp_platform/wizards/smo_wizard.dart';
 
 class SmoBirthInfoScreen extends StatefulWidget {
   static const routeName = '/smo-birth-screen';

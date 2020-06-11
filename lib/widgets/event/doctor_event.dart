@@ -4,6 +4,7 @@ import 'package:mvp_platform/models/event/doctor_event.dart' as EventModel;
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/widgets/event/doctor_event_details.dart';
 import 'package:mvp_platform/widgets/event/event_header.dart';
+import 'package:provider/provider.dart';
 
 class DoctorEvent extends StatelessWidget {
   final EventModel.DoctorEvent event;
@@ -18,12 +19,19 @@ class DoctorEvent extends StatelessWidget {
         DoctorVisitDetailsScreen.routeName,
         arguments: DoctorVisitDetailsScreenArguments(event),
       ),
-      child: Column(
-        children: <Widget>[
-          EventHeader(event),
-          DoctorEventDetails(event),
-        ],
-      ),
+      child:
+          MultiProvider(
+            providers: [
+              ChangeNotifierProvider.value(value: event),
+              ChangeNotifierProvider.value(value: event.doctor),
+            ],
+            child: Column(
+              children: <Widget>[
+                EventHeader(),
+                DoctorEventDetails(),
+              ],
+            ),
+          ),
     );
   }
 }

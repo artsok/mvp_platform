@@ -6,11 +6,10 @@ import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
@@ -255,10 +254,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                     VoidCallback onStepCancel}) =>
                   Container(),
               steps: steps,
-              currentStep: currentStep,
-              onStepContinue: nextStep,
-              onStepCancel: cancelStep,
-              onStepTapped: (step) => goTo(step),
+//              onStepContinue: nextStep,
+//              onStepCancel: cancelStep,
+//              onStepTapped: (step) => goTo(step),
             ),
             Align(
               alignment: Alignment.center,
@@ -326,3 +324,5 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
     );
   }
 }
+
+

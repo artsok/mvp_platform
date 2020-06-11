@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/gos_button.dart';
+
 
 class Services extends StatelessWidget {
   static const tabName = 'Услуги';
@@ -43,15 +43,6 @@ class Services extends StatelessWidget {
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
                 onTap: () =>
                     Navigator.pushNamed(context, SmoInfoScreen.routeName),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-                leading: Icon(Icons.calendar_today),
-                title: const Text('Календарь',
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
-                onTap: () =>
-                    Navigator.pushNamed(context, CalendarScreen.routeName),
               ),
             ],
           ),

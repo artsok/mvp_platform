@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/doctor.dart';
+import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/hospital.dart';
-import 'package:mvp_platform/res/app_icons.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/widgets/common/popup_menu.dart';
+import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
+import 'package:provider/provider.dart';
 
 class DoctorVisitDetailsScreen extends StatelessWidget {
   static final routeName = '/doctor-visit-details-screen';
@@ -27,16 +30,22 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
         title: const Text('Запись на прием'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            VisitStateHeader(event),
-            VisitDateTime(event),
-            PatientInfo(),
-            DoctorInfo(event.doctor),
-            HospitalInfo(),
-            SizedBox(height: 8.0),
-            AvailableActions(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: event),
+            ChangeNotifierProvider.value(value: event.doctor),
           ],
+          child: Column(
+            children: <Widget>[
+              VisitStateHeader(event),
+              VisitDateTime(event),
+              PatientInfo(),
+              DoctorInfo(),
+              HospitalInfo(),
+              SizedBox(height: 8.0),
+              AvailableActions(),
+            ],
+          ),
         ),
       ),
     );
@@ -60,7 +69,9 @@ class VisitStateHeader extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
-                  AppIcons.home,
+                  event.eventState == EventState.planned
+                      ? Icons.event
+                      : Icons.check_circle_outline,
                   color: event.eventState.colors().item1,
                 ),
               ),
@@ -176,12 +187,11 @@ class PatientInfo extends StatelessWidget {
 }
 
 class DoctorInfo extends StatelessWidget {
-  final Doctor doctor;
-
-  const DoctorInfo(this.doctor, {Key key}) : super(key: key);
+  const DoctorInfo({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final doctor = Provider.of<Doctor>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -194,11 +204,27 @@ class DoctorInfo extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Врач',
-                  style: TextStyle(
-                    color: Colors.black54,
-                  ),
+                Row(
+                  children: <Widget>[
+                    Consumer<Doctor>(
+                      builder:
+                          (BuildContext context, Doctor doctor, Widget child) {
+                        if (doctor.rating != 0.0) {
+                          return Icon(
+                            Rate.values[doctor.rating.toInt() - 1].icon,
+                            color: Rate.values[doctor.rating.toInt() - 1].color,
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
+                    const Text(
+                      'Врач',
+                      style: TextStyle(
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 4.0),
                 Text(
@@ -276,7 +302,10 @@ class HospitalInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.location_on),
+              Icon(
+                Icons.location_on,
+                color: Colors.blue[700],
+              ),
             ],
           ),
         ],
@@ -288,6 +317,7 @@ class HospitalInfo extends StatelessWidget {
 class AvailableActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final doctor = Provider.of<Doctor>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -310,27 +340,86 @@ class AvailableActions extends StatelessWidget {
             horizontal: 16.0,
             vertical: 8.0,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Отменить запись',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.blue[600],
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4.0),
-              Text(
-                'Перенести запись',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.blue[600],
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+          child: Consumer<DoctorEvent>(
+            builder: (context, event, child) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                if (event.eventState != EventState.complete)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Отменить запись',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue[600],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                if (event.eventState != EventState.complete)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Перенести запись',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.blue[600],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                if (event.eventState == EventState.complete)
+                  PopupMenuButton(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Оценить специалиста',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.blue[600],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (BuildContext context) => [
+                      RatePopupMenu(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Row(
+                            children: <Widget>[
+                              RatePopupMenuButton(
+                                callback: () =>
+                                    doctor.rating = Rate.rate1.value.toDouble(),
+                                rate: Rate.rate1,
+                              ),
+                              RatePopupMenuButton(
+                                callback: () =>
+                                    doctor.rating = Rate.rate2.value.toDouble(),
+                                rate: Rate.rate2,
+                              ),
+                              RatePopupMenuButton(
+                                callback: () =>
+                                    doctor.rating = Rate.rate3.value.toDouble(),
+                                rate: Rate.rate3,
+                              ),
+                              RatePopupMenuButton(
+                                callback: () =>
+                                    doctor.rating = Rate.rate4.value.toDouble(),
+                                rate: Rate.rate4,
+                              ),
+                              RatePopupMenuButton(
+                                callback: () =>
+                                    doctor.rating = Rate.rate5.value.toDouble(),
+                                rate: Rate.rate5,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
       ],

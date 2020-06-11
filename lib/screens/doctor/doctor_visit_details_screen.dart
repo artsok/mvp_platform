@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/doctor.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/hospital.dart';
+import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/widgets/common/popup_menu.dart';
 import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:provider/provider.dart';
 
 class DoctorVisitDetailsScreen extends StatelessWidget {
@@ -19,7 +22,8 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final DoctorVisitDetailsScreenArguments args =
         ModalRoute.of(context).settings.arguments;
-    final DoctorEvent event = args.event;
+    final client = args.client;
+    final visit = args.visit;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,13 +36,13 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: MultiProvider(
           providers: [
-            ChangeNotifierProvider.value(value: event),
-            ChangeNotifierProvider.value(value: event.doctor),
+            ChangeNotifierProvider.value(value: client),
+            ChangeNotifierProvider.value(value: visit),
           ],
           child: Column(
             children: <Widget>[
-              VisitStateHeader(event),
-              VisitDateTime(event),
+              VisitStatusHeader(visit),
+              VisitDateTime(visit),
               PatientInfo(),
               DoctorInfo(),
               HospitalInfo(),
@@ -52,10 +56,10 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
   }
 }
 
-class VisitStateHeader extends StatelessWidget {
-  final DoctorEvent event;
+class VisitStatusHeader extends StatelessWidget {
+  final VisitExt visit;
 
-  const VisitStateHeader(this.event, {Key key}) : super(key: key);
+  const VisitStatusHeader(this.visit, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +73,10 @@ class VisitStateHeader extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
-                  event.eventState == EventState.planned
+                  visit.status.toVisitStatus() == VisitStatus.serviceRegistered
                       ? Icons.event
                       : Icons.check_circle_outline,
-                  color: event.eventState.colors().item1,
+                  color: visit.status.toVisitStatus().colors().item1,
                 ),
               ),
               Container(
@@ -81,7 +85,7 @@ class VisitStateHeader extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      event.eventState.translate(),
+                      visit.status.toVisitStatus().translate(),
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -101,7 +105,7 @@ class VisitStateHeader extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Icon(
               CupertinoIcons.forward,
-              color: event.eventState.colors().item1,
+              color: visit.status.toVisitStatus().colors().item1,
             ),
           ),
         ],
@@ -111,13 +115,13 @@ class VisitStateHeader extends StatelessWidget {
 }
 
 class VisitDateTime extends StatelessWidget {
-  final DoctorEvent event;
+  final VisitExt visit;
 
-  const VisitDateTime(this.event, {Key key}) : super(key: key);
+  const VisitDateTime(this.visit, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return event.eventState == EventState.planned
+    return visit.status.toVisitStatus() == VisitStatus.serviceRegistered
         ? Container()
         : Container(
             width: double.infinity,
@@ -137,7 +141,7 @@ class VisitDateTime extends StatelessWidget {
                   ),
                   SizedBox(height: 4.0),
                   Text(
-                    DateFormat('dd.MM.yyyy HH:mm').format(event.startsAt),
+                    DateFormat('dd.MM.yyyy HH:mm').format(visit.planDate),
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -191,67 +195,70 @@ class DoctorInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final doctor = Provider.of<Doctor>(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 8.0,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    final visit = Provider.of<VisitExt>(context);
+    return visit.doctor == null
+        ? Container()
+        : Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Consumer<Doctor>(
-                      builder:
-                          (BuildContext context, Doctor doctor, Widget child) {
-                        if (doctor.rating != 0.0) {
-                          return Icon(
-                            Rate.values[doctor.rating.toInt() - 1].icon,
-                            color: Rate.values[doctor.rating.toInt() - 1].color,
-                          );
-                        }
-                        return Container();
-                      },
-                    ),
-                    const Text(
-                      'Врач',
-                      style: TextStyle(
-                        color: Colors.black54,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Consumer<VisitExt>(
+                            builder: (BuildContext context, VisitExt visit,
+                                Widget child) {
+                              if (visit.rating != null && visit.rating != 0) {
+                                return Icon(
+                                  Rate.values[visit.rating.toInt() - 1].icon,
+                                  color: Rate
+                                      .values[visit.rating.toInt() - 1].color,
+                                );
+                              }
+                              return Container();
+                            },
+                          ),
+                          const Text(
+                            'Врач',
+                            style: TextStyle(
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4.0),
-                Text(
-                  doctor.profession,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+                      SizedBox(height: 4.0),
+                      Text(
+                        visit.doctor.specialty,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '${visit.doctor.lastName} ${visit.doctor.midName} ${visit.doctor.lastName}',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  doctor.name,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                Container(
+                  width: 95.0,
+                  height: 95.0,
+                  child: Image.asset('assets/images/doctor.jpg'),
+                )
               ],
             ),
-          ),
-          Container(
-            width: 95.0,
-            height: 95.0,
-            child: Image.asset(doctor.photoPath),
-          )
-        ],
-      ),
-    );
+          );
   }
 }
 
@@ -317,7 +324,7 @@ class HospitalInfo extends StatelessWidget {
 class AvailableActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final doctor = Provider.of<Doctor>(context);
+    final visit = Provider.of<VisitExt>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -340,11 +347,12 @@ class AvailableActions extends StatelessWidget {
             horizontal: 16.0,
             vertical: 8.0,
           ),
-          child: Consumer<DoctorEvent>(
-            builder: (context, event, child) => Column(
+          child: Consumer<VisitExt>(
+            builder: (context, visit, child) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                if (event.eventState != EventState.complete)
+                if (visit.status.toVisitStatus() !=
+                    VisitStatus.serviceCompleted)
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -356,7 +364,8 @@ class AvailableActions extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (event.eventState != EventState.complete)
+                if (visit.status.toVisitStatus() !=
+                    VisitStatus.serviceCompleted)
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -368,7 +377,8 @@ class AvailableActions extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (event.eventState == EventState.complete)
+                if (visit.status.toVisitStatus() ==
+                    VisitStatus.serviceCompleted)
                   PopupMenuButton(
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
@@ -388,28 +398,23 @@ class AvailableActions extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               RatePopupMenuButton(
-                                callback: () =>
-                                    doctor.rating = Rate.rate1.value.toDouble(),
+                                callback: () => visit.rating = Rate.rate1.value,
                                 rate: Rate.rate1,
                               ),
                               RatePopupMenuButton(
-                                callback: () =>
-                                    doctor.rating = Rate.rate2.value.toDouble(),
+                                callback: () => visit.rating = Rate.rate2.value,
                                 rate: Rate.rate2,
                               ),
                               RatePopupMenuButton(
-                                callback: () =>
-                                    doctor.rating = Rate.rate3.value.toDouble(),
+                                callback: () => visit.rating = Rate.rate3.value,
                                 rate: Rate.rate3,
                               ),
                               RatePopupMenuButton(
-                                callback: () =>
-                                    doctor.rating = Rate.rate4.value.toDouble(),
+                                callback: () => visit.rating = Rate.rate4.value,
                                 rate: Rate.rate4,
                               ),
                               RatePopupMenuButton(
-                                callback: () =>
-                                    doctor.rating = Rate.rate5.value.toDouble(),
+                                callback: () => visit.rating = Rate.rate5.value,
                                 rate: Rate.rate5,
                               ),
                             ],
@@ -428,7 +433,8 @@ class AvailableActions extends StatelessWidget {
 }
 
 class DoctorVisitDetailsScreenArguments {
-  final DoctorEvent event;
+  final Client client;
+  final VisitExt visit;
 
-  DoctorVisitDetailsScreenArguments(this.event);
+  DoctorVisitDetailsScreenArguments(this.client, this.visit);
 }

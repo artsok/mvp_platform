@@ -1,4 +1,6 @@
-abstract class VisitBase {
+import 'package:flutter/cupertino.dart';
+
+abstract class VisitBase extends ChangeNotifier {
   String id;
   DateTime planDate;
   DateTime factDate;

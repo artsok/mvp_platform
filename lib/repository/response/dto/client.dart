@@ -33,7 +33,7 @@ class Client extends Person {
   BirthCertificate birthCertificate;
 
   Client.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    _gender = (json['gender'] as String)?.toGender();
+    _gender = json['gender'] == null ? null : (json['gender'] as String).toGender();
     birthDate =
         json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
     phone = json['phone'] != null ? json['phone'] : null;

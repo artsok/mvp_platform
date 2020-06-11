@@ -2,7 +2,7 @@ library table_calendar;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/widgets/pin.dart';
 import 'package:provider/provider.dart';

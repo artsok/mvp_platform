@@ -1,30 +1,52 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mvp_platform/repository/response/dto/visit_info.dart';
-import 'package:mvp_platform/repository/rest_api.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class TestHttpConnectionForm extends StatefulWidget {
-  final String url;
+import 'package:flutter/cupertino.dart';
+import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
+import 'package:mvp_platform/repository/rest_api.dart';
+import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 
-  TestHttpConnectionForm({String url}) : url = url;
+class VisitsInfoProvider extends ChangeNotifier {
+  final VisitsInfoData _data = VisitsInfoData();
 
-  @override
-  State<StatefulWidget> createState() => TestHttpState();
-}
+  VisitsInfoProvider._();
 
-class TestHttpState extends State<TestHttpConnectionForm> {
-  String _url, _body;
+  static final _instance = VisitsInfoProvider._();
 
-  @override
-  void initState() {
-    _url = widget.url;
-    super.initState();
+  factory VisitsInfoProvider() {
+    return _instance;
   }
 
-  _sendRequestPost() async {
-    _body = await Service().controlCardVisitInfo();
+  Future<VisitsInfoProvider> fetchData() async {
+    _data.responseStatus = null;
+    notifyListeners();
+    try {
+      List<VisitInfo> allVisitsInfo = await _fetchData();
+      Client client = allVisitsInfo
+          .firstWhere((visitInfo) => visitInfo.client.id == null)
+          .client;
+      _data.client = client;
+      allVisitsInfo
+          .forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
+      _data.responseStatus = ResponseStatus.success;
+      notifyListeners();
+    } on Exception catch (e, stackTrace) {
+      print('Error: $e\n$stackTrace');
+    }
+    return this;
+  }
+
+  VisitsInfoData get data => _data;
+
+  Future<List<VisitInfo>> _fetchData() async {
+//    String response =
+//        await Service().controlCardVisitInfo().catchError(print, test: (error) {
+//      _data.responseStatus = ResponseStatus.error;
+//      print('Error: $error');
+//      return false;
+//    });
+//    await Future.delayed(Duration(seconds: 2), () {});
     final jsonData = json.decode("""{
   "jsonrpc": "2.0",
   "id": 1,
@@ -156,41 +178,9 @@ class TestHttpState extends State<TestHttpConnectionForm> {
 }""");
     //final jsonData = json.decode(_body); //Надо делать заглушку, если отвалиться интернет.
     var map = Map<String, dynamic>.from(jsonData);
-    List<VisitInfo> list =
-        map["result"].map<VisitInfo>((i) => VisitInfo.fromJson(i)).toList();
-    setState(() {}); //reBuildWidget
-  }
-
-  Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-                child: Text(
-                  'API url',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.blue,
-                  ),
-                ),
-                padding: const EdgeInsets.all(10.0)),
-            RaisedButton(
-              child: Text('Send request POST'),
-              onPressed: _sendRequestPost,
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              'Response body',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.blue,
-              ),
-            ),
-            Text(_body == null ? '' : _body),
-          ],
-        ),
-      ),
-    );
+    List<VisitInfo> list = map['result']
+        .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
+        .toList();
+    return list;
   }
 }

@@ -19,7 +19,7 @@ class Doctor extends Person {
     this.specialty = specialty;
   }
 
-  Doctor.withId(String id) : super.withId(id) {}
+  Doctor.withId(String id) : super.withId(id);
 
   Doctor.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     specialty = json['specialty'] != null ? json['specialty'] : null;

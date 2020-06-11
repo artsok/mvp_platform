@@ -72,7 +72,7 @@ class VisitInfo {
 }
 
 class VisitExt extends VisitBase {
-  ByteData rating;
+  int rating;
   String status;
   Doctor doctor;
   Service service;
@@ -85,11 +85,11 @@ class VisitExt extends VisitBase {
         json['service'] != null ? Service.fromJson(json['service']) : null;
   }
 
-  ByteData getRating() {
+  int getRating() {
     return rating;
   }
 
-  void setRating(ByteData rating) {
+  void setRating(int rating) {
     this.rating = rating;
   }
 
@@ -118,7 +118,7 @@ class VisitExt extends VisitBase {
   }
 
   VisitExt(String id, DateTime planDate, DateTime factDate, Service service,
-      Doctor doctor, ByteData rating, String status)
+      Doctor doctor, int rating, String status)
       : super.all(id, planDate, factDate) {
     this.rating = rating;
     this.status = status;

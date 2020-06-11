@@ -9,6 +9,8 @@ import 'client/legal_representative.dart';
 import 'client/parent.dart';
 import 'client/policy.dart';
 import 'client/registration.dart';
+import 'dart:developer';
+
 
 class Client extends Person {
   GenderEnum gender;
@@ -243,4 +245,9 @@ class Client extends Person {
   Client.withoutArgs() : super();
 
   Client.withId(String id) : super.withId(id);
+
+  @override
+  String toString() {
+    return 'Client{gender: $gender, birthDate: $birthDate, phone: $phone, email: $email, registrationAddress: $registrationAddress, registrationSince: $registrationSince, residentialAddress: $residentialAddress, legalRepresentative: $legalRepresentative, benefitCategoryCode: $benefitCategoryCode, snils: $snils, nationality: $nationality, identity: $identity, policy: $policy, birthPlace: $birthPlace, birthAct: $birthAct, parents: $parents, registration: $registration, birthCertificate: $birthCertificate}';
+  }
 }

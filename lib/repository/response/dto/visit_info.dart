@@ -1,6 +1,7 @@
-import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/service.dart';
 import 'package:mvp_platform/repository/response/dto/visit_base.dart';
 
 import 'doctor.dart';
@@ -11,6 +12,13 @@ class VisitInfo {
   MedicalOrganization medicalOrganization;
   List<VisitExt> visits;
   Client client;
+
+  VisitInfo.fromJson(Map<String, dynamic> json) {
+    controlCardId = json['controlCardId'];
+    medicalOrganization =
+        MedicalOrganization.fromJson(json['medicalOrganization']);
+    visits = (json['visits'] as List).map((i) => VisitExt.fromJson(i)).toList();
+  }
 
   MedicalOrganization getMedicalOrganization() {
     return medicalOrganization;
@@ -61,6 +69,13 @@ class VisitExt extends VisitBase {
   Doctor doctor;
   Service service;
 
+  VisitExt.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    rating = json['rating'];
+    status = json['status'];
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
+    service = json['service'] != null ? Service.fromJson(json['service']) : null;
+  }
+
   ByteData getRating() {
     return rating;
   }
@@ -94,7 +109,7 @@ class VisitExt extends VisitBase {
   }
 
   VisitExt(String id, DateTime planDate, DateTime factDate,
-      Service service, Doctor doctor, ByteData rating, String status) : super.a(id, planDate, factDate) {
+      Service service, Doctor doctor, ByteData rating, String status) : super.all(id, planDate, factDate) {
     this.rating = rating;
     this.status = status;
     this.doctor = doctor;

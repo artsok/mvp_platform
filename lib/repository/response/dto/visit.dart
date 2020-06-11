@@ -1,32 +1,17 @@
-class Visit {
-  DateTime planDate;
-  DateTime factDate;
+import 'package:mvp_platform/repository/response/dto/visit_base.dart';
+
+class Visit extends VisitBase {
   String doctorId;
-  String service;
+  String serviceId;
 
-  Visit({DateTime planDate, DateTime factDate, String doctorId,
-      String service}) {
-    this.planDate = planDate;
-    this.factDate = factDate;
-    this.doctorId = doctorId;
-    this.service = service;
+  Visit.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+    doctorId = json['doctorId'] != null ? json['doctorId'] : null;
+    serviceId = json['serviceId'] != null ? json['serviceId'] : null;
   }
 
-  DateTime getPlanDate() {
-    return planDate;
-  }
+  Visit();
 
-  void setPlanDate(DateTime planDate) {
-    this.planDate = planDate;
-  }
-
-  DateTime getFactDate() {
-    return factDate;
-  }
-
-  void setFactDate(DateTime factDate) {
-    this.factDate = factDate;
-  }
+  Visit.withPlanDate(DateTime planDate) : super.withPlanDate(planDate);
 
   String getDoctorId() {
     return doctorId;
@@ -36,11 +21,11 @@ class Visit {
     this.doctorId = doctorId;
   }
 
-  String getService() {
-    return service;
+  String getServiceId() {
+    return serviceId;
   }
 
-  void setService(String service) {
-    this.service = service;
+  void setServiceId(String serviceId) {
+    this.serviceId = serviceId;
   }
 }

@@ -2,16 +2,16 @@ abstract class VisitBase {
   String id;
   DateTime planDate;
   DateTime factDate;
-  String service;
-
-  VisitBase() {}
 
   VisitBase.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    planDate = DateTime.parse(json['planDate']);
-    factDate = json['factDate'] != null ? DateTime.parse(json['factDate']) : null;
-    service = json['service'];
+    planDate =
+        json['planDate'] != null ? DateTime.parse(json['planDate']) : null;
+    factDate =
+        json['factDate'] != null ? DateTime.parse(json['factDate']) : null;
   }
+
+  VisitBase();
 
   VisitBase.withPlanDate(DateTime planDate) {
     this.planDate = planDate;
@@ -22,12 +22,10 @@ abstract class VisitBase {
     this.factDate = factDate;
   }
 
-  VisitBase.all(
-      String id, DateTime planDate, DateTime factDate, String service) {
+  VisitBase.all(String id, DateTime planDate, DateTime factDate) {
     this.id = id;
     this.planDate = planDate;
     this.factDate = factDate;
-    this.service = service;
   }
 
   String getId() {
@@ -52,18 +50,5 @@ abstract class VisitBase {
 
   void setFactDate(DateTime factDate) {
     this.factDate = factDate;
-  }
-
-  String getService() {
-    return service;
-  }
-
-  void setService(String service) {
-    this.service = service;
-  }
-
-  @override
-  String toString() {
-    return 'VisitBase{id: $id, planDate: $planDate, factDate: $factDate, service: $service}';
   }
 }

@@ -41,7 +41,7 @@ class BirthSmoProvider extends ChangeNotifier {
     final jsonData = json.decode(response);
     var map = Map<String, dynamic>.from(jsonData);
     var client = Client.fromJson(map["result"]);
-    log('Received list: $client');
+    log('Received client: $client');
     return client;
   }
 }

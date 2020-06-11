@@ -14,13 +14,12 @@ class VisitInfo {
   Client client;
 
   VisitInfo.fromJson(Map<String, dynamic> json) {
-    controlCardId =
-        json['controlCardId'] != null ? json['controlCardId'] : null;
+    controlCardId = json['controlCardId'];
     medicalOrganization = json['medicalOrganization'] != null
         ? MedicalOrganization.fromJson(json['medicalOrganization'])
         : null;
+    client = json['client'] == null ? null : Client.fromJson(json['client']);
     visits = (json['visits'] as List).map((i) => VisitExt.fromJson(i)).toList();
-    client = json['client'] != null ? Client.fromJson(json['client']) : null;
   }
 
   MedicalOrganization getMedicalOrganization() {
@@ -63,7 +62,7 @@ class VisitInfo {
     this.client = client;
   }
 
-  VisitInfo() {}
+  VisitInfo();
 
   @override
   String toString() {
@@ -72,25 +71,24 @@ class VisitInfo {
 }
 
 class VisitExt extends VisitBase {
-  int rating;
+  int _rating;
   String status;
   Doctor doctor;
   Service service;
 
   VisitExt.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    rating = json['rating'];
+    _rating = json['rating'];
     status = json['status'];
     doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
     service =
         json['service'] != null ? Service.fromJson(json['service']) : null;
   }
 
-  int getRating() {
-    return rating;
-  }
+  int get rating => _rating;
 
-  void setRating(int rating) {
-    this.rating = rating;
+  set rating(int rating) {
+    _rating = rating;
+    notifyListeners();
   }
 
   String getStatus() {

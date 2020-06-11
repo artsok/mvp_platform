@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mvp_platform/models/doctor.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 
 class DoctorEvent with ChangeNotifier {
   DateTime startsAt;
   DateTime endsAt;
   String description;
-  EventState _eventState;
+  VisitStatus _eventState;
   Doctor doctor;
   String imagePath;
 
@@ -14,7 +14,7 @@ class DoctorEvent with ChangeNotifier {
     this.startsAt,
     this.endsAt,
     this.description,
-    EventState eventState,
+    VisitStatus eventState,
     this.doctor,
     this.imagePath,
   }) {
@@ -26,7 +26,7 @@ class DoctorEvent with ChangeNotifier {
     @required DateTime endsAt,
     @required Doctor doctor,
     String description,
-    EventState eventState,
+    VisitStatus eventState,
     String imagePath,
   }) {
     assert(doctor != null);
@@ -66,7 +66,7 @@ class DoctorEvent with ChangeNotifier {
         description.hashCode;
   }
 
-  EventState get eventState => _eventState;
+  VisitStatus get eventState => _eventState;
 
   set eventState(eventState) {
     _eventState = eventState;
@@ -74,17 +74,15 @@ class DoctorEvent with ChangeNotifier {
     notifyListeners();
   }
 
-  void cancel() => eventState = EventState.canceled;
-
-  static EventState calculateState(
+  static VisitStatus calculateState(
       DateTime eventStart, DateTime eventEnd, DateTime date) {
     if (eventStart.compareTo(date) >= 0) {
-      return EventState.planned;
+      return VisitStatus.serviceRegistered;
     }
     if (eventStart.compareTo(date) < 0 && eventEnd.compareTo(date) >= 0) {
       // return active
-      return EventState.planned;
+      return VisitStatus.serviceRegistered;
     }
-    return EventState.complete;
+    return VisitStatus.serviceCompleted;
   }
 }

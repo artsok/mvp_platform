@@ -1,4 +1,7 @@
-class Person {
+import 'package:flutter/cupertino.dart';
+
+class Person extends ChangeNotifier {
+
   String id;
   String firstName;
   String midName;
@@ -7,11 +10,11 @@ class Person {
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : null;
     firstName = json['firstName'] != null ? json['firstName'] : null;
-    midName = json['lastName'] !=null ? json['lastName'] : null;
+    midName = json['midName'] !=null ? json['midName'] : null;
     lastName = json['lastName'] != null ? json['lastName'] : null;
   }
 
-  Person() {}
+  Person();
 
   String getFirstName() {
     return firstName;

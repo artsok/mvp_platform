@@ -6,7 +6,6 @@ class TreatmentActivity {
   bool completed;
   String doctorId;
 
-
   TreatmentActivity(
       {String activity, DateTime beginDate, String doctorId}) {
     this.activity = activity;

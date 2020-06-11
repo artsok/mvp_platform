@@ -3,17 +3,17 @@ import 'package:intl/intl.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
-import 'package:mvp_platform/models/event/doctor_event.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:provider/provider.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
-class EventHeader extends StatelessWidget {
-
+class DoctorVisitItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
-    final event = Provider.of<DoctorEvent>(context);
+    final visit = Provider.of<VisitExt>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -25,11 +25,11 @@ class EventHeader extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    '${event.startsAt.day}',
+                    '${visit.planDate.day}',
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
-                      color: event.eventState.colors().item1,
+                      color: visit.status.toVisitStatus().colors().item1,
                     ),
                   ),
                   Padding(
@@ -38,17 +38,17 @@ class EventHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '${DateFormat(DateFormat.MONTH, locale).format(event.startsAt)}',
+                          '${DateFormat(DateFormat.MONTH, locale).format(visit.planDate)}',
                           style: TextStyle(
                             fontSize: 18.0,
-                            color: event.eventState.colors().item1,
+                            color: visit.status.toVisitStatus().colors().item1,
                           ),
                         ),
                         Text(
-                          '(${DateFormat(DateFormat.WEEKDAY, locale).format(event.startsAt)})',
+                          '(${DateFormat(DateFormat.WEEKDAY, locale).format(visit.planDate)})',
                           style: TextStyle(
                             fontSize: 12.0,
-                            color: event.eventState.colors().item1,
+                            color: visit.status.toVisitStatus().colors().item1,
                           ),
                         ),
                       ],
@@ -60,16 +60,16 @@ class EventHeader extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: event.eventState == EventState.planned
+            child: visit.status.toVisitStatus() == VisitStatus.serviceRegistered
                 ? Container(
                     constraints: BoxConstraints(
                       maxWidth: 105.0,
                     ),
                     child: Text(
-                      event.eventState.translate(),
+                      visit.status.toVisitStatus().translate(),
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: event.eventState.colors().item3,
+                        color: visit.status.toVisitStatus().colors().item3,
                         fontSize: 16.0,
                       ),
                     ),
@@ -78,29 +78,31 @@ class EventHeader extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Text(
-                        '${event.eventState.translate()}',
+                        '${visit.status.toVisitStatus().translate()}',
                         style: TextStyle(
                           fontSize: 12.0,
-                          color: event.eventState.colors().item3,
+                          color: visit.status.toVisitStatus().colors().item3,
                         ),
                       ),
-                      Consumer<Doctor>(
-                        builder: (BuildContext context, Doctor doctor,
+                      Consumer<VisitExt>(
+                        builder: (BuildContext context, VisitExt visit,
                             Widget child) {
                           return Row(
                             children: <Widget>[
                               Text(
-                                '${DateFormat(DateFormat.HOUR24_MINUTE).format(event.startsAt)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(event.endsAt)}',
+                                '${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate.add(Duration(minutes: 30)))}',
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  color: event.eventState.colors().item3,
+                                  color: visit.status
+                                      .toVisitStatus()
+                                      .colors()
+                                      .item3,
                                 ),
                               ),
-                              if (doctor.rating != 0.0)
+                              if (visit.rating != null && visit.rating != 0.0)
                                 Icon(
-                                  Rate.values[doctor.rating.toInt() - 1].icon,
-                                  color: Rate
-                                      .values[doctor.rating.toInt() - 1].color,
+                                  Rate.values[visit.rating - 1].icon,
+                                  color: Rate.values[visit.rating - 1].color,
                                 ),
                             ],
                           );

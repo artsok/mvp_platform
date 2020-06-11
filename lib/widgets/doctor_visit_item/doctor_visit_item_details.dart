@@ -1,25 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/doctor.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
-import 'package:mvp_platform/models/event/doctor_event.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/widgets/common/popup_menu.dart';
 import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:provider/provider.dart';
 
-class DoctorEventDetails extends StatelessWidget {
+class DoctorVisitItemDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final event = Provider.of<DoctorEvent>(context);
+    final visit = Provider.of<VisitExt>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        color: event.eventState.colors().item2,
-        child: event.doctor == null
-            ? Text(event.description)
+        color: visit.status.toVisitStatus().colors().item2,
+        child: visit.doctor == null
+            ? Container(
+                height: 50.0,
+                width: double.infinity,
+                child:
+                    Text(visit.service?.name == null ? '' : visit.service.name))
             : Column(
                 children: <Widget>[
                   Row(
@@ -29,15 +34,28 @@ class DoctorEventDetails extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              event.doctor.name,
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                if (visit.doctor.lastName != null)
+                                  Text(
+                                    visit.doctor.lastName.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 26.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                Text(
+                                  '${visit.doctor.firstName == null ? '' : visit.doctor.firstName }${visit.doctor.midName == null ? '' : visit.doctor.midName}',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(height: 8),
-                            Text(event.doctor.profession),
+                            Text(visit.doctor.specialty),
                           ],
                         ),
                       ),
@@ -46,7 +64,7 @@ class DoctorEventDetails extends StatelessWidget {
                         width: 80.0,
                         height: 80.0,
                         child: ClipRRect(
-                          child: Image.asset(event.doctor.photoPath),
+                          child: Image.asset('assets/images/doctor.jpg'),
                           borderRadius: BorderRadius.circular(40.0),
                         ),
                       ),
@@ -58,14 +76,17 @@ class DoctorEventDetails extends StatelessWidget {
                       SizedBox(height: 8.0),
                       Expanded(
                         child: Text(
-                          event.description,
+                          visit.service.serviceType,
                           style: TextStyle(fontSize: 20.0),
                         ),
                       ),
-                      if (event.eventState == EventState.complete)
+                      if (visit.status.toVisitStatus() ==
+                          VisitStatus.serviceCompleted)
                         GestureDetector(
                           onTap: () {
-                            event.eventState = EventState.approved;
+                            visit.status = VisitStatus.serviceRegistered
+                                .toString()
+                                .split('.')[1];
                           },
                           child: Consumer<Doctor>(
                             builder: (BuildContext context, Doctor doctor,

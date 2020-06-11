@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/event_state.dart';
+import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/providers/doctor_provider.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
@@ -17,21 +17,21 @@ class DoctorEvents with ChangeNotifier {
       doctor: Doctors.doctors[0],
       startsAt: DateTime(2020, 05, 02, 14, 15),
       endsAt: DateTime(2020, 05, 02, 14, 45),
-      eventState: EventState.complete,
+      eventState: VisitStatus.serviceCompleted,
       description: 'Посещение кардиолога первое - Постановка на Д учет - Является первой явкой по Д-учету',
     ));
     events.add(DoctorEvent(
       doctor: Doctors.doctors[1],
       startsAt: DateTime(2020, 05, 10, 10, 15),
       endsAt: DateTime(2020, 05, 10, 11),
-      eventState: EventState.approved,
+      eventState: VisitStatus.serviceRegistered,
       description: 'Ультразвуковое исследование',
     ));
     events.add(DoctorEvent(
       doctor: Doctors.doctors[1],
       startsAt: DateTime(2020, 05, 11),
       endsAt: DateTime(2020, 05, 11),
-      eventState: EventState.planned,
+      eventState: VisitStatus.serviceRegistered,
       description: 'Посещение кардиолога в рамках Д-учета',
     ));
     events.forEach((event) {

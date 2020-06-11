@@ -311,7 +311,7 @@ class CalendarController {
   bool _hasEventOnNextDay(DateTime day) =>
       _events.containsKey(day.add(Duration(days: 1)).roundToDay());
 
-  EventState _getEventState(DateTime day) {
+  VisitStatus _getVisitStatus(DateTime day) {
     List<DoctorEvent> doctorEvents = _events[day.roundToDay()];
     return doctorEvents == null ? null : doctorEvents[0].eventState;
   }

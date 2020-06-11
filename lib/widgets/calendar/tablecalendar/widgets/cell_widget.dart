@@ -55,7 +55,7 @@ class _CellWidget extends StatelessWidget {
     );
   }
 
-  Decoration _buildCellDecoration(BoxConstraints constraints, EventState eventState) {
+  Decoration _buildCellDecoration(BoxConstraints constraints, VisitStatus eventState) {
     if (eventState != null) {
       return BoxDecoration(
         borderRadius: BorderRadius.only(

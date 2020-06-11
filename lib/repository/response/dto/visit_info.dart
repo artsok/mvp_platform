@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:mvp_platform/repository/response/dto/visit_base.dart';
@@ -9,15 +10,7 @@ class VisitInfo {
   String controlCardId;
   MedicalOrganization medicalOrganization;
   List<VisitExt> visits;
-
-  VisitInfo.fromJson(Map<String, dynamic> json) {
-    controlCardId = json['controlCardId'];
-    medicalOrganization =
-        MedicalOrganization.fromJson(json['medicalOrganization']);
-    visits = (json['visits'] as List).map((i) => VisitExt.fromJson(i)).toList();
-  }
-
-  VisitInfo.withOutArgs() {}
+  Client client;
 
   MedicalOrganization getMedicalOrganization() {
     return medicalOrganization;
@@ -43,29 +36,30 @@ class VisitInfo {
     this.visits = visits;
   }
 
-  VisitInfo(String controlCardId, MedicalOrganization medicalOrganization,
-      List<VisitExt> visits) {
+  Client getClient() {
+    return client;
+  }
+
+  void setClient(Client client) {
+    this.client = client;
+  }
+
+  VisitInfo.all(String controlCardId, MedicalOrganization medicalOrganization,
+      List<VisitExt> visits, Client client) {
     this.controlCardId = controlCardId;
     this.medicalOrganization = medicalOrganization;
     this.visits = visits;
+    this.client = client;
   }
 
-  @override
-  String toString() {
-    return 'VisitInfo{controlCardId: $controlCardId, medicalOrganization: $medicalOrganization, visits: $visits}';
-  }
+  VisitInfo() {}
 }
 
 class VisitExt extends VisitBase {
   ByteData rating;
   String status;
   Doctor doctor;
-
-  VisitExt.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    rating = json['rating'];
-    status = json['status'];
-    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
-  }
+  Service service;
 
   ByteData getRating() {
     return rating;
@@ -91,17 +85,19 @@ class VisitExt extends VisitBase {
     this.doctor = doctor;
   }
 
-  VisitExt(String id, DateTime planDate, DateTime factDate, String service,
-      Doctor doctor, ByteData rating, String status)
-      : super.all(id, planDate, factDate, service) {
-    ;
+  Service getService() {
+    return service;
+  }
+
+  void setService(Service service) {
+    this.service = service;
+  }
+
+  VisitExt(String id, DateTime planDate, DateTime factDate,
+      Service service, Doctor doctor, ByteData rating, String status) : super.a(id, planDate, factDate) {
     this.rating = rating;
     this.status = status;
     this.doctor = doctor;
-  }
-
-  @override
-  String toString() {
-    return 'VisitExt{rating: $rating, status: $status, doctor: $doctor} ${super.toString()}';
+    this.service = service;
   }
 }

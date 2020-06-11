@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
 
-class DoctorEvent {
+class DoctorEvent with ChangeNotifier {
   DateTime startsAt;
   DateTime endsAt;
   String description;
-  EventState eventState;
+  EventState _eventState;
   Doctor doctor;
   String imagePath;
 
@@ -14,10 +14,12 @@ class DoctorEvent {
     this.startsAt,
     this.endsAt,
     this.description,
-    this.eventState,
+    EventState eventState,
     this.doctor,
     this.imagePath,
-  });
+  }) {
+    _eventState = eventState;
+  }
 
   factory DoctorEvent({
     @required DateTime startsAt,
@@ -49,7 +51,7 @@ class DoctorEvent {
       other is DoctorEvent &&
           startsAt == other.startsAt &&
           endsAt == other.endsAt &&
-          eventState == other.eventState &&
+          _eventState == other._eventState &&
           doctor == other.doctor &&
           imagePath == other.imagePath &&
           description == other.description;
@@ -58,10 +60,18 @@ class DoctorEvent {
   int get hashCode {
     return startsAt.hashCode +
         endsAt.hashCode +
-        eventState.hashCode +
+        _eventState.hashCode +
         doctor.hashCode +
         imagePath.hashCode +
         description.hashCode;
+  }
+
+  EventState get eventState => _eventState;
+
+  set eventState(eventState) {
+    _eventState = eventState;
+    print('Rate set');
+    notifyListeners();
   }
 
   void cancel() => eventState = EventState.canceled;

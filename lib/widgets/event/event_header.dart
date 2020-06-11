@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mvp_platform/main.dart';
+import 'package:mvp_platform/models/doctor.dart';
+import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/event/doctor_event.dart';
 import 'package:mvp_platform/models/enums/event_state.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 
 class EventHeader extends StatelessWidget {
-  final DoctorEvent event;
-
-  EventHeader(this.event);
 
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
+    final event = Provider.of<DoctorEvent>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -83,12 +84,27 @@ class EventHeader extends StatelessWidget {
                           color: event.eventState.colors().item3,
                         ),
                       ),
-                      Text(
-                        '${DateFormat(DateFormat.HOUR24_MINUTE).format(event.startsAt)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(event.endsAt)}',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          color: event.eventState.colors().item3,
-                        ),
+                      Consumer<Doctor>(
+                        builder: (BuildContext context, Doctor doctor,
+                            Widget child) {
+                          return Row(
+                            children: <Widget>[
+                              Text(
+                                '${DateFormat(DateFormat.HOUR24_MINUTE).format(event.startsAt)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(event.endsAt)}',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: event.eventState.colors().item3,
+                                ),
+                              ),
+                              if (doctor.rating != 0.0)
+                                Icon(
+                                  Rate.values[doctor.rating.toInt() - 1].icon,
+                                  color: Rate
+                                      .values[doctor.rating.toInt() - 1].color,
+                                ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),

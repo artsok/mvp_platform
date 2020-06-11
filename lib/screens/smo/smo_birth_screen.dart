@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
-import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
-import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
-import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
-import 'package:mvp_platform/wizards/smo_wizard.dart';
 
 class SmoBirthInfoScreen extends StatefulWidget {
   static const routeName = '/smo-birth-screen';
@@ -45,13 +41,16 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
             ),
             Column(
               children: [
-                GosFlatButton(
-                  textColor: Colors.white,
-                  backgroundColor: getGosBlueColor(),
-                  onPressed: () =>
-                      Navigator.pushNamed(context, SmoInfoScreen.routeName),
-                  text: 'Выберите Страховую компанию',
-                  width: 320,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: GosFlatButton(
+                    textColor: Colors.white,
+                    backgroundColor: getGosBlueColor(),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, SmoInfoScreen.routeName),
+                    text: 'Выберите Страховую компанию',
+                    width: 320,
+                  ),
                 ),
               ],
             ),

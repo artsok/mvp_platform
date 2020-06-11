@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
@@ -163,7 +162,8 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                   title: Container(
                     width: 290,
                     child: const Text(
-                        'Выберите удобное для вас медицинское учреждение'),
+                      'Выберите удобное для вас медицинское учреждение',
+                    ),
                   ),
                   content: Text(SmoWizard.points[5]),
                   isActive: true,

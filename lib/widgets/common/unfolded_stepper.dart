@@ -9,19 +9,12 @@ enum UnfoldedStepState {
   error,
 }
 
-enum StepperType {
-  vertical,
-  horizontal,
-}
-
 const TextStyle _kStepStyle = TextStyle(
   fontSize: 12.0,
   color: Colors.white,
 );
 const Color _kErrorLight = Colors.red;
 final Color _kErrorDark = Colors.red.shade400;
-const Color _kCircleActiveLight = Colors.white;
-const Color _kCircleActiveDark = Colors.black87;
 const Color _kDisabledLight = Colors.black38;
 const Color _kDisabledDark = Colors.white38;
 const double _kStepSize = 24.0;
@@ -48,28 +41,20 @@ class UnfoldedStep {
 
 class UnfoldedStepper extends StatefulWidget {
   const UnfoldedStepper({
+
     Key key,
     @required this.steps,
     this.physics,
-    this.type = StepperType.vertical,
-    this.currentStep = 0,
     this.onStepTapped,
-    this.onStepContinue,
-    this.onStepCancel,
     this.controlsBuilder,
+    this.firstStep = 1,
   })  : assert(steps != null),
-        assert(type != null),
-        assert(currentStep != null),
-        assert(0 <= currentStep && currentStep < steps.length),
         super(key: key);
 
+  final int firstStep;
   final List<UnfoldedStep> steps;
   final ScrollPhysics physics;
-  final StepperType type;
-  final int currentStep;
   final ValueChanged<int> onStepTapped;
-  final VoidCallback onStepContinue;
-  final VoidCallback onStepCancel;
   final ControlsWidgetBuilder controlsBuilder;
 
   @override
@@ -129,31 +114,12 @@ class _UnfoldedStepperState extends State<UnfoldedStepper>
         oldState ? _oldStates[index] : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
     assert(state != null);
-    switch (state) {
-      case UnfoldedStepState.indexed:
-      case UnfoldedStepState.disabled:
-        return Text(
-          '${index + 1}',
-          style: isDarkActive
-              ? _kStepStyle.copyWith(color: Colors.black87)
-              : _kStepStyle,
-        );
-      case UnfoldedStepState.editing:
-        return Icon(
-          Icons.edit,
-          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
-          size: 18.0,
-        );
-      case UnfoldedStepState.complete:
-        return Icon(
-          Icons.check,
-          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
-          size: 18.0,
-        );
-      case UnfoldedStepState.error:
-        return const Text('!', style: _kStepStyle);
-    }
-    return null;
+    return Text(
+      '${index + widget.firstStep}',
+      style: isDarkActive
+          ? _kStepStyle.copyWith(color: Colors.black87)
+          : _kStepStyle,
+    );
   }
 
   Color _circleColor(int index) {
@@ -239,10 +205,7 @@ class _UnfoldedStepperState extends State<UnfoldedStepper>
   }
 
   Widget _buildVerticalControls() {
-    if (widget.controlsBuilder != null)
-      return widget.controlsBuilder(context,
-          onStepContinue: widget.onStepContinue,
-          onStepCancel: widget.onStepCancel);
+    if (widget.controlsBuilder != null) return widget.controlsBuilder(context);
 
     Color cancelColor;
 
@@ -257,38 +220,7 @@ class _UnfoldedStepperState extends State<UnfoldedStepper>
 
     assert(cancelColor != null);
 
-    final ThemeData themeData = Theme.of(context);
-    final MaterialLocalizations localizations =
-        MaterialLocalizations.of(context);
-
-    return Container(
-      margin: const EdgeInsets.only(top: 16.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints.tightFor(height: 48.0),
-        child: Row(
-          children: <Widget>[
-            FlatButton(
-              onPressed: widget.onStepContinue,
-              color: _isDark()
-                  ? themeData.backgroundColor
-                  : themeData.primaryColor,
-              textColor: Colors.white,
-              textTheme: ButtonTextTheme.normal,
-              child: Text(localizations.continueButtonLabel),
-            ),
-            Container(
-              margin: const EdgeInsetsDirectional.only(start: 8.0),
-              child: FlatButton(
-                onPressed: widget.onStepCancel,
-                textColor: cancelColor,
-                textTheme: ButtonTextTheme.normal,
-                child: Text(localizations.cancelButtonLabel),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    return Container();
   }
 
   TextStyle _titleStyle(int index) {
@@ -462,71 +394,6 @@ class _UnfoldedStepperState extends State<UnfoldedStepper>
     );
   }
 
-  Widget _buildHorizontal() {
-    final List<Widget> children = <Widget>[
-      for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
-        InkResponse(
-          onTap: widget.steps[i].state != UnfoldedStepState.disabled
-              ? () {
-                  if (widget.onStepTapped != null) widget.onStepTapped(i);
-                }
-              : null,
-          canRequestFocus: widget.steps[i].state != UnfoldedStepState.disabled,
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 72.0,
-                child: Center(
-                  child: _buildIcon(i),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsetsDirectional.only(start: 12.0),
-                child: _buildHeaderText(i),
-              ),
-            ],
-          ),
-        ),
-        if (!_isLast(i))
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              height: 1.0,
-              color: Colors.grey.shade400,
-            ),
-          ),
-      ],
-    ];
-
-    return Column(
-      children: <Widget>[
-        Material(
-          elevation: 2.0,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Row(
-              children: children,
-            ),
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(24.0),
-            children: <Widget>[
-              AnimatedSize(
-                curve: Curves.fastOutSlowIn,
-                duration: kThemeAnimationDuration,
-                vsync: this,
-                child: widget.steps[widget.currentStep].content,
-              ),
-              _buildVerticalControls(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
@@ -539,14 +406,7 @@ class _UnfoldedStepperState extends State<UnfoldedStepper>
             'https://material.io/archive/guidelines/components/steppers.html#steppers-usage');
       return true;
     }());
-    assert(widget.type != null);
-    switch (widget.type) {
-      case StepperType.vertical:
-        return _buildVertical();
-      case StepperType.horizontal:
-        return _buildHorizontal();
-    }
-    return null;
+    return _buildVertical();
   }
 }
 

@@ -39,6 +39,17 @@ class RequestDto {
     }
     return data;
   }
+
+  Map<String, dynamic> toJsonGetMedicalOrganizations() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = null;
+    return data;
+  }
+
+
 }
 
 class Params {
@@ -47,6 +58,8 @@ class Params {
   DateTime planDate;
   String rating;
   String birthActId;
+
+  Params();
 
   Params.withClientIdAndPlanDate({this.clientId, this.planDate});
 

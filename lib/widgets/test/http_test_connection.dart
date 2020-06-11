@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:developer' as developer;
-
-
 
 class TestHttpConnectionForm extends StatefulWidget {
   final String url;
@@ -28,14 +27,14 @@ class TestHttpState extends State<TestHttpConnectionForm> {
   }
 
   _sendRequestPost() async {
-    _body = await Service().getInsuredInfant();
+    _body = await Service().getMedicalOrganizations();
     final jsonData = json.decode(_body);
     var map = Map<String, dynamic>.from(jsonData);
-    var client = Client.fromJson(map["result"]);
-    developer.log('$client');
+    List<MedicalOrganization> list = map["result"]
+        .map<MedicalOrganization>((i) => MedicalOrganization.fromJson(i))
+        .toList();
 
-
-    //List<VisitInfo> list = map["result"].map<VisitInfo>((i) => VisitInfo.fromJson(i)).toList();
+    developer.log('$list');
 
     setState(() {}); //reBuildWidget
   }

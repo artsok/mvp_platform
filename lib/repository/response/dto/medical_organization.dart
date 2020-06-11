@@ -5,10 +5,10 @@ class MedicalOrganization {
   String phone;
 
   MedicalOrganization.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    address = json['address'];
-    phone = json['phone'];
+    id = json['id'] != null ? json['id'] : null;
+    name = json['name'] != null ? json['name'] : null;
+    address = json['address'] != null ? json['address'] : null;
+    phone = json['phone'] != null ? json['phone'] : null;
   }
 
   MedicalOrganization({String id, String name, String address, String phone}) {

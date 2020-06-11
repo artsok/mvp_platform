@@ -687,14 +687,14 @@ class _TableCalendarState extends State<TableCalendar>
     }
   }
 
-  DoctorEvent getFirstEventOfDay(DateTime date) {
-    Map<DateTime, List<DoctorEvent>> events =
-        widget.events as Map<DateTime, List<DoctorEvent>>;
-    DoctorEvent event;
-    List<DoctorEvent> dayEvents = events[date.roundToDay()];
-    if (dayEvents != null && dayEvents.isNotEmpty) {
-      event = dayEvents[0];
+  VisitExt getFirstEventOfDay(DateTime date) {
+    Map<DateTime, List<VisitExt>> visits =
+        widget.events as Map<DateTime, List<VisitExt>>;
+    VisitExt firstEvent;
+    List<VisitExt> dayVisits = visits[date.roundToDay()];
+    if (dayVisits != null && dayVisits.isNotEmpty) {
+      firstEvent = dayVisits[0];
     }
-    return event;
+    return firstEvent;
   }
 }

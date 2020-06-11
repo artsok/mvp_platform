@@ -8,20 +8,22 @@ class VisitsInfoData {
   List<VisitExt> visits = [];
   ResponseStatus responseStatus;
 
-  List<VisitExt> getItemsOfMonth(int year, int month) {
-    return visits
+  List<VisitExt> getVisitsOfMonth(int year, int month) {
+    List<VisitExt> visitsOfMonth = visits
         .where((visit) =>
             visit.planDate.year == year && visit.planDate.month == month)
         .toList();
+    visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
+    return visitsOfMonth;
   }
 
   Map<DateTime, List<VisitExt>> getDateTimeToVisitsList() {
     Map<DateTime, List<VisitExt>> visitsMap = {};
     visits.forEach((v) {
-      if (!visitsMap.containsKey(v.planDate.roundToMonth())) {
-        visitsMap[v.planDate.roundToMonth()] = [];
+      if (!visitsMap.containsKey(v.planDate.roundToDay())) {
+        visitsMap[v.planDate.roundToDay()] = [];
       }
-      visitsMap[v.planDate.roundToMonth()].add(v);
+      visitsMap[v.planDate.roundToDay()].add(v);
     });
     return visitsMap;
   }

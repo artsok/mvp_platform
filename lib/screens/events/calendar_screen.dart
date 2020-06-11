@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
-import 'package:mvp_platform/providers/events/doctor_events.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
 import 'package:mvp_platform/widgets/doctor_visit_item/doctor_visit_item.dart';
@@ -72,7 +71,10 @@ class _CalendarScreenState extends State<CalendarScreen>
             ),
             Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
               if (visitsInfo == null) {
-                return CupertinoActivityIndicator(radius: 25.0);
+                return Container(
+                  width: double.infinity,
+                  child: CupertinoActivityIndicator(radius: 25.0),
+                );
               } else {
                 switch (visitsInfo.data.responseStatus) {
                   case ResponseStatus.success:
@@ -90,7 +92,6 @@ class _CalendarScreenState extends State<CalendarScreen>
 //                  },
                         locale: locale,
                         events: visitsInfo.data.getDateTimeToVisitsList(),
-                        initialSelectedDay: DateTime(2020, 5, 9),
                         client: visitsInfo.data.client,
                         calendarController: calendarController,
                         daysOfWeekStyle: DaysOfWeekStyle(
@@ -135,15 +136,15 @@ class _CalendarScreenState extends State<CalendarScreen>
                         return ListView.builder(
                           key: listKey,
                           itemCount: visitsInfoData.data
-                              .getItemsOfMonth(2020, 6)
+                              .getVisitsOfMonth(2020, 6)
                               .length,
                           itemBuilder: (context, i) =>
                               ChangeNotifierProvider.value(
                             value:
-                                visitsInfoData.data.getItemsOfMonth(2020, 6)[i],
+                                visitsInfoData.data.getVisitsOfMonth(2020, 6)[i],
                             child: DoctorVisitItem(
                               visitsInfoData.data.client,
-                              visitsInfoData.data.getItemsOfMonth(2020, 6)[i],
+                              visitsInfoData.data.getVisitsOfMonth(2020, 6)[i],
                             ),
                           ),
                         );

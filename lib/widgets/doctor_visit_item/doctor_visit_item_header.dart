@@ -84,8 +84,8 @@ class DoctorVisitItemHeader extends StatelessWidget {
                           color: visit.status.toVisitStatus().colors().item3,
                         ),
                       ),
-                      Consumer<Doctor>(
-                        builder: (BuildContext context, Doctor doctor,
+                      Consumer<VisitExt>(
+                        builder: (BuildContext context, VisitExt visit,
                             Widget child) {
                           return Row(
                             children: <Widget>[
@@ -93,14 +93,16 @@ class DoctorVisitItemHeader extends StatelessWidget {
                                 '${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate.add(Duration(minutes: 30)))}',
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  color: visit.status.toVisitStatus().colors().item3,
+                                  color: visit.status
+                                      .toVisitStatus()
+                                      .colors()
+                                      .item3,
                                 ),
                               ),
-                              if (doctor.rating != 0.0)
+                              if (visit.rating != null && visit.rating != 0.0)
                                 Icon(
-                                  Rate.values[doctor.rating.toInt() - 1].icon,
-                                  color: Rate
-                                      .values[doctor.rating.toInt() - 1].color,
+                                  Rate.values[visit.rating - 1].icon,
+                                  color: Rate.values[visit.rating - 1].color,
                                 ),
                             ],
                           );

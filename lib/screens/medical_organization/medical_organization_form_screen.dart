@@ -40,7 +40,7 @@ class _MedicalOrganizationFormScreenState
         title: Container(
           width: 290,
           child: const Text(
-            'Выбор страховой и медицнской организации для ребёнка',
+            'Выберите лечебно-профилактическое учреждение для прикрепления',
           ),
         ),
         content: FutureProvider(
@@ -59,14 +59,15 @@ class _MedicalOrganizationFormScreenState
                         padding: const EdgeInsets.only(top: 16),
                         child: DropdownButton(
                           hint: Container(
-                            width: 270,
+                            width: 260,
+                            height: 40,
                             child: const Text('Мед.учреждение'),
                           ),
                           onChanged: (organizationName) {
                             selectOrganization(medicalOrganizations.data.data
                                 .firstWhere((c) => c.name == organizationName));
                           },
-                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                          style: TextStyle(fontSize: 9.0, color: Colors.black),
                           value: selectedOrganization.name ?? '',
                           items: medicalOrganizations.data.data
                               .map(

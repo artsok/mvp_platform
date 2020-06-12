@@ -8,7 +8,7 @@ import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provid
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/providers/smo_form/smo_form_med_insurance_provider.dart';
-import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
@@ -240,7 +240,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                           child: const Text('Да, согласен'),
                                           onPressed: () => Navigator.of(context)
                                               .pushNamed(
-                                                  HospitalInfoScreen.routeName)
+                                              MedicalOrganizationInfoScreen.routeName)
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(

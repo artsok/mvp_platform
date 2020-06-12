@@ -34,7 +34,7 @@ void main() {
 
 _addClientIdToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('clientId', "1005");
+  await prefs.setString('clientId', "1003");
 }
 
 _addBirthActIdToSF() async {
@@ -101,7 +101,7 @@ class _MvpPlatformState extends State<MvpPlatform> {
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: SmoBirthInfoScreen(),
+        home: RootScreen(),
         initialRoute: '/',
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),

@@ -56,15 +56,28 @@ class RequestDto {
     data['params'] = this.params.toJsonChangeVisit();
     return data;
   }
+
+  Map<String, dynamic> toJsonCancelVisit() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = this.params.toJsonCancelVisit();
+    return data;
+  }
+
+
 }
 
 class Params {
   String id;
+  String visitId;
   String clientId;
   DateTime planDate;
   String rating;
   String birthActId;
   ChangeControlCardVisitParams changeControlCardVisitParams;
+  GetVisitParams getVisitParams;
 
   Params();
 
@@ -76,6 +89,10 @@ class Params {
 
   Params.changeVisit({this.changeControlCardVisitParams});
 
+  Params.getVisitParams({this.getVisitParams});
+
+  Params.cancelVisit({this.visitId});
+
   Map<String, dynamic> toJsonBirthActId() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['birthActId'] = this.birthActId;
@@ -84,10 +101,8 @@ class Params {
 
   Map<String, dynamic> toJsonGetVisitsByClient() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['clientId'] = this.clientId;
-    data['planDate'] = this.planDate;
-    return data;
-  }
+    data['getVisitParams'] = this.getVisitParams;
+    return data;}
 
   Map<String, dynamic> toJsonSetRating() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -101,6 +116,13 @@ class Params {
     data['changeControlCardVisitParams'] = this.changeControlCardVisitParams;
     return data;
   }
+
+  Map<String, dynamic> toJsonCancelVisit() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.visitId;
+    return data;
+  }
+
 }
 
 class ChangeControlCardVisitParams {
@@ -120,6 +142,22 @@ class ChangeControlCardVisitParams {
     data['doctorId'] = this.doctorId;
     data['serviceId'] = this.serviceId;
     data['status'] = this.status;
+    return data;
+  }
+}
+
+class GetVisitParams {
+  String clientId;
+  String startDate;
+  String endDate;
+
+  GetVisitParams({this.clientId, this.startDate, this.endDate});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['clientId'] = this.clientId;
+    data['startDate'] = this.startDate;
+    data['endDate'] = this.endDate;
     return data;
   }
 }

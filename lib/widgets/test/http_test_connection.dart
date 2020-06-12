@@ -27,7 +27,8 @@ class TestHttpState extends State<TestHttpConnectionForm> {
   }
 
   _sendRequestPost() async {
-    _body = await Service().getInsuredInfant();
+    await Service().cancelVisit("6837346495864242179");
+
 //    _body = await Service().changeVisit("6837082304388071426",
 //        "2020-06-08T14:00:00", 3003, 4001, "serviceNotified");
     //final jsonData = json.decode(_body);

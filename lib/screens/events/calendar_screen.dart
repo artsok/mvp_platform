@@ -7,6 +7,7 @@ import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
+import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/doctor_visit_item/doctor_visit_item.dart';
 import 'package:provider/provider.dart';
 
@@ -129,7 +130,7 @@ class _CalendarScreenState extends State<CalendarScreen>
                       ),
                     );
                   default:
-                    return CupertinoActivityIndicator(radius: 25.0);
+                    return const GosCupertinoLoadingIndicator();
                 }
               }
             }),
@@ -164,7 +165,7 @@ class _CalendarScreenState extends State<CalendarScreen>
                           ),
                         );
                       default:
-                        return CupertinoActivityIndicator(radius: 25.0);
+                        return const GosCupertinoLoadingIndicator();
                     }
                   }
                 },

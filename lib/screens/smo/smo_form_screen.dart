@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
+import 'package:mvp_platform/models/enums/dialog_process_status.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
+import 'package:mvp_platform/providers/dialogs/select_med_organization/select_med_organization_provider.dart';
 import 'package:mvp_platform/providers/smo_form/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
@@ -33,10 +35,6 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
     setState(() {
       selectedOrganization = organization;
     });
-  }
-
-  _applyForInsurance() async {
-    await Service().applyForInsurance(await getBirthActId(), "39002");
   }
 
   Future<String> getBirthActId() async {
@@ -230,45 +228,79 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Column(
-                          children: [
-                            Text(
-                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name}. Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Text(
-                                "Ознакомиться с договором",
-                                style: TextStyle(
-                                  fontSize: 12,
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (_) => SelectMedOrganizationProvider(),
+                        child: Consumer<SelectMedOrganizationProvider>(
+                          builder: (_, medOrganizationSelect, __) {
+                            return CupertinoAlertDialog(
+                              title: medOrganizationSelect.processStatus ==
+                                      DialogProcessStatus.started
+                                  ? const CupertinoActivityIndicator(
+                                      radius: 25.0)
+                                  : medOrganizationSelect.processStatus ==
+                                          DialogProcessStatus.error
+                                      ? Container(
+                                          width: double.infinity,
+                                          child: const Text(
+                                            'Произошла ошибка',
+                                            style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        )
+                                      : Column(
+                                          children: [
+                                            Text(
+                                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name}. Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 16,
+                                              ),
+                                              child: Text(
+                                                "Ознакомиться с договором",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                              actions: <Widget>[
+                                CupertinoDialogAction(
+                                  child: const Text('Отменить'),
+                                  onPressed: () => Navigator.of(context).pop(),
                                 ),
-                              ),
-                            )
-                          ],
+                                CupertinoDialogAction(
+                                    child: const Text('Да, согласен'),
+                                    onPressed: () => {
+                                          medOrganizationSelect
+                                              .applyForInsurance(
+                                                  selectedOrganization.id)
+                                              .then((result) {
+                                            if (medOrganizationSelect
+                                                    .processStatus ==
+                                                DialogProcessStatus.success) {
+                                              Navigator.of(context).pushNamed(
+                                                  MedicalOrganizationInfoScreen
+                                                      .routeName);
+                                            }
+                                          }),
+                                        }
+//                                  onPressed: () =>
+//                                      Navigator.of(context).pushNamed(
+//                                    SmoSuccessScreen.routeName,
+//                                    arguments: SmoSuccessScreenArguments(
+//                                      selectedChild,
+//                                      selectedInsuranceCompany,
+//                                    ),
+//                                  ),
+                                    ),
+                              ],
+                            );
+                          },
                         ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: const Text('Отменить'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                              child: const Text('Да, согласен'),
-                              onPressed: () => {
-                                    _applyForInsurance(),
-                                    Navigator.of(context).pushNamed(
-                                        MedicalOrganizationInfoScreen.routeName)
-                                  }
-//                            onPressed: () => Navigator.of(context).pushNamed(
-//                              SmoSuccessScreen.routeName,
-//                              arguments: SmoSuccessScreenArguments(
-//                                selectedChild,
-//                                selectedInsuranceCompany,
-//                              ),
-//                            ),
-
-                              ),
-                        ],
                       ),
                     );
                   },

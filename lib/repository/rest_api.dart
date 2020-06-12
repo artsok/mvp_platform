@@ -286,7 +286,7 @@ class Service {
     RequestDto(method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
     try {
       Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+          "${URLS.BASE_URL}/${URLS.PATH}/infoService",
           data: requestDto.toJsonGetMedicalOrganizations());
       log("${response.data}");
       return response.data;

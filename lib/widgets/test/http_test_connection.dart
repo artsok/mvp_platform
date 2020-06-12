@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
@@ -34,8 +35,8 @@ class TestHttpState extends State<TestHttpConnectionForm> {
 
     final jsonData = json.decode(_body);
     var map = Map<String, dynamic>.from(jsonData);
-    List<MedicalOrganization> list = map["result"]
-        .map<MedicalOrganization>((i) => MedicalOrganization.fromJson(i))
+    List<MedicalInsuranceOrganization> list = map["result"]
+        .map<MedicalOrganization>((i) => MedicalInsuranceOrganization.fromJson(i))
         .toList();
 
     print('Received list: $list');

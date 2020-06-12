@@ -23,7 +23,7 @@ class VisitsInfoProvider extends ChangeNotifier {
     notifyListeners();
     List<VisitInfo> allVisitsInfo = await _fetchData();
     Client client = allVisitsInfo
-        .firstWhere((visitInfo) => visitInfo.client.id == null)
+        .firstWhere((visitInfo) => visitInfo.client?.id == null)
         .client;
     _data.client = client;
     allVisitsInfo.forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
@@ -39,7 +39,7 @@ class VisitsInfoProvider extends ChangeNotifier {
     String response = await Service().getVisitsByClient();
     final jsonData = json.decode(response);
     var jsonMap = Map<String, dynamic>.from(jsonData);
-    List<VisitInfo> list = jsonMap['result']
+    List<VisitInfo> list = jsonMap['result']['visitInfos']
         .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
         .toList();
     print('Received list: $list');

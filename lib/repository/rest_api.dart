@@ -247,9 +247,51 @@ class Service {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/infoService",
           data: requestDto.toJsonGetMedicalOrganizations());
+      log("${response.data}");
       return response.data;
     } catch (e) {
       return "No Internet connection (getInsuredInfant)";
+    }
+  }
+
+  //Получение списка страховых компаний
+  Future<dynamic> getMedicalInsuranceOrganizations() async {
+    log("Получение списка страховых компаний");
+    var dio = new Dio();
+    final List<int> certClient =
+    (await rootBundle.load('assets/cert/client.example.crt'))
+        .buffer
+        .asInt8List();
+    final List<int> keyClient =
+    (await rootBundle.load('assets/cert/client.example.key'))
+        .buffer
+        .asInt8List();
+    final List<int> rootCA =
+    (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
+
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      SecurityContext sc = new SecurityContext(withTrustedRoots: true);
+      sc.setTrustedCertificatesBytes(rootCA);
+      sc.useCertificateChainBytes(certClient);
+      sc.usePrivateKeyBytes(keyClient);
+      HttpClient httpClient = new HttpClient(context: sc);
+      httpClient.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      return httpClient;
+    };
+    var requestDto =
+    RequestDto(method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
+    try {
+      Response response = await dio.post(
+          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+          data: requestDto.toJsonGetMedicalOrganizations());
+      log("${response.data}");
+      return response.data;
+    } catch (e) {
+      return "No Internet connection (getMedicalInsuranceOrganizations)";
     }
   }
 

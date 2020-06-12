@@ -30,12 +30,14 @@ class TestHttpState extends State<TestHttpConnectionForm> {
     //_body = await Service().getVisitsByClient();
 
 
-    _body =  await Service().getVisitsByClient();
+    _body =  await Service().getMedicalInsuranceOrganizations();
+
     final jsonData = json.decode(_body);
     var map = Map<String, dynamic>.from(jsonData);
-    List<VisitInfo> list = map['result']
-        .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
+    List<MedicalOrganization> list = map["result"]
+        .map<MedicalOrganization>((i) => MedicalOrganization.fromJson(i))
         .toList();
+
     print('Received list: $list');
 
     //await Service().cancelVisit("6837346495864242179");

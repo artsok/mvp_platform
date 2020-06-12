@@ -1,17 +1,34 @@
+class Organization {
+  String id;
+  String name;
+  String address;
+  String phone;
 
-import 'package:mvp_platform/repository/response/dto/organization.dart';
-
-class MedicalOrganization extends Organization {
-
-  String ogrn;
-
-  MedicalOrganization.fromJson(Map<String, dynamic> json) : super.fromJson(json)  {
+  Organization.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : null;
     name = json['name'] != null ? json['name'] : null;
     address = json['address'] != null ? json['address'] : null;
     phone = json['phone'] != null ? json['phone'] : null;
   }
 
+  Organization.all(String id, String name, String address, String phone) {
+    this.id = id;
+    this.name = name;
+    this.address = address;
+    this.phone = phone;
+  }
+
+  Organization.withId(String id) {
+    this.id = id;
+  }
+
+  String getId() {
+    return id;
+  }
+
+  void setId(String id) {
+    this.id = id;
+  }
 
   String getName() {
     return name;
@@ -35,13 +52,5 @@ class MedicalOrganization extends Organization {
 
   void setPhone(String phone) {
     this.phone = phone;
-  }
-
-  String getId() {
-    return id;
-  }
-
-  void setId(String id) {
-    this.id = id;
   }
 }

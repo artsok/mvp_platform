@@ -77,13 +77,11 @@ class ActInfo extends StatelessWidget {
         birthDate: client.birthDate.toString() ?? "",
         birthCertificateId:
             "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}",
-        birthPlace: client.birthPlace.toString() ?? ""
-    );
+        birthPlace: client.birthPlace.toString() ?? "");
 
-    if(Children.children.length == 0) {
+    if (Children.children.length == 0) {
       Children.children.add(child);
     }
-
 
     return Container(
       color: '#D4EEFD'.colorFromHex(),

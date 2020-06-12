@@ -11,9 +11,7 @@ class DoctorVisitItem extends StatelessWidget {
   final Client client;
   final VisitExt visit;
 
-  DoctorVisitItem(this.client, this.visit)
-      : assert(client != null),
-        assert(visit != null);
+  DoctorVisitItem(this.client, this.visit) : assert(visit != null);
 
   @override
   Widget build(BuildContext context) {

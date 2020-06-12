@@ -29,7 +29,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
         title: Container(
           width: 290,
           child: const Text(
-            'Выберите лечебно-профилактическое учреждение для прикрепления',
+            'Выбор страховой и медицнской организации для ребёнка',
           ),
         ),
         content: Wrap(
@@ -105,7 +105,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Подача заявления о прикреплении к медицинскому учреждению',
+          'Подача заявления о выборе страховой и медицнской организации для ребёнка',
         ),
       ),
       body: SingleChildScrollView(

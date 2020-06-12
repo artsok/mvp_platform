@@ -30,7 +30,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
               .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
-          'Подача заявления о прикреплении к медицинскому учреждению',
+          'Подача заявления о выборе страховой и медицнской организации для ребёнка',
           style: TextStyle(fontWeight: FontWeight.normal),
         ),
       ),
@@ -39,7 +39,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Прикрепление ребёнка к медицинской организации',
+              'Выбор страховой и медицнской организации для ребёнка',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,6 +55,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
               ],
             ),
             UnfoldedStepper(
+              firstStep: 4,
               physics: ClampingScrollPhysics(),
               controlsBuilder: (BuildContext context,
                   {VoidCallback onStepContinue,
@@ -72,6 +73,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
                   isActive: true,
                 ),
                 UnfoldedStep(
+
                   title: const Text('Будьте здоровы!'),
                   state: UnfoldedStepState.complete,
                   isActive: true,

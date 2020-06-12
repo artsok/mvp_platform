@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
+import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
@@ -62,12 +63,27 @@ class ChildInfo extends StatelessWidget {
 //}
 
 class ActInfo extends StatelessWidget {
-  final Client child;
+  final Client client;
 
-  ActInfo(this.child, {Key key}) : super(key: key);
+  ActInfo(this.client, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Child child = Child(
+        surname: client.lastName,
+        name: client.firstName,
+        patronym: client.midName,
+        birthDate: client.birthDate.toString() ?? "",
+        birthCertificateId:
+            "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}",
+        birthPlace: client.birthPlace.toString() ?? ""
+    );
+
+    if(Children.children.length == 0) {
+      Children.children.add(child);
+    }
+
+
     return Container(
       color: '#D4EEFD'.colorFromHex(),
       width: double.infinity,
@@ -75,16 +91,19 @@ class ActInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SingleInfoItem('Фамилия, имя, отество',
-              "${child.lastName} ${child.midName} ${child.lastName}"),
-          SingleInfoItem('Дата рождения', child.birthDate.toString()),
-          SingleInfoItem('Место рождения', child.birthPlace.getCountry() ?? ""),
+              "${client.lastName} ${client.midName} ${client.lastName}"),
+          SingleInfoItem('Дата рождения', client.birthDate.toString()),
           SingleInfoItem(
-              'Запись акта о рождении', "№ ${child.birthCertificate.series} от ${child.birthCertificate.number}"),
-          SingleInfoItem('Информация о родителях', child.parents.toString() ?? ""),
+              'Место рождения', client.birthPlace.getCountry() ?? ""),
+          SingleInfoItem('Запись акта о рождении',
+              "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}"),
+          SingleInfoItem(
+              'Информация о родителях', client.parents.toString() ?? ""),
           SingleInfoItem('Место гос.регистрации', ""),
           SingleInfoItem(
-              '№ свидетельства о рождении', child.birthAct.getNumber()),
-          SingleInfoItem('Номер полиса ОМС', child.getPolicy().getNumber(), last: true)
+              '№ свидетельства о рождении', client.birthAct.getNumber()),
+          SingleInfoItem('Номер полиса ОМС', client.getPolicy().getNumber(),
+              last: true)
 
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),

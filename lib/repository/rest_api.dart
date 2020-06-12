@@ -43,6 +43,7 @@ class Service {
 
   ///Оценка посещения. Id - visits.id (берем из метода getVisitsByClient), rating on 1-5
   void setRating(String id, String rating) async {
+    log("Оценка посещения");
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))
@@ -123,6 +124,7 @@ class Service {
 
   ///Получение информации о посещениях клиента
   Future<dynamic> getVisitsByClient() async {
+    log("Получение информации о посещениях клиента");
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))
@@ -149,7 +151,6 @@ class Service {
       return httpClient;
     };
 
-    //Cha clientId: await getClientId()
     var requestDto = RequestDto(
         method: "getVisitsByClient",
         id: 1,
@@ -162,6 +163,7 @@ class Service {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
           data: requestDto.toJsonGetVisitsByClient());
+      log("${response.data}");
       return response.data;
     } catch (e) {
       return "No Internet connection (getVisitsByClient)";
@@ -213,6 +215,7 @@ class Service {
 
   //Получение информации о мед. организациях
   Future<dynamic> getMedicalOrganizations() async {
+    log("Получение информации о мед. организациях");
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))

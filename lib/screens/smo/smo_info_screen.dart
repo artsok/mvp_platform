@@ -168,11 +168,11 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                   content: Text(SmoWizard.points[5]),
                   isActive: true,
                 ),
-                UnfoldedStep(
-                  title: const Text('Будьте здоровы!'),
-                  state: UnfoldedStepState.complete,
-                  isActive: true,
-                ),
+//                UnfoldedStep(
+//                  title: const Text('Будьте здоровы!'),
+//                  state: UnfoldedStepState.complete,
+//                  isActive: true,
+//                ),
               ],
             ),
             Column(

@@ -22,7 +22,6 @@ class SmoBirthInfoScreen extends StatefulWidget {
 class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
   bool attachedToHospital = true;
   InsuranceType insuranceType = InsuranceType.digital;
-  Child selectedChild = Children.children[0];
 
   @override
   Widget build(BuildContext context) {

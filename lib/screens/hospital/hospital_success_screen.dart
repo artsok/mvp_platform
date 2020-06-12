@@ -52,19 +52,19 @@ class HospitalSuccessScreen extends StatelessWidget {
                   children: <Widget>[
                     SingleInfoItem(
                       'Полис ОМС',
-                      Children.children[0].oms,
+                      Children.children[0].oms ?? "",
                     ),
                     SingleInfoItem(
                       'Фамилия, имя, отчество',
-                      Children.children[0].fullname,
+                      Children.children[0].fullname ?? "",
                     ),
                     SingleInfoItem(
                       'Дата рождения',
-                      Children.children[0].birthDate,
+                      Children.children[0].birthDate ?? "",
                     ),
                     SingleInfoItem(
                       'Адрес проживания',
-                      Children.children[0].address,
+                      Children.children[0].address ?? "",
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
@@ -72,7 +72,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.hospital.name,
+                      args.hospital.name ?? "",
                     ),
                     Center(
                       child: Padding(

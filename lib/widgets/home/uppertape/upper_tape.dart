@@ -8,8 +8,8 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 class UpperTape extends StatelessWidget {
   final List<UpperTapeItem> items = [
     new UpperTapeItem(
-      name: 'Календарь',
-      tags: 'События',
+      name: 'Страховая медицина',
+      tags: 'Диспансерный учет',
       navigatorCallback: (ctx) => Navigator.pushNamed(ctx, CalendarScreen.routeName),
       color: '#668095'.colorFromHex(),
       icon: Icons.event,

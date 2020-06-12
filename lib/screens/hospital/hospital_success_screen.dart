@@ -136,6 +136,14 @@ class HospitalSuccessScreen extends StatelessWidget {
                       callback: (context) => Navigator.of(context)
                           .pushNamed(DoctorInfoScreen.routeName)),
                 );
+                notifications.addNotification(
+                  GosNotification(
+                      date: DateTime.now().add(new Duration(minutes: 10)),
+                      message:
+                      'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
+                      callback: (context) => Navigator.of(context)
+                          .pushNamed(CalendarScreen.routeName)),
+                );
                 Navigator.of(context)
                     .popUntil(ModalRoute.withName(HomeScreen.routeName));
               },

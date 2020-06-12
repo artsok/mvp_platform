@@ -6,7 +6,7 @@ import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
@@ -75,7 +75,7 @@ class SmoSuccessScreen extends StatelessWidget {
                   GosNotification(
                     message: 'Желаете выбрать другое медицинское учреждение',
                     callback: (ctx) => Navigator.of(ctx)
-                        .pushReplacementNamed(HospitalInfoScreen.routeName),
+                        .pushReplacementNamed(MedicalOrganizationInfoScreen.routeName),
                   ),
                 );
                 Navigator.of(context)
@@ -94,7 +94,7 @@ class SmoSuccessScreen extends StatelessWidget {
                 backgroundColor: Colors.white,
                 onPressed: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(HospitalInfoScreen.routeName);
+                      .pushReplacementNamed(MedicalOrganizationInfoScreen.routeName);
                   notifications.addNotification(GosNotification(
                     message: 'Оформлен выбор страховой медицинской организации',
                   ));

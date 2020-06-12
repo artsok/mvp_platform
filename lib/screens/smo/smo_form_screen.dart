@@ -6,7 +6,7 @@ import 'package:mvp_platform/models/insurance_company.dart';
 import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
-import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
@@ -204,7 +204,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             'Подача заявления о выборе Страхового медицинского осмотра'),
       ),
       body: FutureProvider(
-        create: (context) => provider.fetchData(),
+        create: (_) => provider.fetchData(),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -257,7 +257,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                     onPressed: () =>
                                         Navigator.of(context)
                                             .pushNamed(
-                                            HospitalInfoScreen.routeName)
+                                            MedicalOrganizationInfoScreen.routeName)
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(

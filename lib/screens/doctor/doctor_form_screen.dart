@@ -5,7 +5,7 @@ import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/doctor_provider.dart';
-import 'package:mvp_platform/providers/hospital_provider.dart';
+import 'package:mvp_platform/providers/medical_organizations/medical_organizations_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/timestamp_picker.dart';
@@ -23,7 +23,7 @@ class DoctorFormScreen extends StatefulWidget {
 class _DoctorFormScreenState extends State<DoctorFormScreen> {
   Child selectedChild = Children.children[0];
   Doctor selectedDoctor = Doctors.doctors[0];
-  Hospital selectedHospital = Hospitals.hospitals[0];
+  Hospital selectedHospital = MedicalOrganizationsProvider.hospitals[0];
 
   int currentStep = 0;
   bool complete = false;
@@ -122,12 +122,12 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
               ),
               onChanged: (hospitalName) {
                 setState(() {
-                  selectedHospital = Hospitals.hospitals
+                  selectedHospital = MedicalOrganizationsProvider.hospitals
                       .firstWhere((c) => c.name == hospitalName);
                 });
               },
               value: selectedHospital.name,
-              items: Hospitals.hospitals
+              items: MedicalOrganizationsProvider.hospitals
                   .map(
                     (hospital) => DropdownMenuItem(
                       child: Padding(

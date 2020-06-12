@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
-import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
@@ -12,14 +12,14 @@ import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
 
-class HospitalSuccessScreen extends StatelessWidget {
+class MedicalOrganizationSuccessScreen extends StatelessWidget {
   static const routeName = '/hospital-success-screen';
 
   final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
-    final HospitalSuccessScreenArguments args =
+    final MedicalOrganizationSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
@@ -72,7 +72,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.hospital.name ?? "",
+                      args.medicalOrganization.name ?? "",
                     ),
                     Center(
                       child: Padding(
@@ -83,7 +83,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                             maxHeight: 400,
                           ),
                           child: Image.asset(
-                            args.hospital.imagePath,
+                            args.medicalOrganization.photoPath,
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -92,7 +92,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
-                        'Адрес пордазделения', args.hospital.address,
+                        'Адрес пордазделения', args.medicalOrganization.address,
                         last: true,
                       ),
                     ),
@@ -153,8 +153,7 @@ class HospitalSuccessScreen extends StatelessWidget {
   }
 }
 
-class HospitalSuccessScreenArguments {
-  final Hospital hospital;
-
-  HospitalSuccessScreenArguments(this.hospital);
+class MedicalOrganizationSuccessScreenArguments {
+  final MedicalOrganization medicalOrganization;
+  MedicalOrganizationSuccessScreenArguments(this.medicalOrganization);
 }

@@ -59,7 +59,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
                     .toList(),
               ),
             ),
-            Text(selectedHospital.messageInfo ?? "", style: TextStyle(fontSize: 10),),
+            Text(selectedHospital.messageInfo ?? '', style: TextStyle(fontSize: 10),),
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 28),

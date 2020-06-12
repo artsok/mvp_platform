@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
@@ -90,21 +91,36 @@ class ActInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SingleInfoItem('Фамилия, имя, отество',
-              "${client.lastName} ${client.midName} ${client.lastName}"),
-          SingleInfoItem('Дата рождения', client.birthDate.toString()),
           SingleInfoItem(
-              'Место рождения', client.birthPlace.getCountry() ?? ""),
-          SingleInfoItem('Запись акта о рождении',
-              "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}"),
+            'Фамилия, имя, отество',
+            "${client.lastName} ${client.midName} ${client.lastName}",
+          ),
           SingleInfoItem(
-              'Информация о родителях', client.parents.toString() ?? ""),
-          SingleInfoItem('Место гос.регистрации', ""),
+            'Дата рождения',
+            DateFormat('dd.MM.yyyy').format(client.birthDate),
+          ),
           SingleInfoItem(
-              '№ свидетельства о рождении', client.birthAct.getNumber()),
-          SingleInfoItem('Номер полиса ОМС', client.getPolicy().getNumber(),
-              last: true)
-
+            'Место рождения',
+            client.birthPlace.getCountry() ?? '',
+          ),
+          SingleInfoItem(
+            'Запись акта о рождении',
+            "№ ${client.birthCertificate.series} ${client.birthCertificate.number == null ? '' : 'от ${client.birthCertificate.number}'}",
+          ),
+          SingleInfoItem(
+            'Информация о родителях',
+            client.parents.isEmpty ? '' : client.parents.toString(),
+          ),
+          SingleInfoItem('Место гос.регистрации', ''),
+          SingleInfoItem(
+            '№ свидетельства о рождении',
+            client.birthAct?.getNumber() ?? '',
+          ),
+          SingleInfoItem(
+            'Номер полиса ОМС',
+            client.getPolicy()?.getNumber() ?? '',
+            last: true,
+          ),
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),
         ],

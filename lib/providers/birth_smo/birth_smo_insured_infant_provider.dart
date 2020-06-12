@@ -34,8 +34,8 @@ class BirthSmoProvider extends ChangeNotifier {
   Future<Client> _fetchClientData() async {
     String response = await Service().getInsuredInfant();
     final jsonData = json.decode(response);
-    var map = Map<String, dynamic>.from(jsonData);
-    var client = Client.fromJson(map["result"]);
+    var jsonMap = Map<String, dynamic>.from(jsonData);
+    var client = Client.fromJson(jsonMap['result']);
     log('Received client: $client');
     return client;
   }

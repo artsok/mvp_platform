@@ -55,7 +55,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: 8),
-                            Text(visit.doctor.specialty ?? ""),
+                            Text(visit.doctor.specialty ?? ''),
                           ],
                         ),
                       ),
@@ -76,7 +76,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                       SizedBox(height: 8.0),
                       Expanded(
                         child: Text(
-                          visit.service.name ?? "",
+                          visit.service.name ?? '',
                           style: TextStyle(fontSize: 20.0),
                         ),
                       ),

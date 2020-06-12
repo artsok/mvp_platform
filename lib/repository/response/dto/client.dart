@@ -13,8 +13,6 @@ import 'client/registration.dart';
 
 class Client extends Person {
   Gender _gender;
-
-
   String registrationAddress;
   DateTime registrationSince;
   String residentialAddress;
@@ -29,7 +27,7 @@ class Client extends Person {
   Registration registration;
   BirthCertificate birthCertificate;
 
-  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json["person"]) {
+  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json['person'] ?? json) {
     _gender = (json['gender'] as String)?.toGender();
     registrationAddress = json['registrationAddress'] != null
         ? json['registrationAddress']

@@ -1,8 +1,6 @@
-import 'dart:async' show Future;
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
-
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -84,8 +82,8 @@ class Service {
     }
   }
 
-  //Отмена посещения (TODO!)
-  void cancelVisit(String id) async {
+  //Отмена посещения
+  void cancelVisit(String visitId) async {
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))
@@ -112,14 +110,14 @@ class Service {
       return httpClient;
     };
     var requestDto = RequestDto(
-        method: "setRating", id: 1, params: Params.setRating(id: id));
+        method: "cancel", id: 1, params: Params.cancelVisit(visitId: visitId));
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
-          data: requestDto.toJsonSetRating());
+          data: requestDto.toJsonCancelVisit());
       log('${response.data}');
     } catch (e) {
-      log('No Internet connection(setRating)');
+      log('No Internet connection(changeControlCardVisit - Cancel Visit)');
     }
   }
 
@@ -150,10 +148,16 @@ class Service {
       };
       return httpClient;
     };
+
+    //Cha clientId: await getClientId()
     var requestDto = RequestDto(
         method: "getVisitsByClient",
         id: 1,
-        params: Params.withClientIdAndPlanDate(clientId: await getClientId()));
+        params: Params.getVisitParams(
+            getVisitParams: GetVisitParams(
+                clientId: await getClientId(),
+                startDate: "2020-05-01T14:00:00",
+                endDate: "2020-06-30T14:00:00")));
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",

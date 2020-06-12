@@ -93,5 +93,5 @@ class Policy {
     this.territory = territory;
   }
 
-  Policy() {}
+  Policy();
 }

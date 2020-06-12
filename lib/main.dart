@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mvp_platform/providers/events/doctor_events.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
+import 'package:mvp_platform/screens/events/detailed_event_screen.dart';
+import 'package:mvp_platform/screens/events/calendar_screen.dart';
+import 'package:mvp_platform/screens/pin_screen.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
-import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
-import 'package:mvp_platform/screens/events/detailed_event_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
 import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
-import 'package:mvp_platform/screens/pin_screen.dart';
-import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
+import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/test/http_connection_screen.dart';
+import 'package:mvp_platform/widgets/test/http_test_connection.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,7 +34,7 @@ void main() {
 
 _addClientIdToSF() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('clientId', "1005");
+  await prefs.setString('clientId', "1003");
 }
 
 _addBirthActIdToSF() async {

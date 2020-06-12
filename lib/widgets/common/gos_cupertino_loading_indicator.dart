@@ -8,7 +8,7 @@ class GosCupertinoLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: const CupertinoActivityIndicator(radius: 25.0),
+      child: const CupertinoActivityIndicator(radius: 10.0),
     );
   }
 }

@@ -2,16 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
-import 'package:mvp_platform/models/insurance_company.dart';
-import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provider.dart';
+import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
+import 'package:mvp_platform/providers/smo_form/med_insurance_provider.dart';
+import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
+import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
+import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
@@ -22,17 +26,28 @@ class SmoFormScreen extends StatefulWidget {
 
 class _SmoFormScreenState extends State<SmoFormScreen> {
   Child selectedChild = Children.children[0];
-  InsuranceCompany selectedInsuranceCompany =
-  InsuranceCompanies.insuranceCompanies[0];
+
+  MedicalInsuranceOrganization selectedOrganization;
   InsuranceType insuranceType = InsuranceType.digital;
 
-  int currentStep = 0;
-  bool complete = false;
+  void selectInsuranceOrganization(MedicalInsuranceOrganization organization) {
+    setState(() {
+      selectedOrganization = organization;
+    });
+  }
+
+  _applyForInsurance() async {
+    await Service().applyForInsurance(await getBirthActId(), "39002");
+  }
+
+  Future<String> getBirthActId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('birthActId');
+  }
 
   @override
   Widget build(BuildContext context) {
-    final BirthSmoProvider provider = BirthSmoProvider();
-
+    final insurancesProvider = MedInsuranceProvider();
     List<UnfoldedStep> steps = [
       UnfoldedStep(
         title: Container(
@@ -48,7 +63,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                   width: 243,
                   height: 60,
                   child:
-                  const Text('Фамилия, имя, отчество новорожденного(-ой)')),
+                      const Text('Фамилия, имя, отчество новорожденного(-ой)')),
               onChanged: (fullname) {
                 setState(() {
                   selectedChild = Children.children
@@ -58,12 +73,11 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
               value: selectedChild.fullname,
               items: Children.children
                   .map(
-                    (child) =>
-                    DropdownMenuItem(
+                    (child) => DropdownMenuItem(
                       child: Text(child.fullname),
                       value: child.fullname,
                     ),
-              )
+                  )
                   .toList(),
             ),
             ChildInfo(selectedChild),
@@ -78,121 +92,107 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             'Пожалуйста, выберите страховую медицинскую организацию',
           ),
         ),
-        content: Container(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                width: 290,
-                child: Padding(
-                  padding: const EdgeInsets.all(0.0),
-//По ТЗ убрал, но не удаляю
-//                  child: Container(
-//                    child: Column(
-//                      crossAxisAlignment: CrossAxisAlignment.start,
-//                      children: <Widget>[
-//                        const Text(
-//                          'Регион прикрепления: ',
-//                          style: TextStyle(
-//                            fontWeight: FontWeight.bold,
-//                          ),
-//                        ),
-//                        Text(selectedInsuranceCompany.address),
-//                      ],
-//                    ),
-//                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Ваша страховая компания:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4, bottom: 16),
-                          child: const Text(
-                            'АО «СОГАЗ Мед» СОГАЗ МЕД',
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Text(
-                      'Страховая компания ребёнка: ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Builder(
-                      builder: (context) =>
-                          DropdownButton(
-                            hint: const Text('Страховая компания'),
-                            //hint почему-то не отрабатывает
-                            onChanged: (name) {
-                              setState(() {
-                                selectedInsuranceCompany = InsuranceCompanies
-                                    .insuranceCompanies
-                                    .firstWhere((c) => c.name == name);
-
-                                //Т.к у мамы ребенка согаз, даем подсказу. Убрал. не нужно по ТЗ
-//                                if (selectedInsuranceCompany.name
-//                                    .toLowerCase()
-//                                    .contains("согаз")) {
-//                                  Scaffold.of(context).showSnackBar(SnackBar(
-//                                    content: Text(
-//                                        "Вы также обслуживаетесь в компании ${selectedInsuranceCompany
-//                                            .name}"),
-//                                  ));
-//                                }
-                              });
-                            },
-                            value: selectedInsuranceCompany.name,
-                            items: InsuranceCompanies.insuranceCompanies
-                                .map(
-                                  (company) =>
-                                  DropdownMenuItem(
-                                    child: Container(
-                                        width: 240, child: Text(company.name)),
-                                    value: company.name,
+        content: FutureProvider(
+          create: (_) => insurancesProvider.fetchData(),
+          child: Consumer<MedInsuranceProvider>(
+            builder: (_, organizations, __) {
+              if (organizations == null) {
+                return const GosCupertinoLoadingIndicator();
+              } else {
+                switch (organizations.responseStatus) {
+                  case ResponseStatus.success:
+                    selectedOrganization = organizations.data[0];
+                    return Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Ваша страховая компания:',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 4,
+                                        bottom: 16,
+                                      ),
+                                      child: const Text(
+                                        'АО «СОГАЗ Мед» СОГАЗ МЕД',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Text(
+                                  'Страховая компания ребёнка: ',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                            )
-                                .toList(),
+                                ),
+                                SizedBox(height: 4.0),
+                                DropdownButton(
+                                  hint: Container(
+                                    width: 260,
+                                    child: const Text('Страховая компания'),
+                                  ),
+                                  onChanged: (name) {
+                                    selectInsuranceOrganization(organizations
+                                        .data
+                                        .firstWhere((c) => c.name == name));
+                                  },
+                                  value: selectedOrganization.name,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black,
+                                  ),
+                                  underline: Container(),
+                                  items: organizations.data
+                                      .map(
+                                        (company) => DropdownMenuItem(
+                                          child: Container(
+                                              width: 240,
+                                              child: Text('${company.name}\n')),
+                                          value: company.name,
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ],
+                            ),
                           ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                        ],
+                      ),
+                    );
+
+                  case ResponseStatus.error:
+                    return Center(
+                      child: const Text(
+                        'Ошибка при загрузке данных',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  default:
+                    return const GosCupertinoLoadingIndicator();
+                }
+              }
+            },
           ),
         ),
         isActive: true,
       ),
     ];
-
-    void goTo(int step) {
-      setState(() => currentStep = step);
-    }
-
-    void nextStep() {
-      currentStep + 1 != steps.length
-          ? goTo(currentStep + 1)
-          : setState(() => complete = true);
-    }
-
-    void cancelStep() {
-      if (currentStep > 0) {
-        goTo(currentStep - 1);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -203,61 +203,57 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
         title: const Text(
             'Подача заявления о выборе Страхового медицинского осмотра'),
       ),
-      body: FutureProvider(
-        create: (_) => provider.fetchData(),
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              UnfoldedStepper(
-                physics: ClampingScrollPhysics(),
-                controlsBuilder: (BuildContext context,
-                    {VoidCallback onStepContinue,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            UnfoldedStepper(
+              physics: ClampingScrollPhysics(),
+              controlsBuilder: (BuildContext context,
+                      {VoidCallback onStepContinue,
                       VoidCallback onStepCancel}) =>
-                    Container(),
-                steps: steps,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 56),
-                  child: GosFlatButton(
-                    width: 320,
-                    textColor: Colors.white,
-                    backgroundColor: '#2763AA'.colorFromHex(),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            CupertinoAlertDialog(
-                              title: Column(
-                                children: [
-                                  Text(
-                                    'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany
-                                        .name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany
-                                        .name}.',
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 16),
-                                    child: Text(
-                                      "Ознакомиться с договором",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              actions: <Widget>[
-                                CupertinoDialogAction(
-                                  child: const Text('Отменить'),
-                                  onPressed: () => Navigator.of(context).pop(),
+                  Container(),
+              steps: steps,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 56),
+                child: GosFlatButton(
+                  width: 320,
+                  textColor: Colors.white,
+                  backgroundColor: '#2763AA'.colorFromHex(),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CupertinoAlertDialog(
+                        title: Column(
+                          children: [
+                            Text(
+                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text(
+                                "Ознакомиться с договором",
+                                style: TextStyle(
+                                  fontSize: 12,
                                 ),
-                                CupertinoDialogAction(
-                                    child: const Text('Да, согласен'),
-                                    onPressed: () =>
-                                        Navigator.of(context)
-                                            .pushNamed(
-                                            MedicalOrganizationInfoScreen.routeName)
+                              ),
+                            )
+                          ],
+                        ),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            child: const Text('Отменить'),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          CupertinoDialogAction(
+                              child: const Text('Да, согласен'),
+                              onPressed: () => {
+                                    _applyForInsurance(),
+                                    Navigator.of(context).pushNamed(
+                                        MedicalOrganizationInfoScreen.routeName)
+                                  }
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(
@@ -266,22 +262,18 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 //                              ),
 //                            ),
 
-                                ),
-                              ],
-                            ),
-                      );
-                    },
-                    text: 'Оформить >',
-                  ),
-
+                              ),
+                        ],
+                      ),
+                    );
+                  },
+                  text: 'Оформить >',
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-

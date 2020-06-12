@@ -30,7 +30,7 @@ class _MedicalOrganizationInfoScreenState extends State<MedicalOrganizationInfoS
               .popUntil(ModalRoute.withName(HomeScreen.routeName)),
         ),
         title: const Text(
-          'Подача заявления о выборе страховой и медицнской организации для ребёнка',
+          'Подача заявления о прикреплении к медицинскому учреждению',
           style: TextStyle(fontWeight: FontWeight.normal),
         ),
       ),
@@ -39,7 +39,7 @@ class _MedicalOrganizationInfoScreenState extends State<MedicalOrganizationInfoS
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Выбор страховой и медицнской организации для ребёнка',
+              'Прикрепление ребёнка к медицинской организации',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -41,6 +41,96 @@ class Service {
     return _instance;
   }
 
+  ///Прикрепление ребёнка к МО
+  void changeMedicalOrganization(
+      String policyNumber, String medicalOrganizationCode) async {
+    log("Прикрепление ребёнка к МО");
+    var dio = new Dio();
+    final List<int> certClient =
+        (await rootBundle.load('assets/cert/client.example.crt'))
+            .buffer
+            .asInt8List();
+    final List<int> keyClient =
+        (await rootBundle.load('assets/cert/client.example.key'))
+            .buffer
+            .asInt8List();
+    final List<int> rootCA =
+        (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
+
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      SecurityContext sc = new SecurityContext(withTrustedRoots: true);
+      sc.setTrustedCertificatesBytes(rootCA);
+      sc.useCertificateChainBytes(certClient);
+      sc.usePrivateKeyBytes(keyClient);
+      HttpClient httpClient = new HttpClient(context: sc);
+      httpClient.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      return httpClient;
+    };
+    var requestDto = RequestDto(
+        method: "changeMedicalOrganization",
+        id: 1,
+        params: Params.changeMedicalOrganization(
+            assignment: Assignment(
+                policyNumber: policyNumber,
+                medicalOrganizationCode: medicalOrganizationCode)));
+    try {
+      Response response = await dio.post(
+          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+          data: requestDto.toJsonChangeMedicalOrganization());
+      log('${response.data}');
+    } catch (e) {
+      log('No Internet connection(changeMedicalOrganization)');
+    }
+  }
+
+  ///Прикрепление ребёнка к СМО
+  void applyForInsurance(String birthActId, String smoId) async {
+    log("Прикрепление ребёнка к СМО");
+    var dio = new Dio();
+    final List<int> certClient =
+        (await rootBundle.load('assets/cert/client.example.crt'))
+            .buffer
+            .asInt8List();
+    final List<int> keyClient =
+        (await rootBundle.load('assets/cert/client.example.key'))
+            .buffer
+            .asInt8List();
+    final List<int> rootCA =
+        (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
+
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      SecurityContext sc = new SecurityContext(withTrustedRoots: true);
+      sc.setTrustedCertificatesBytes(rootCA);
+      sc.useCertificateChainBytes(certClient);
+      sc.usePrivateKeyBytes(keyClient);
+      HttpClient httpClient = new HttpClient(context: sc);
+      httpClient.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      return httpClient;
+    };
+    var requestDto = RequestDto(
+        method: "applyForInsurance",
+        id: 1,
+        params: Params.applyForInsurance(
+            insuranceApplicationDetails: InsuranceApplicationDetails(
+                birthActId: birthActId, smoId: smoId)));
+    try {
+      Response response = await dio.post(
+          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+          data: requestDto.toJsonApplyForInsurance());
+      log('${response.data}');
+    } catch (e) {
+      log('No Internet connection(applyForInsurance)');
+    }
+  }
+
   ///Оценка посещения. Id - visits.id (берем из метода getVisitsByClient), rating on 1-5
   void setRating(String id, String rating) async {
     log("Оценка посещения");
@@ -259,15 +349,15 @@ class Service {
     log("Получение списка страховых компаний");
     var dio = new Dio();
     final List<int> certClient =
-    (await rootBundle.load('assets/cert/client.example.crt'))
-        .buffer
-        .asInt8List();
+        (await rootBundle.load('assets/cert/client.example.crt'))
+            .buffer
+            .asInt8List();
     final List<int> keyClient =
-    (await rootBundle.load('assets/cert/client.example.key'))
-        .buffer
-        .asInt8List();
+        (await rootBundle.load('assets/cert/client.example.key'))
+            .buffer
+            .asInt8List();
     final List<int> rootCA =
-    (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
+        (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
 
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
@@ -282,8 +372,8 @@ class Service {
       };
       return httpClient;
     };
-    var requestDto =
-    RequestDto(method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
+    var requestDto = RequestDto(
+        method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/infoService",
@@ -342,5 +432,4 @@ class Service {
       return "No Internet connection (changeControlCardVisit)";
     }
   }
-
 }

@@ -4,6 +4,7 @@ import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/medical_organizations/medical_organizations_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
+import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/screens/medical_organization/medical_organization_success_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -20,8 +21,11 @@ class MedicalOrganizationFormScreen extends StatefulWidget {
       _MedicalOrganizationFormScreenState();
 }
 
+
+
 class _MedicalOrganizationFormScreenState
     extends State<MedicalOrganizationFormScreen> {
+
   MedicalOrganization selectedOrganization;
   InsuranceType insuranceType = InsuranceType.digital;
 
@@ -29,6 +33,10 @@ class _MedicalOrganizationFormScreenState
     setState(() {
       selectedOrganization = organization;
     });
+  }
+
+  _changeMedicalOrganization() async {
+    await Service().changeMedicalOrganization("6394589773000297", "390870");
   }
 
   @override
@@ -40,7 +48,7 @@ class _MedicalOrganizationFormScreenState
         title: Container(
           width: 290,
           child: const Text(
-            'Выбор страховой и медицнской организации для ребёнка',
+            'Выберите лечебно-профилактическое учреждение для прикрепления',
           ),
         ),
         content: FutureProvider(
@@ -59,14 +67,15 @@ class _MedicalOrganizationFormScreenState
                         padding: const EdgeInsets.only(top: 16),
                         child: DropdownButton(
                           hint: Container(
-                            width: 270,
+                            width: 260,
+                            height: 40,
                             child: const Text('Мед.учреждение'),
                           ),
                           onChanged: (organizationName) {
                             selectOrganization(medicalOrganizations.data.data
                                 .firstWhere((c) => c.name == organizationName));
                           },
-                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                          style: TextStyle(fontSize: 9.0, color: Colors.black),
                           value: selectedOrganization.name ?? '',
                           items: medicalOrganizations.data.data
                               .map(
@@ -164,18 +173,23 @@ class _MedicalOrganizationFormScreenState
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                           CupertinoDialogAction(
-                            child: const Text('Да, подтверждаю'),
-                            onPressed: () => Navigator.of(context).pushNamed(
-                              MedicalOrganizationSuccessScreen.routeName,
-                              arguments:
-                                  MedicalOrganizationSuccessScreenArguments(
-                                selectedOrganization,
-                              ),
-                            ),
-                          ),
+                              child: const Text('Да, подтверждаю'),
+                              onPressed: () => {
+
+
+                                    Navigator.of(context).pushNamed(
+                                      MedicalOrganizationSuccessScreen
+                                          .routeName,
+                                      arguments:
+                                          MedicalOrganizationSuccessScreenArguments(
+                                        selectedOrganization,
+                                      ),
+                                    ),
+                                  }),
                         ],
                       ),
                     );
+                    _changeMedicalOrganization();
                     Navigator.of(context).pushNamed(
                       MedicalOrganizationSuccessScreen.routeName,
                       arguments: MedicalOrganizationSuccessScreenArguments(

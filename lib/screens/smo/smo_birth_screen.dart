@@ -37,7 +37,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
         ),
       ),
       body: FutureProvider(
-        create: (context) => provider.fetchData(),
+        create: (_) => provider.fetchData(),
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[

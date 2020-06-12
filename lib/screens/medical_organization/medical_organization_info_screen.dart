@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_form_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:mvp_platform/wizards/hospital_wizard.dart';
 
-class HospitalInfoScreen extends StatefulWidget {
-  static const routeName = '/hospital-info-screen';
+class MedicalOrganizationInfoScreen extends StatefulWidget {
+  static const routeName = '/medical-organization-info-screen';
 
   @override
-  _HospitalInfoScreenState createState() => _HospitalInfoScreenState();
+  _MedicalOrganizationInfoScreenState createState() => _MedicalOrganizationInfoScreenState();
 }
 
-class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
+class _MedicalOrganizationInfoScreenState extends State<MedicalOrganizationInfoScreen> {
   bool attachedToHospital = true;
   InsuranceType insuranceType = InsuranceType.digital;
 
@@ -86,7 +86,7 @@ class _HospitalInfoScreenState extends State<HospitalInfoScreen> {
                   textColor: Colors.white,
                   backgroundColor: '#2763AA'.colorFromHex(),
                   onPressed: () => Navigator.pushNamed(
-                      context, HospitalFormScreen.routeName),
+                      context, MedicalOrganizationFormScreen.routeName),
                   text: 'Прикрепить >',
                   width: 320,
                 ),

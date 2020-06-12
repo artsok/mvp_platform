@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:mvp_platform/providers/events/doctor_events.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
-import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
-import 'package:mvp_platform/screens/events/detailed_event_screen.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
-import 'package:mvp_platform/screens/pin_screen.dart';
 import 'package:mvp_platform/screens/auth_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_form_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
+import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
+import 'package:mvp_platform/screens/events/calendar_screen.dart';
+import 'package:mvp_platform/screens/events/detailed_event_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_form_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
-import 'package:mvp_platform/screens/hospital/hospital_success_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_form_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
+import 'package:mvp_platform/screens/medical_organization/medical_organization_success_screen.dart';
+import 'package:mvp_platform/screens/pin_screen.dart';
+import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
-import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/test/http_connection_screen.dart';
-import 'package:mvp_platform/widgets/test/http_test_connection.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +48,6 @@ class MvpPlatform extends StatefulWidget {
 
 class _MvpPlatformState extends State<MvpPlatform> {
   final gosNotifications = GosNotifications();
-  final doctorEvents = DoctorEvents();
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +55,6 @@ class _MvpPlatformState extends State<MvpPlatform> {
       providers: [
         ChangeNotifierProvider<GosNotifications>.value(
           value: gosNotifications,
-        ),
-        ChangeNotifierProvider<DoctorEvents>.value(
-          value: doctorEvents,
         ),
       ],
       child: MaterialApp(
@@ -113,9 +107,9 @@ class _MvpPlatformState extends State<MvpPlatform> {
           DoctorVisitDetailsScreen.routeName: (ctx) => DoctorVisitDetailsScreen(),
           CalendarScreen.routeName: (ctx) => CalendarScreen(),
           HomeScreen.routeName: (ctx) => HomeScreen(),
-          HospitalInfoScreen.routeName: (ctx) => HospitalInfoScreen(),
-          HospitalFormScreen.routeName: (ctx) => HospitalFormScreen(),
-          HospitalSuccessScreen.routeName: (ctx) => HospitalSuccessScreen(),
+          MedicalOrganizationInfoScreen.routeName: (ctx) => MedicalOrganizationInfoScreen(),
+          MedicalOrganizationFormScreen.routeName: (ctx) => MedicalOrganizationFormScreen(),
+          MedicalOrganizationSuccessScreen.routeName: (ctx) => MedicalOrganizationSuccessScreen(),
           RootScreen.routeName: (ctx) => RootScreen(),
           SmoBirthInfoScreen.routeName: (ctx) => SmoBirthInfoScreen(),
           SmoInfoScreen.routeName: (ctx) => SmoInfoScreen(),

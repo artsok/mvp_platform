@@ -27,7 +27,18 @@ class TestHttpState extends State<TestHttpConnectionForm> {
   }
 
   _sendRequestPost() async {
-    await Service().cancelVisit("6837346495864242179");
+    //_body = await Service().getVisitsByClient();
+
+
+    _body =  await Service().getVisitsByClient();
+    final jsonData = json.decode(_body);
+    var map = Map<String, dynamic>.from(jsonData);
+    List<VisitInfo> list = map['result']
+        .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
+        .toList();
+    print('Received list: $list');
+
+    //await Service().cancelVisit("6837346495864242179");
 
 //    _body = await Service().changeVisit("6837082304388071426",
 //        "2020-06-08T14:00:00", 3003, 4001, "serviceNotified");

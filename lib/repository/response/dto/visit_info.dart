@@ -15,11 +15,14 @@ class VisitInfo {
 
   VisitInfo.fromJson(Map<String, dynamic> json) {
     controlCardId = json['controlCardId'];
-    medicalOrganization = json['medicalOrganization'] != null
-        ? MedicalOrganization.fromJson(json['medicalOrganization'])
-        : null;
-    client = json['client'] == null ? null : Client.fromJson(json['client']);
+    if (json['medicalOrganization'] != null) {
+      medicalOrganization =
+          MedicalOrganization.fromJson(json['medicalOrganization']);
+    }
     visits = (json['visits'] as List).map((i) => VisitExt.fromJson(i)).toList();
+    if (json['client'] != null) {
+      client = Client.fromJson(json['client']);
+    }
   }
 
   MedicalOrganization getMedicalOrganization() {

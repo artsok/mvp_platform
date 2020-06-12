@@ -40,10 +40,10 @@ class MedInsuranceProvider extends ChangeNotifier {
     final jsonData = json.decode(response);
     var map = Map<String, dynamic>.from(jsonData);
     List<MedicalInsuranceOrganization> list = map["result"]
-        .map<MedicalOrganization>(
+        .map<MedicalInsuranceOrganization>(
             (i) => MedicalInsuranceOrganization.fromJson(i))
         .toList();
-    log('Received MedicalOrganizations: $MedicalInsuranceOrganization');
+    log('Received MedicalInsuranceOrganization: $MedicalInsuranceOrganization');
     return list;
   }
 }

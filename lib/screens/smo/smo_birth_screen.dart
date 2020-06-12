@@ -46,7 +46,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                 child: Consumer<BirthSmoProvider>(
                   builder: (_, birthInfoData, __) {
                     if (birthInfoData == null) {
-                      return CupertinoActivityIndicator(radius: 25.0);
+                      return CupertinoActivityIndicator(radius: 10.0);
                     } else {
                       switch (birthInfoData.data.responseStatus) {
                         case ResponseStatus.success:
@@ -62,7 +62,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                             ),
                           );
                         default:
-                          return CupertinoActivityIndicator(radius: 25.0);
+                          return CupertinoActivityIndicator(radius: 10.0);
                       }
                     }
                   },

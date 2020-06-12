@@ -15,6 +15,7 @@ class Policy {
     number = json['number'] != null ? json['number'] : null;
     territory = json['territory'] != null ? json['territory'] : null;
     smoCode = json['smoCode'] != null ? json['smoCode'] : null;
+    smoName = json['smoName'] != null ? json['smoName'] : null;
     startDate = json['startDate'] != null ? json['startDate'] : null;
     endDate = json['endDate'] != null ? json['endDate'] : null;
     representative = json['representative'] != null

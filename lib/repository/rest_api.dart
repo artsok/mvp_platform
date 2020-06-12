@@ -170,6 +170,7 @@ class Service {
 
   ///Получение сведений о новорожденном для показа в мобильном приложении
   Future<dynamic> getInsuredInfant() async {
+    log("Получение сведений о новорожденном");
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))
@@ -203,6 +204,7 @@ class Service {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/clientService",
           data: requestDto.toJsonInsuredInfant());
+      log("${response.data}");
       return response.data;
     } catch (e) {
       return "No Internet connection (getInsuredInfant)";
@@ -296,20 +298,4 @@ class Service {
     }
   }
 
-  static dynamic _returnResponse(http.Response response) {
-    switch (response.statusCode) {
-      case 200:
-        var responseJson = json.decode(response.body.toString());
-        return responseJson;
-      case 400:
-        throw BadRequestException(response.body.toString());
-      case 401:
-      case 403:
-        throw UnauthorisedException(response.body.toString());
-      case 500:
-      default:
-        throw FetchDataException(
-            'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
-    }
-  }
 }

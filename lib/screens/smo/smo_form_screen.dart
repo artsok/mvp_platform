@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/insurance_company.dart';
+import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/screens/hospital/hospital_info_screen.dart';
@@ -10,6 +11,7 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
+import 'package:provider/provider.dart';
 
 class SmoFormScreen extends StatefulWidget {
   static const routeName = '/smo-form-screen';
@@ -29,6 +31,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final BirthSmoProvider provider = BirthSmoProvider();
+
     List<UnfoldedStep> steps = [
       UnfoldedStep(
         title: Container(
@@ -172,51 +176,6 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
         ),
         isActive: true,
       ),
-//      Step(
-//        title: Container(
-//          width: 280,
-//          child: const Text(
-//            'Пожалуйста, выберите желаемую форму полиса ОМС',
-//          ),
-//        ),
-//        content: Column(
-//          mainAxisAlignment: MainAxisAlignment.start,
-//          children: <Widget>[
-//            Row(
-//              children: [
-//                Radio(
-//                  value: InsuranceType.digital,
-//                  groupValue: insuranceType,
-//                  onChanged: (type) => setState(() => insuranceType = type),
-//                ),
-//                const Text('Электронный'),
-//              ],
-//            ),
-//            Row(
-//              children: [
-//                Radio(
-//                  value: InsuranceType.material,
-//                  groupValue: insuranceType,
-//                  onChanged: (type) => setState(() => insuranceType = type),
-//                ),
-//                Container(width: 240, child: const Text('Пластиковый')),
-//              ],
-//            ),
-//            Row(
-//              children: [
-//                Radio(
-//                  value: InsuranceType.paper,
-//                  groupValue: insuranceType,
-//                  onChanged: (type) => setState(() => insuranceType = type),
-//                ),
-//                Container(width: 240, child: const Text('Бумажный')),
-//              ],
-//            ),
-//          ],
-//        ),
-//        isActive: true,
-//        state: StepState.complete,
-//      ),
     ];
 
     void goTo(int step) {
@@ -244,62 +203,61 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
         title: const Text(
             'Подача заявления о выборе Страхового медицинского осмотра'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            UnfoldedStepper(
-              physics: ClampingScrollPhysics(),
-              controlsBuilder: (BuildContext context,
-                  {VoidCallback onStepContinue,
-                    VoidCallback onStepCancel}) =>
-                  Container(),
-              steps: steps,
-//              onStepContinue: nextStep,
-//              onStepCancel: cancelStep,
-//              onStepTapped: (step) => goTo(step),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 56),
-                child: GosFlatButton(
-                  width: 320,
-                  textColor: Colors.white,
-                  backgroundColor: '#2763AA'.colorFromHex(),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) =>
-                          CupertinoAlertDialog(
-                            title: Column(
-                              children: [
-                                Text(
-                                  'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany
-                                      .name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany
-                                      .name}.',
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Text(
-                                    "Ознакомиться с договором",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                    ),
+      body: FutureProvider(
+        create: (context) => provider.fetchData(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              UnfoldedStepper(
+                physics: ClampingScrollPhysics(),
+                controlsBuilder: (BuildContext context,
+                    {VoidCallback onStepContinue,
+                      VoidCallback onStepCancel}) =>
+                    Container(),
+                steps: steps,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 56),
+                  child: GosFlatButton(
+                    width: 320,
+                    textColor: Colors.white,
+                    backgroundColor: '#2763AA'.colorFromHex(),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            CupertinoAlertDialog(
+                              title: Column(
+                                children: [
+                                  Text(
+                                    'Вы выбрали страховую медицинскую организацию  ${selectedInsuranceCompany
+                                        .name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedInsuranceCompany
+                                        .name}.',
                                   ),
-                                )
-                              ],
-                            ),
-                            actions: <Widget>[
-                              CupertinoDialogAction(
-                                child: const Text('Отменить'),
-                                onPressed: () => Navigator.of(context).pop(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: Text(
+                                      "Ознакомиться с договором",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                              CupertinoDialogAction(
-                                  child: const Text('Да, согласен'),
-                                  onPressed: () =>
-                                      Navigator.of(context)
-                                          .pushNamed(
-                                          HospitalInfoScreen.routeName)
+                              actions: <Widget>[
+                                CupertinoDialogAction(
+                                  child: const Text('Отменить'),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                                CupertinoDialogAction(
+                                    child: const Text('Да, согласен'),
+                                    onPressed: () =>
+                                        Navigator.of(context)
+                                            .pushNamed(
+                                            HospitalInfoScreen.routeName)
 //                            onPressed: () => Navigator.of(context).pushNamed(
 //                              SmoSuccessScreen.routeName,
 //                              arguments: SmoSuccessScreenArguments(
@@ -308,17 +266,18 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
 //                              ),
 //                            ),
 
-                              ),
-                            ],
-                          ),
-                    );
-                  },
-                  text: 'Оформить >',
-                ),
+                                ),
+                              ],
+                            ),
+                      );
+                    },
+                    text: 'Оформить >',
+                  ),
 
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

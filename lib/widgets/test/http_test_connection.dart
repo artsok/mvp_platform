@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
@@ -30,12 +31,14 @@ class TestHttpState extends State<TestHttpConnectionForm> {
     //_body = await Service().getVisitsByClient();
 
 
-    _body =  await Service().getVisitsByClient();
+    _body =  await Service().getMedicalInsuranceOrganizations();
+
     final jsonData = json.decode(_body);
     var map = Map<String, dynamic>.from(jsonData);
-    List<VisitInfo> list = map['result']
-        .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
+    List<MedicalInsuranceOrganization> list = map["result"]
+        .map<MedicalOrganization>((i) => MedicalInsuranceOrganization.fromJson(i))
         .toList();
+
     print('Received list: $list');
 
     //await Service().cancelVisit("6837346495864242179");

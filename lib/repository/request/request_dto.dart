@@ -66,7 +66,23 @@ class RequestDto {
     return data;
   }
 
+  Map<String, dynamic> toJsonApplyForInsurance() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = this.params.toJsonApplyForInsurance();
+    return data;
+  }
 
+  Map<String, dynamic> toJsonChangeMedicalOrganization() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = this.params.toJsonChangeMedicalOrganization();
+    return data;
+  }
 }
 
 class Params {
@@ -78,6 +94,8 @@ class Params {
   String birthActId;
   ChangeControlCardVisitParams changeControlCardVisitParams;
   GetVisitParams getVisitParams;
+  InsuranceApplicationDetails insuranceApplicationDetails;
+  Assignment assignment;
 
   Params();
 
@@ -93,6 +111,10 @@ class Params {
 
   Params.cancelVisit({this.visitId});
 
+  Params.applyForInsurance({this.insuranceApplicationDetails});
+
+  Params.changeMedicalOrganization({this.assignment});
+
   Map<String, dynamic> toJsonBirthActId() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['birthActId'] = this.birthActId;
@@ -102,7 +124,8 @@ class Params {
   Map<String, dynamic> toJsonGetVisitsByClient() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['getVisitParams'] = this.getVisitParams;
-    return data;}
+    return data;
+  }
 
   Map<String, dynamic> toJsonSetRating() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -123,6 +146,17 @@ class Params {
     return data;
   }
 
+  Map<String, dynamic> toJsonApplyForInsurance() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['insuranceApplicationDetails'] = this.insuranceApplicationDetails;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonChangeMedicalOrganization() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['assignment'] = this.assignment;
+    return data;
+  }
 }
 
 class ChangeControlCardVisitParams {
@@ -158,6 +192,39 @@ class GetVisitParams {
     data['clientId'] = this.clientId;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
+    return data;
+  }
+}
+
+class InsuranceApplicationDetails {
+  String birthActId;
+  String smoId;
+
+  InsuranceApplicationDetails({this.birthActId, this.smoId});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['birthActId'] = this.birthActId;
+    data['smoId'] = this.smoId;
+    return data;
+  }
+}
+
+class Assignment {
+  String policyNumber;
+  String medicalOrganizationCode;
+
+  Assignment({this.policyNumber, this.medicalOrganizationCode});
+
+  Assignment.fromJson(Map<String, dynamic> json) {
+    policyNumber = json['policyNumber'];
+    medicalOrganizationCode = json['medicalOrganizationCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['policyNumber'] = this.policyNumber;
+    data['medicalOrganizationCode'] = this.medicalOrganizationCode;
     return data;
   }
 }

@@ -31,15 +31,15 @@ class TestHttpState extends State<TestHttpConnectionForm> {
     //_body = await Service().getVisitsByClient();
 
 
-    _body =  await Service().getMedicalInsuranceOrganizations();
+    await Service().applyForInsurance("10054555", "03101");
 
-    final jsonData = json.decode(_body);
-    var map = Map<String, dynamic>.from(jsonData);
-    List<MedicalInsuranceOrganization> list = map["result"]
-        .map<MedicalOrganization>((i) => MedicalInsuranceOrganization.fromJson(i))
-        .toList();
+//    final jsonData = json.decode(_body);
+//    var map = Map<String, dynamic>.from(jsonData);
+//    List<MedicalInsuranceOrganization> list = map["result"]
+//        .map<MedicalOrganization>((i) => MedicalInsuranceOrganization.fromJson(i))
+//        .toList();
 
-    print('Received list: $list');
+    //print('Received list: $list');
 
     //await Service().cancelVisit("6837346495864242179");
 
@@ -49,6 +49,10 @@ class TestHttpState extends State<TestHttpConnectionForm> {
     //var map = Map<String, dynamic>.from(jsonData);
     setState(() {}); //reBuildWidget
   }
+
+
+
+
 
   Widget build(BuildContext context) {
     return Container(

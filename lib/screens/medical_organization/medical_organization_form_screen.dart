@@ -4,6 +4,7 @@ import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/medical_organizations/medical_organizations_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
+import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/screens/medical_organization/medical_organization_success_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -30,6 +31,7 @@ class _MedicalOrganizationFormScreenState
       selectedOrganization = organization;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

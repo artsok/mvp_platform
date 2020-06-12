@@ -7,7 +7,6 @@ import 'package:mvp_platform/repository/response/dto/medical_insurance_organizat
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class MedInsuranceProvider extends ChangeNotifier {
-
   List<MedicalInsuranceOrganization> data = [];
   ResponseStatus responseStatus;
 
@@ -18,6 +17,9 @@ class MedInsuranceProvider extends ChangeNotifier {
   factory MedInsuranceProvider() {
     return _instance;
   }
+
+  MedicalInsuranceOrganization getDefaultOrganization() =>
+      data.firstWhere((organization) => organization.id == "39002");
 
   Future<MedInsuranceProvider> fetchData() async {
     responseStatus = null;

@@ -4,7 +4,6 @@ import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
-import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/providers/smo_form/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
@@ -102,7 +101,11 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                 switch (organizations.responseStatus) {
                   case ResponseStatus.success:
                     if (selectedOrganization == null) {
-                      selectedOrganization = organizations.data[0];
+                      final defaultOrganization =
+                          organizations.getDefaultOrganization();
+                      selectedOrganization = defaultOrganization != null
+                          ? defaultOrganization
+                          : organizations.data[0];
                     }
                     return Container(
                       width: double.infinity,
@@ -231,7 +234,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                         title: Column(
                           children: [
                             Text(
-                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
+                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name}. Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 16),

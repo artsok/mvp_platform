@@ -4,7 +4,6 @@ import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/response_status.dart';
 import 'package:mvp_platform/models/insurance_company.dart';
-import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/insurance_companies_provider.dart';
 import 'package:mvp_platform/providers/smo_form/smo_form_med_insurance_provider.dart';

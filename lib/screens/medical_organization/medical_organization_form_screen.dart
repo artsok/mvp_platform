@@ -21,8 +21,11 @@ class MedicalOrganizationFormScreen extends StatefulWidget {
       _MedicalOrganizationFormScreenState();
 }
 
+
+
 class _MedicalOrganizationFormScreenState
     extends State<MedicalOrganizationFormScreen> {
+
   MedicalOrganization selectedOrganization;
   InsuranceType insuranceType = InsuranceType.digital;
 
@@ -32,6 +35,9 @@ class _MedicalOrganizationFormScreenState
     });
   }
 
+  _changeMedicalOrganization() async {
+    await Service().changeMedicalOrganization("6394589773000297", "390870");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,18 +173,23 @@ class _MedicalOrganizationFormScreenState
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                           CupertinoDialogAction(
-                            child: const Text('Да, подтверждаю'),
-                            onPressed: () => Navigator.of(context).pushNamed(
-                              MedicalOrganizationSuccessScreen.routeName,
-                              arguments:
-                                  MedicalOrganizationSuccessScreenArguments(
-                                selectedOrganization,
-                              ),
-                            ),
-                          ),
+                              child: const Text('Да, подтверждаю'),
+                              onPressed: () => {
+
+
+                                    Navigator.of(context).pushNamed(
+                                      MedicalOrganizationSuccessScreen
+                                          .routeName,
+                                      arguments:
+                                          MedicalOrganizationSuccessScreenArguments(
+                                        selectedOrganization,
+                                      ),
+                                    ),
+                                  }),
                         ],
                       ),
                     );
+                    _changeMedicalOrganization();
                     Navigator.of(context).pushNamed(
                       MedicalOrganizationSuccessScreen.routeName,
                       arguments: MedicalOrganizationSuccessScreenArguments(

@@ -31,7 +31,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
               .popUntil(ModalRoute.withName(SmoBirthInfoScreen.routeName)),
         ),
         title: const Text(
-          'Подача заявления о выборе Страхового медицинского осмотра',
+          'Подача заявления о выборе страховой и медицнской организации для ребёнка',
         ),
       ),
       body: SingleChildScrollView(
@@ -39,7 +39,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
           children: <Widget>[
             WizardHeader(
               'assets/icons/notificationIcon.png',
-              'Выбор страховой компании',
+              'Выбор страховой и медицнской организации для ребёнка',
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

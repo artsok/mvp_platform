@@ -13,9 +13,6 @@ import 'client/registration.dart';
 
 class Client extends Person {
   Gender _gender;
-  DateTime birthDate;
-  String phone;
-  String email;
   String registrationAddress;
   DateTime registrationSince;
   String residentialAddress;
@@ -24,19 +21,14 @@ class Client extends Person {
   String snils;
   String nationality;
   Identity identity;
-  Policy policy;
   BirthPlace birthPlace;
   BirthAct birthAct;
   List<Parent> parents;
   Registration registration;
   BirthCertificate birthCertificate;
 
-  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json['person'] ?? json) {
     _gender = (json['gender'] as String)?.toGender();
-    birthDate =
-        json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
-    phone = json['phone'] != null ? json['phone'] : null;
-    email = json['email'] != null ? json['email'] : null;
     registrationAddress = json['registrationAddress'] != null
         ? json['registrationAddress']
         : null;
@@ -51,11 +43,9 @@ class Client extends Person {
     benefitCategoryCode = json['benefitCategoryCode'] != null
         ? json['benefitCategoryCode']
         : null;
-    snils = json['snils'] != null ? json['snils'] : null;
     nationality = json['nationality'] != null ? json['nationality'] : null;
     identity =
         json['identity'] != null ? Identity.fromJson(json['identity']) : null;
-    policy = json['policy'] != null ? Policy.fromJson(json['policy']) : null;
     birthPlace = json['birthPlace'] != null
         ? BirthPlace.fromJson(json['birthPlace'])
         : null;

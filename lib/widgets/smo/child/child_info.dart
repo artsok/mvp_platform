@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
@@ -77,9 +78,33 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem(
             'Фамилия, имя, отество',
             "${child.lastName} ${child.midName} ${child.lastName}",
+          ),
+          SingleInfoItem(
+            'Дата рождения',
+            DateFormat('dd.MM.yyyy').format(child.birthDate),
+          ),
+          SingleInfoItem(
+            'Место рождения',
+            child.birthPlace.getCountry() ?? '',
+          ),
+          SingleInfoItem(
+            'Запись акта о рождении',
+            "№ ${child.birthCertificate.series} ${child.birthCertificate.number == null ? '' : 'от ${child.birthCertificate.number}'}",
+          ),
+          SingleInfoItem(
+            'Информация о родителях',
+            child.parents.isEmpty ? '' : child.parents.toString(),
+          ),
+          SingleInfoItem('Место гос.регистрации', ''),
+          SingleInfoItem(
+            '№ свидетельства о рождении',
+            child.birthAct?.getNumber() ?? '',
+          ),
+          SingleInfoItem(
+            'Номер полиса ОМС',
+            child.getPolicy()?.getNumber() ?? '',
             last: true,
           ),
-
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),
         ],

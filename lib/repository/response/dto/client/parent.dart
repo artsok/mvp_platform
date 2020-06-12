@@ -43,4 +43,9 @@ class Parent {
   void setNationality(String nationality) {
     this.nationality = nationality;
   }
+
+  @override
+  String toString() {
+    return 'Parent{title: $title, name: $name, birthDate: $birthDate, nationality: $nationality}';
+  }
 }

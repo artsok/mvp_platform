@@ -79,7 +79,7 @@ class _CalendarScreenState extends State<CalendarScreen>
               if (visitsInfo == null) {
                 return Container(
                   width: double.infinity,
-                  child: CupertinoActivityIndicator(radius: 25.0),
+                  child: GosCupertinoLoadingIndicator(),
                 );
               } else {
                 switch (visitsInfo.data.responseStatus) {

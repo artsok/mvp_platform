@@ -74,7 +74,7 @@ class ActInfo extends StatelessWidget {
         surname: client.lastName,
         name: client.firstName,
         patronym: client.midName,
-        birthDate: client.birthDate.toString() ?? "",
+        birthDate: DateFormat('dd.MM.yyyy').format(client.birthDate) ?? "",
         birthCertificateId:
             "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}",
         birthPlace: client.birthPlace.toString() ?? "");

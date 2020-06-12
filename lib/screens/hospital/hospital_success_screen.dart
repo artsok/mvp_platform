@@ -6,6 +6,7 @@ import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
+import 'package:mvp_platform/screens/events/calendar_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -138,7 +139,7 @@ class HospitalSuccessScreen extends StatelessWidget {
                 );
                 notifications.addNotification(
                   GosNotification(
-                      date: DateTime.now().add(new Duration(minutes: 10)),
+                      date: DateTime.now().add(new Duration(minutes: 80)),
                       message:
                       'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
                       callback: (context) => Navigator.of(context)

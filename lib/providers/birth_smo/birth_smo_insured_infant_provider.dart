@@ -22,15 +22,10 @@ class BirthSmoProvider extends ChangeNotifier {
 
   Future<BirthSmoProvider> fetchData() async {
     _data.responseStatus = null;
+    Client client = await _fetchClientData();
+    _data.client = client;
+    _data.responseStatus = ResponseStatus.success;
     notifyListeners();
-    try {
-      Client client = await _fetchClientData();
-      _data.client = client;
-      _data.responseStatus = ResponseStatus.success;
-      notifyListeners();
-    } on Exception catch (e, stackTrace) {
-      print('Error: $e\n$stackTrace');
-    }
     return this;
   }
 

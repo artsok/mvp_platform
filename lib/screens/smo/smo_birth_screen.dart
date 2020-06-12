@@ -45,7 +45,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Consumer<BirthSmoProvider>(
                   builder: (_, birthInfoData, __) {
-                    if (birthInfoData.data.client.lastName == null) {
+                    if (birthInfoData == null) {
                       return CupertinoActivityIndicator(radius: 25.0);
                     } else {
                       switch (birthInfoData.data.responseStatus) {

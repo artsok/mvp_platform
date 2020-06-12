@@ -33,18 +33,18 @@ class _CellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final event = Provider.of<DoctorEvent>(context);
-    final eventState = event?.eventState;
+    final visit = Provider.of<VisitExt>(context);
+    final visitStatus = visit?.status?.toString()?.toVisitStatus();
 
     return LayoutBuilder(
       builder: (_, constraints) => AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        decoration: _buildCellDecoration(constraints, eventState),
+        decoration: _buildCellDecoration(constraints, visitStatus),
         margin: EdgeInsets.only(
           top: 6.0,
           bottom: 6.0,
-          left: hasEventOnPreviousDay && eventState != null ? 0.0 : 6.0,
-          right: hasEventOnNextDay && eventState != null ? 0.0 : 6.0,
+          left: hasEventOnPreviousDay && visitStatus != null ? 0.0 : 6.0,
+          right: hasEventOnNextDay && visitStatus != null ? 0.0 : 6.0,
         ),
         alignment: Alignment.center,
         child: Text(
@@ -55,8 +55,8 @@ class _CellWidget extends StatelessWidget {
     );
   }
 
-  Decoration _buildCellDecoration(BoxConstraints constraints, VisitStatus eventState) {
-    if (eventState != null) {
+  Decoration _buildCellDecoration(BoxConstraints constraints, VisitStatus status) {
+    if (status != null) {
       return BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: hasEventOnPreviousDay
@@ -72,7 +72,7 @@ class _CellWidget extends StatelessWidget {
               ? Radius.zero
               : Radius.circular(constraints.maxWidth / 2),
         ),
-        color: eventState.colors().item2,
+        color: status.colors().item2,
         boxShadow: <BoxShadow>[
 //          BoxShadow(
 //            color: Colors.black12,

@@ -19,12 +19,14 @@ class CalendarController {
 
   /// `Map` of currently visible events.
   Map<DateTime, List> get visibleEvents {
-    if (_events == null) {
+    if (_visits == null) {
       return {};
     }
 
+    Map<DateTime, List<VisitExt>> visits = _visits.getDateTimeToVisitsList();
+
     return Map.fromEntries(
-      _events.entries.where((entry) {
+      visits.entries.where((entry) {
         for (final day in visibleDays) {
           if (_isSameDay(day, entry.key)) {
             return true;
@@ -55,7 +57,7 @@ class CalendarController {
     );
   }
 
-  Map<DateTime, List> _events;
+  VisitsInfoData _visits;
   Map<DateTime, List> _holidays;
   DateTime _focusedDay;
   DateTime _selectedDay;
@@ -68,7 +70,7 @@ class CalendarController {
   _SelectedDayCallback _selectedDayCallback;
 
   void _init({
-    @required Map<DateTime, List> events,
+    @required VisitsInfoData visits,
     @required Map<DateTime, List> holidays,
     @required DateTime initialDay,
     @required _SelectedDayCallback selectedDayCallback,
@@ -76,7 +78,7 @@ class CalendarController {
     @required OnCalendarCreated onCalendarCreated,
     @required bool includeInvisibleDays,
   }) {
-    _events = events;
+    _visits = visits;
     _holidays = holidays;
     _selectedDayCallback = selectedDayCallback;
     _includeInvisibleDays = includeInvisibleDays;
@@ -299,21 +301,27 @@ class CalendarController {
   }
 
   Color _getEventColor(DateTime day) {
-    List<DoctorEvent> doctorEvents = _events[day.roundToDay()];
-    return doctorEvents == null ? null : doctorEvents[0].eventState.colors().item2;
+    List<VisitExt> visits = _visits.getDateTimeToVisitsList()[day.roundToDay()];
+    return visits == null
+        ? null
+        : visits[0].status.toVisitStatus().colors().item2;
   }
 
-  bool _isEventDay(DateTime day) => _events.containsKey(day.roundToDay());
+  bool _isEventDay(DateTime day) =>
+      _visits.getDateTimeToVisitsList().containsKey(day.roundToDay());
 
-  bool _hasEventOnPreviousDay(DateTime day) =>
-      _events.containsKey(day.subtract(Duration(days: 1)).roundToDay());
+  bool _hasEventOnPreviousDay(DateTime day) => _visits
+      .getDateTimeToVisitsList()
+      .containsKey(day.subtract(Duration(days: 1)).roundToDay());
 
-  bool _hasEventOnNextDay(DateTime day) =>
-      _events.containsKey(day.add(Duration(days: 1)).roundToDay());
+  bool _hasEventOnNextDay(DateTime day) => _visits
+      .getDateTimeToVisitsList()
+      .containsKey(day.add(Duration(days: 1)).roundToDay());
 
   VisitStatus _getVisitStatus(DateTime day) {
-    List<DoctorEvent> doctorEvents = _events[day.roundToDay()];
-    return doctorEvents == null ? null : doctorEvents[0].eventState;
+    List<VisitExt> doctorEvents =
+        _visits.getDateTimeToVisitsList()[day.roundToDay()];
+    return doctorEvents == null ? null : doctorEvents[0].status.toVisitStatus();
   }
 
   bool _isExtraDay(DateTime day) {

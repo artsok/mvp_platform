@@ -26,7 +26,7 @@ class TableCalendar extends StatefulWidget {
 
   final dynamic locale;
 
-  final Map<DateTime, List> events;
+  final VisitsInfoData visits;
 
   /// `Map` of holidays.
   /// This property allows you to provide custom holiday rules.
@@ -101,14 +101,14 @@ class TableCalendar extends StatefulWidget {
   /// Set of Builders for `TableCalendar` to work with.
   final CalendarBuilders builders;
 
-  final DoctorEvents doctorEvents;
+  final Client client;
 
   TableCalendar({
     Key key,
     @required this.calendarController,
-    @required this.doctorEvents,
+    @required this.client,
     this.locale,
-    this.events = const {},
+    this.visits,
     this.holidays = const {},
     this.onDaySelected,
     this.onDayLongPressed,
@@ -167,7 +167,7 @@ class _TableCalendarState extends State<TableCalendar>
     );
 
     widget.calendarController._init(
-      events: widget.events,
+      visits: widget.visits,
       holidays: widget.holidays,
       initialDay: widget.initialSelectedDay,
       selectedDayCallback: _selectedDayCallback,
@@ -192,7 +192,8 @@ class _TableCalendarState extends State<TableCalendar>
   void _afterLayout(_) {
     if (calendarHeightAnimation == null) {
       setState(() {
-        final RenderBox renderBox = calendarKey.currentContext.findRenderObject();
+        final RenderBox renderBox =
+            calendarKey.currentContext.findRenderObject();
         calendarHeightAnimation = calendarHeightAnimation = Tween<double>(
           begin: renderBox.size.height,
           end: 18.0,
@@ -208,8 +209,8 @@ class _TableCalendarState extends State<TableCalendar>
   void didUpdateWidget(TableCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.events != widget.events) {
-      widget.calendarController._events = widget.events;
+    if (oldWidget.visits != widget.visits) {
+      widget.calendarController._visits = widget.visits;
     }
 
     if (oldWidget.holidays != widget.holidays) {
@@ -228,16 +229,14 @@ class _TableCalendarState extends State<TableCalendar>
     setState(() {
       widget.calendarController._selectPrevious();
     });
-    widget.doctorEvents
-        .setActiveMonth(widget.calendarController.visibleDays[15]);
+    widget.visits.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectNext() {
     setState(() {
       widget.calendarController._selectNext();
     });
-    widget.doctorEvents
-        .setActiveMonth(widget.calendarController.visibleDays[15]);
+    widget.visits.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectDay(DateTime day) {
@@ -687,14 +686,14 @@ class _TableCalendarState extends State<TableCalendar>
     }
   }
 
-  DoctorEvent getFirstEventOfDay(DateTime date) {
-    Map<DateTime, List<DoctorEvent>> events =
-        widget.events as Map<DateTime, List<DoctorEvent>>;
-    DoctorEvent event;
-    List<DoctorEvent> dayEvents = events[date.roundToDay()];
-    if (dayEvents != null && dayEvents.isNotEmpty) {
-      event = dayEvents[0];
+  VisitExt getFirstEventOfDay(DateTime date) {
+    Map<DateTime, List<VisitExt>> visits =
+        widget.visits.getDateTimeToVisitsList();
+    VisitExt firstEvent;
+    List<VisitExt> dayVisits = visits[date.roundToDay()];
+    if (dayVisits != null && dayVisits.isNotEmpty) {
+      firstEvent = dayVisits[0];
     }
-    return event;
+    return firstEvent;
   }
 }

@@ -20,6 +20,7 @@ class VisitsInfoProvider extends ChangeNotifier {
 
   Future<VisitsInfoProvider> fetchData() async {
     _data.responseStatus = null;
+    notifyListeners();
     List<VisitInfo> allVisitsInfo = await _fetchData();
     Client client = allVisitsInfo
         .firstWhere((visitInfo) => visitInfo.client.id == null)

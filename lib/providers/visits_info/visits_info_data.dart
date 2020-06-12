@@ -9,9 +9,15 @@ class VisitsInfoData with ChangeNotifier {
   Client client;
   List<VisitExt> visits = [];
   List<VisitExt> visitsOfMonth = [];
-  ResponseStatus responseStatus;
-
+  ResponseStatus _responseStatus;
   DateTime activeMonth;
+
+  set responseStatus(ResponseStatus responseStatus) {
+    _responseStatus = responseStatus;
+    notifyListeners();
+  }
+
+  get responseStatus => _responseStatus;
 
   void setActiveMonth(DateTime date) {
     if (date.roundToMonth() != activeMonth) {

@@ -8,6 +8,7 @@ import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
+import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/smo/child/child_info.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +47,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                 child: Consumer<BirthSmoProvider>(
                   builder: (_, birthInfoData, __) {
                     if (birthInfoData == null) {
-                      return CupertinoActivityIndicator(radius: 10.0);
+                      return const GosCupertinoLoadingIndicator();
                     } else {
                       switch (birthInfoData.data.responseStatus) {
                         case ResponseStatus.success:
@@ -62,7 +63,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                             ),
                           );
                         default:
-                          return CupertinoActivityIndicator(radius: 10.0);
+                          return const GosCupertinoLoadingIndicator();
                       }
                     }
                   },

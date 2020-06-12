@@ -27,7 +27,7 @@ class Client extends Person {
   Registration registration;
   BirthCertificate birthCertificate;
 
-  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
+  Client.fromJson(Map<String, dynamic> json) : super.fromJson(json['person'] ?? json) {
     _gender = (json['gender'] as String)?.toGender();
     registrationAddress = json['registrationAddress'] != null
         ? json['registrationAddress']

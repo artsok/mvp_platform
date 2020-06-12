@@ -38,8 +38,8 @@ class VisitsInfoProvider extends ChangeNotifier {
   Future<List<VisitInfo>> _fetchData() async {
     String response = await Service().getVisitsByClient();
     final jsonData = json.decode(response);
-    var map = Map<String, dynamic>.from(jsonData);
-    List<VisitInfo> list = map['result']
+    var jsonMap = Map<String, dynamic>.from(jsonData);
+    List<VisitInfo> list = jsonMap['result']
         .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
         .toList();
     print('Received list: $list');

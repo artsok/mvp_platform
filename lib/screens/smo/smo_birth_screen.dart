@@ -33,7 +33,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
-          'Запись акта о рождении',
+          'Регистрация в системе ОМС',
         ),
       ),
       body: FutureProvider(

@@ -233,15 +233,6 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                             Text(
                               'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name} Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16),
-                              child: Text(
-                                "Ознакомиться с договором",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                ),
-                              ),
-                            )
                           ],
                         ),
                         actions: <Widget>[

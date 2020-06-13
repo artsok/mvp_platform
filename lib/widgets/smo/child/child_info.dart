@@ -117,7 +117,7 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Запись акта о рождении',
-            "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
+            '${client.birthAct?.getNumber()} от ${DateFormat('dd.MM.yyyy').format(client.birthAct.getDate())} ' ,
           ),
           SingleInfoItem(
             'Информация о родителях',
@@ -127,7 +127,7 @@ class ActInfo extends StatelessWidget {
               'Место гос.регистрации', client.birthAct.getBirthActPlace()),
           SingleInfoItem(
             '№ свидетельства о рождении',
-            client.birthAct?.getNumber() ?? '',
+            "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
             last: true,
           ),
 //          SingleInfoItem('СНИЛС', child.snils),

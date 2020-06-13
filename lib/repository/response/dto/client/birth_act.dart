@@ -1,6 +1,7 @@
 class BirthAct {
   String number;
   DateTime date;
+  String birthActPlace;
 
   String getNumber() {
     return number;
@@ -8,6 +9,14 @@ class BirthAct {
 
   void setNumber(String number) {
     this.number = number;
+  }
+
+  String getBirthActPlace() {
+    return birthActPlace;
+  }
+
+  void setBirthActPlace(String birthActPlace) {
+    this.birthActPlace = birthActPlace;
   }
 
   DateTime getDate() {
@@ -21,5 +30,7 @@ class BirthAct {
   BirthAct.fromJson(Map<String, dynamic> json) {
     number = json['number'] != null ? json['number'] : null;
     date = json['date'] != null ? DateTime.parse(json['date']) : null;
+    birthActPlace =
+        json['birthActPlace'] != null ? json['birthActPlace'] : null;
   }
 }

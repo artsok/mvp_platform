@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
-import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/request/dialogs/select_smo_dialog_provider.dart';
 import 'package:mvp_platform/providers/request/med_insurance_provider.dart';
@@ -49,7 +48,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
   @override
   Widget build(BuildContext context) {
     final BirthSmoProvider birthSmo = BirthSmoProvider();
-    birthSmo ?? birthSmo.fetchData();
+    birthSmo.client ?? birthSmo.fetchData();
     selectedChild = birthSmo.client;
     final insurancesProvider = MedInsuranceProvider();
     List<UnfoldedStep> steps = [
@@ -102,6 +101,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
           create: (_) => insurancesProvider.fetchData(),
           child: Consumer<MedInsuranceProvider>(
             builder: (_, organizations, __) {
+              if (organizations == null) {
+                return const Center(child: GosCupertinoLoadingIndicator());
+              }
               switch (organizations.requestStatus) {
                 case RequestStatus.success:
                   if (selectedOrganization == null) {
@@ -110,6 +112,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                     selectedOrganization = defaultOrganization != null
                         ? defaultOrganization
                         : organizations.data[0];
+                    organizations.selectedOrganization = selectedOrganization;
                   }
                   return Container(
                     width: double.infinity,
@@ -156,6 +159,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                 onChanged: (name) {
                                   selectInsuranceOrganization(organizations.data
                                       .firstWhere((c) => c.name == name));
+                                  organizations.selectedOrganization = selectedOrganization;
                                 },
                                 value: selectedOrganization.name,
                                 style: TextStyle(

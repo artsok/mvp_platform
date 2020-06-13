@@ -9,6 +9,7 @@ import 'package:mvp_platform/repository/rest_api.dart';
 class MedInsuranceProvider extends ChangeNotifier {
   List<MedicalInsuranceOrganization> data = [];
   RequestStatus requestStatus = RequestStatus.ready;
+  MedicalInsuranceOrganization selectedOrganization;
 
   MedInsuranceProvider._();
 
@@ -18,8 +19,11 @@ class MedInsuranceProvider extends ChangeNotifier {
     return _instance;
   }
 
-  MedicalInsuranceOrganization getDefaultOrganization() =>
-      data.firstWhere((organization) => organization.id == "39002");
+  MedicalInsuranceOrganization getDefaultOrganization() {
+    final organization = data.firstWhere((organization) => organization.id == "39002");
+    selectedOrganization = organization;
+    return organization;
+  }
 
   Future<MedInsuranceProvider> fetchData() async {
     requestStatus = RequestStatus.processing;

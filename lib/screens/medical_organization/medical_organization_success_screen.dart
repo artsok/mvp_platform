@@ -1,9 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
-import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/providers/request/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
@@ -17,14 +18,15 @@ import 'package:provider/provider.dart';
 class MedicalOrganizationSuccessScreen extends StatelessWidget {
   static const routeName = '/medical-organizatios-success-screen';
 
-  final int randomNumber = Random().nextInt(9000) + 10000;
-
   @override
   Widget build(BuildContext context) {
     final MedicalOrganizationSuccessScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
+    final medOrganization = args.medicalOrganization;
+    final medInsuranceProvider = MedInsuranceProvider();
+    final client = args.client;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -37,7 +39,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
-                'Заявление о прикреплении к медицинской организации № $randomNumber',
+                'Заявление о прикреплении к медицинской организации № ${medOrganization.ogrn}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -54,27 +56,27 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                   children: <Widget>[
                     SingleInfoItem(
                       'Полис ОМС',
-                      Children.children[0].oms ?? "",
+                      client.policy?.number ?? '',
                     ),
                     SingleInfoItem(
                       'Фамилия, имя, отчество',
-                      Children.children[0].fullname ?? "",
+                      client.fullName,
                     ),
                     SingleInfoItem(
                       'Дата рождения',
-                      Children.children[0].birthDate ?? "",
+                      DateFormat('dd.MM.yyyy').format(client.birthDate),
                     ),
                     SingleInfoItem(
                       'Адрес проживания',
-                      Children.children[0].address ?? "",
+                      client.registrationAddress ?? 'не указан',
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
-                      "АО «СОГАЗ Мед» СОГАЗ МЕД",
+                      medInsuranceProvider.selectedOrganization.name ?? 'не выбрана',
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.medicalOrganization.name ?? "",
+                      args.medicalOrganization.name ?? '',
                     ),
                     Center(
                       child: Padding(

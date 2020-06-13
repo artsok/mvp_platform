@@ -251,7 +251,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                       : Column(
                                           children: [
                                             Text(
-                                              'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name}. Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
+                                              'Вы выбрали страховую медицинскую организацию ${selectedOrganization.name}',
                                             ),
                                           ],
                                         ),

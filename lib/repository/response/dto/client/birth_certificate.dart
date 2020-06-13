@@ -29,7 +29,7 @@ class BirthCertificate {
 
   BirthCertificate.fromJson(Map<String, dynamic> json) {
     series = json['series'] != null ? json['series'] : null;
-    series = json['number'] != null ? json['number'] : null;
+    number = json['number'] != null ? json['number'] : null;
     date = json['date'] != null ? DateTime.parse(json['date']) : null;
   }
 }

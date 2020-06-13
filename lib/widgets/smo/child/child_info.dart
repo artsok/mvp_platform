@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/repository/response/dto/client/parent.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 
@@ -68,6 +69,10 @@ class ActInfo extends StatelessWidget {
 
   ActInfo(this.client, {Key key}) : super(key: key);
 
+  String _concatText(List<String> list, String delimiter) {
+    return list.join(delimiter);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Child child = Child(
@@ -76,7 +81,7 @@ class ActInfo extends StatelessWidget {
         patronym: client.midName,
         birthDate: DateFormat('dd.MM.yyyy').format(client.birthDate) ?? "",
         birthCertificateId:
-            "№ ${client.birthCertificate.series} от ${client.birthCertificate.number}",
+            "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
         birthPlace: "г.Калининград, Калининградская область, Россия");
 
     if (Children.children.length == 0) {
@@ -96,7 +101,7 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Фамилия, имя, отество',
-            "${client.lastName} ${client.midName} ${client.lastName}",
+            "${client.lastName} ${client.firstName} ${client.midName}",
           ),
           SingleInfoItem(
             'Дата рождения',
@@ -104,25 +109,51 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Место рождения',
-            client.birthPlace.getCountry() ?? '',
+            _concatText([
+              client.birthPlace.getCountry(),
+              client.birthPlace.getRegion(),
+              '\n${client.getBirthPlace().getCity()}'
+            ], ", "),
           ),
           SingleInfoItem(
             'Запись акта о рождении',
-            "№ ${client.birthCertificate.series} ${client.birthCertificate.number == null ? '' : 'от ${client.birthCertificate.number}'}",
+            "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
           ),
           SingleInfoItem(
             'Информация о родителях',
-            client.parents.isEmpty ? '' : client.parents.toString(),
+            _parent(client.parents),
           ),
-          SingleInfoItem('Место гос.регистрации', ''),
+          SingleInfoItem(
+              'Место гос.регистрации', client.birthAct.getBirthActPlace()),
           SingleInfoItem(
             '№ свидетельства о рождении',
-            client.birthAct?.getNumber() ?? '', last: true,
+            client.birthAct?.getNumber() ?? '',
+            last: true,
           ),
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),
         ],
       ),
     );
+  }
+
+  String _parent(List<Parent> parents) {
+    if (parents.isEmpty) {
+      return "";
+    }
+
+    List<String> formattedInfo = new List<String>();
+    parents.forEach((element) {
+      String parent = element.title +
+          ": " +
+          element.name +
+          ", " +
+          DateFormat('dd.MM.yyyy').format(element.birthDate) +
+          ", " +
+          element.nationality;
+      formattedInfo.add(parent);
+    });
+
+    return formattedInfo.join("\n\n");
   }
 }

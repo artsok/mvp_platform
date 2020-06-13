@@ -42,7 +42,6 @@ class VisitsInfoProvider extends ChangeNotifier {
     List<VisitInfo> list = jsonMap['result']['visitInfos']
         .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
         .toList();
-    print('Received list: $list');
     return list;
   }
 }

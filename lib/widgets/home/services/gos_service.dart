@@ -16,7 +16,7 @@ class GosService extends StatelessWidget {
         leading: Icon(gosService.icon),
         title: Text(
           gosService.name,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ),
     );

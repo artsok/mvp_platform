@@ -54,7 +54,7 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Информация о родителях',
-            _parent(client.parents),
+            _parents(client.parents),
           ),
           SingleInfoItem(
               'Место гос.регистрации', client.birthAct.getBirthActPlace()),
@@ -70,17 +70,11 @@ class ActInfo extends StatelessWidget {
     );
   }
 
-  String _parent(List<Parent> parents) {
-    if (parents.isEmpty) {
-      return "";
-    }
-
-    List<String> formattedInfo = new List<String>();
-    parents.forEach((element) {
-      String parent = '${element.title}: ${element.name}, ${element.birthDate.toDmy()}, ${element.nationality}';
-      formattedInfo.add(parent);
-    });
-
-    return formattedInfo.join("\n\n");
-  }
+  String _parents(List<Parent> parents) => parents.isEmpty
+      ? ''
+      : parents
+          .map((p) =>
+              '${p.title}: ${p.name}, ${p.birthDate.toDmy()}, ${p.nationality}')
+          .toList()
+          .join('\n\n');
 }

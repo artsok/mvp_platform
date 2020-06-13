@@ -17,7 +17,6 @@ import 'package:mvp_platform/screens/root_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_form_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
-import 'package:mvp_platform/screens/smo/smo_success_screen.dart';
 import 'package:mvp_platform/screens/test/http_connection_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,7 +114,6 @@ class _MvpPlatformState extends State<MvpPlatform> {
           SmoBirthInfoScreen.routeName: (ctx) => SmoBirthInfoScreen(),
           SmoInfoScreen.routeName: (ctx) => SmoInfoScreen(),
           SmoFormScreen.routeName: (ctx) => SmoFormScreen(),
-          SmoSuccessScreen.routeName: (ctx) => SmoSuccessScreen(),
           HttpConnectionScreen.routeName: (ctx) => HttpConnectionScreen(),
         },
       ),

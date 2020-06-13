@@ -44,22 +44,25 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
               switch (birthInfo.requestStatus) {
                 case RequestStatus.success:
                   return SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        ActInfo(birthInfo.client),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(top: 24.0, bottom: 44.0),
-                          child: GosFlatButton(
-                            textColor: Colors.white,
-                            backgroundColor: getGosBlueColor(),
-                            onPressed: () => Navigator.pushNamed(
-                                context, SmoInfoScreen.routeName),
-                            text: 'Выберите страховую компанию >',
-                            width: 320,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: <Widget>[
+                          ActInfo(birthInfo.client),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 24.0, bottom: 44.0),
+                            child: GosFlatButton(
+                              textColor: Colors.white,
+                              backgroundColor: getGosBlueColor(),
+                              onPressed: () => Navigator.pushNamed(
+                                  context, SmoInfoScreen.routeName),
+                              text: 'Выберите страховую компанию >',
+                              width: 320,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 case RequestStatus.error:

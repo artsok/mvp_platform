@@ -8,7 +8,7 @@ class MedicalOrganization extends Organization {
   MedicalOrganization.fromJson(Map<String, dynamic> json)
       : super.fromJson(json) {
     ogrn = json['ogrn'] != null ? json['ogrn'] : null;
-    photoPath = 'assets/map/snezhnaya-22.png';
+    photoPath = 'assets/map/1.png';
   }
 
   String getOgrn() {

@@ -90,6 +90,11 @@ class ActInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SingleInfoItem(
+            'Номер полиса ОМС',
+            client.getPolicy()?.getNumber() ?? '',
+            last: true,
+          ),
+          SingleInfoItem(
             'Фамилия, имя, отество',
             "${client.lastName} ${client.midName} ${client.lastName}",
           ),
@@ -112,12 +117,7 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem('Место гос.регистрации', ''),
           SingleInfoItem(
             '№ свидетельства о рождении',
-            client.birthAct?.getNumber() ?? '',
-          ),
-          SingleInfoItem(
-            'Номер полиса ОМС',
-            client.getPolicy()?.getNumber() ?? '',
-            last: true,
+            client.birthAct?.getNumber() ?? '', last: true,
           ),
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),

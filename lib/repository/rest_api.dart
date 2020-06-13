@@ -296,15 +296,10 @@ class Service {
         method: "getInsuredInfant",
         id: 1,
         params: Params.withBirthActId(birthActId: await getBirthActId()));
-    try {
-      Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
-          data: requestDto.toJsonInsuredInfant());
-      log("${response.data}");
-      return response.data;
-    } catch (e) {
-      return "No Internet connection (getInsuredInfant)";
-    }
+    Response response = await dio.post(
+        "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+        data: requestDto.toJsonInsuredInfant());
+    return response.data;
   }
 
   //Получение информации о мед. организациях

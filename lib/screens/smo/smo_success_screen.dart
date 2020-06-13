@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 class SmoSuccessScreen extends StatelessWidget {
   static const routeName = '/smo-success-screen';
 
-  final int randomNumber = new Random().nextInt(9000) + 10000;
+  final int randomNumber = Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {

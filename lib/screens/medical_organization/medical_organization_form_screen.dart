@@ -15,7 +15,7 @@ import 'package:mvp_platform/widgets/common/wizard_header.dart';
 import 'package:provider/provider.dart';
 
 class MedicalOrganizationFormScreen extends StatefulWidget {
-  static const routeName = '/hospital-form-screen';
+  static const routeName = '/medical-organization-form-screen';
 
   @override
   _MedicalOrganizationFormScreenState createState() =>

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/home/uppertape_item.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
+import 'package:mvp_platform/screens/calendar/calendar_screen.dart';
 import 'package:mvp_platform/screens/smo/smo_birth_screen.dart';
 import 'package:mvp_platform/widgets/home/uppertape/tape_item.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';

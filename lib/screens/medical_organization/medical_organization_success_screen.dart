@@ -7,7 +7,7 @@ import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
+import 'package:mvp_platform/screens/calendar/calendar_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -15,7 +15,7 @@ import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
 
 class MedicalOrganizationSuccessScreen extends StatelessWidget {
-  static const routeName = '/hospital-success-screen';
+  static const routeName = '/medical-organizatios-success-screen';
 
   final int randomNumber = Random().nextInt(9000) + 10000;
 

@@ -123,7 +123,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                       'Запишитесь к специалисту в электронном виде',
                     ),
                   ),
-                  content: Text(DoctorWizard.points[3]),
+                  content: Text(DoctorWizard.steps[3]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -133,7 +133,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                       'Получите медицинскую услугу',
                     ),
                   ),
-                  content: Text(DoctorWizard.points[4]),
+                  content: Text(DoctorWizard.steps[4]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -144,7 +144,7 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                     ),
                   ),
                   content: Text(
-                    DoctorWizard.points[5],
+                    DoctorWizard.steps[5],
                     style: TextStyle(
                       color: Colors.red,
                     ),

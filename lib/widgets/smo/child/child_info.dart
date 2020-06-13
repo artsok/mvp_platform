@@ -117,7 +117,8 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem('Место гос.регистрации', ''),
           SingleInfoItem(
             '№ свидетельства о рождении',
-            client.birthAct?.getNumber() ?? '', last: true,
+            client.birthAct?.getNumber() ?? '',
+            last: true,
           ),
 //          SingleInfoItem('СНИЛС', child.snils),
 //          SingleInfoItem('Адрес проживания', child.address, last: true),

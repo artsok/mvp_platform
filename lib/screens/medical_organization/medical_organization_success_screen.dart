@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/events/calendar_screen.dart';
@@ -93,7 +94,8 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
-                        'Адрес пордазделения', args.medicalOrganization.address,
+                        'Адрес пордазделения',
+                        args.medicalOrganization.address,
                         last: true,
                       ),
                     ),
@@ -119,7 +121,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                   GosNotification(
                     date: DateTime.now().add(new Duration(minutes: 4)),
                     message:
-                    'Богатырев Иван Иванович застрахован в страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
+                        'Богатырев Иван Иванович застрахован в страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
                   ),
                 );
                 notifications.addNotification(
@@ -141,7 +143,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                   GosNotification(
                       date: DateTime.now().add(new Duration(minutes: 80)),
                       message:
-                      'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
+                          'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
                       callback: (context) => Navigator.of(context)
                           .pushNamed(CalendarScreen.routeName)),
                 );
@@ -163,6 +165,9 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
 }
 
 class MedicalOrganizationSuccessScreenArguments {
+  final Client client;
   final MedicalOrganization medicalOrganization;
-  MedicalOrganizationSuccessScreenArguments(this.medicalOrganization);
+
+  MedicalOrganizationSuccessScreenArguments(
+      this.client, this.medicalOrganization);
 }

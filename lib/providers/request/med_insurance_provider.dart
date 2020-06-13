@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class MedInsuranceProvider extends ChangeNotifier {
-
   List<MedicalInsuranceOrganization> data = [];
-  ResponseStatus responseStatus;
+  RequestStatus requestStatus;
 
   MedInsuranceProvider._();
 
@@ -19,13 +18,16 @@ class MedInsuranceProvider extends ChangeNotifier {
     return _instance;
   }
 
+  MedicalInsuranceOrganization getDefaultOrganization() =>
+      data.firstWhere((organization) => organization.id == "39002");
+
   Future<MedInsuranceProvider> fetchData() async {
-    responseStatus = null;
+    requestStatus = null;
     notifyListeners();
     List<MedicalInsuranceOrganization> organizations =
         await _fetchMedicalInsuranceData();
     data = organizations;
-    responseStatus = ResponseStatus.success;
+    requestStatus = RequestStatus.success;
     notifyListeners();
     return this;
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
-import 'package:mvp_platform/providers/medical_organizations/medical_organizations_provider.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
+import 'package:mvp_platform/providers/request/actions/select_medical_organization_action_provider.dart';
+import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
+import 'package:mvp_platform/providers/request/medical_organizations_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
-import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/screens/medical_organization/medical_organization_success_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -21,11 +22,8 @@ class MedicalOrganizationFormScreen extends StatefulWidget {
       _MedicalOrganizationFormScreenState();
 }
 
-
-
 class _MedicalOrganizationFormScreenState
     extends State<MedicalOrganizationFormScreen> {
-
   MedicalOrganization selectedOrganization;
   InsuranceType insuranceType = InsuranceType.digital;
 
@@ -33,10 +31,6 @@ class _MedicalOrganizationFormScreenState
     setState(() {
       selectedOrganization = organization;
     });
-  }
-
-  _changeMedicalOrganization() async {
-    await Service().changeMedicalOrganization("6394589773000297", "390870");
   }
 
   @override
@@ -58,10 +52,10 @@ class _MedicalOrganizationFormScreenState
               if (medicalOrganizations == null) {
                 return GosCupertinoLoadingIndicator();
               }
-              switch (medicalOrganizations.data.responseStatus) {
-                case (ResponseStatus.success):
+              switch (medicalOrganizations.requestStatus) {
+                case (RequestStatus.success):
                   if (selectedOrganization == null) {
-                    selectedOrganization = medicalOrganizations.data.data[0];
+                    selectedOrganization = medicalOrganizations.data[0];
                   }
                   return Wrap(
                     children: <Widget>[
@@ -74,12 +68,13 @@ class _MedicalOrganizationFormScreenState
                             child: const Text('Мед.учреждение'),
                           ),
                           onChanged: (organizationName) {
-                            selectOrganization(medicalOrganizations.data.data
+                            selectOrganization(medicalOrganizations.data
                                 .firstWhere((c) => c.name == organizationName));
                           },
-                          style: TextStyle(fontSize: 9.0, color: Colors.black),
+                          underline: Container(),
+                          style: TextStyle(fontSize: 14.0, color: Colors.black),
                           value: selectedOrganization.name ?? '',
-                          items: medicalOrganizations.data.data
+                          items: medicalOrganizations.data
                               .map(
                                 (hospital) => DropdownMenuItem(
                                   child: Container(
@@ -109,7 +104,7 @@ class _MedicalOrganizationFormScreenState
                       ),
                     ],
                   );
-                case ResponseStatus.error:
+                case RequestStatus.error:
                   return Center(
                     child: const Text(
                       'Ошибка при загрузке данных',
@@ -158,69 +153,45 @@ class _MedicalOrganizationFormScreenState
               alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: GosFlatButton(
-                  width: 320,
-                  textColor: Colors.white,
-                  backgroundColor: '#2763AA'.colorFromHex(),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Text(
-                          'Вы желаете обслуживаться в ${selectedOrganization.name}',
-                        ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: const Text('Отменить'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                              child: const Text('Да, подтверждаю'),
-                              onPressed: () => {
-
-
-                                    Navigator.of(context).pushNamed(
-                                      MedicalOrganizationSuccessScreen
-                                          .routeName,
-                                      arguments:
-                                          MedicalOrganizationSuccessScreenArguments(
-                                        selectedOrganization,
+                child: MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                        create: (_) => SelectMedOrganizationActionProvider()),
+                    ChangeNotifierProvider.value(value: BirthSmoProvider()),
+                  ],
+                  child: Consumer2<SelectMedOrganizationActionProvider,
+                      BirthSmoProvider>(
+                    builder: (_, medOrganizationSelect, birthInfo, __) {
+                      return GosFlatButton(
+                        width: 320,
+                        textColor: Colors.white,
+                        backgroundColor: '#2763AA'.colorFromHex(),
+                        onPressed: medOrganizationSelect.processStatus ==
+                                RequestStatus.processing
+                            ? () {}
+                            : () {
+                                medOrganizationSelect
+                                    .selectMedicalOrganization(
+                                        birthInfo.client
+                                            .getPolicy()
+                                            .getNumber(),
+                                        selectedOrganization.id)
+                                    .then(
+                                      (_) => Navigator.of(context).pushNamed(
+                                        MedicalOrganizationSuccessScreen
+                                            .routeName,
+                                        arguments:
+                                            MedicalOrganizationSuccessScreenArguments(
+                                          birthInfo.client,
+                                          selectedOrganization,
+                                        ),
                                       ),
-                                    ),
-                                  }),
-                        ],
-                      ),
-                    );
-                    _changeMedicalOrganization();
-                    Navigator.of(context).pushNamed(
-                      MedicalOrganizationSuccessScreen.routeName,
-                      arguments: MedicalOrganizationSuccessScreenArguments(
-                          selectedOrganization),
-//                    showDialog(
-//                      context: context,
-//                      builder: (context) => CupertinoAlertDialog(
-//                        title: Text(
-//                          'Вы желаете обслуживаться в ${selectedHospital.name}',
-//                        ),
-//                        actions: <Widget>[
-//                          CupertinoDialogAction(
-//                            child: const Text('Отменить'),
-//                            onPressed: () => Navigator.of(context).pop(),
-//                          ),
-//                          CupertinoDialogAction(
-//                            child: const Text('Да, подтверждаю'),
-//                            onPressed: () => Navigator.of(context).pushNamed(
-//                              SuccessfulHospitalScreen.routeName,
-//                              arguments: SuccessfulHospitalScreenArguments(
-//                                selectedHospital,
-//                              ),
-//                            ),
-//                          ),
-//                        ],
-//                      ),
-                    );
-                  },
-                  text: 'Выбрать >',
+                                    );
+                              },
+                        text: 'Выбрать >',
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

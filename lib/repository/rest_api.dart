@@ -42,7 +42,7 @@ class Service {
   }
 
   ///Прикрепление ребёнка к МО
-  void changeMedicalOrganization(
+  Future<dynamic> changeMedicalOrganization(
       String policyNumber, String medicalOrganizationCode) async {
     log("Прикрепление ребёнка к МО");
     var dio = new Dio();
@@ -82,13 +82,15 @@ class Service {
           "${URLS.BASE_URL}/${URLS.PATH}/clientService",
           data: requestDto.toJsonChangeMedicalOrganization());
       log('${response.data}');
+      return response.data;
     } catch (e) {
       log('No Internet connection(changeMedicalOrganization)');
+      return 'Unknown error';
     }
   }
 
   ///Прикрепление ребёнка к СМО
-  void applyForInsurance(String birthActId, String smoId) async {
+  Future<dynamic> applyForInsurance(String birthActId, String smoId) async {
     log("Прикрепление ребёнка к СМО");
     var dio = new Dio();
     final List<int> certClient =
@@ -125,9 +127,11 @@ class Service {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/clientService",
           data: requestDto.toJsonApplyForInsurance());
-      log('${response.data}');
+      log('Результат прикрепления к СМО: ${response.data}');
+      return response.data;
     } catch (e) {
       log('No Internet connection(applyForInsurance)');
+      return "Неизвестная ошибка прикрепления к СМО";
     }
   }
 
@@ -292,15 +296,10 @@ class Service {
         method: "getInsuredInfant",
         id: 1,
         params: Params.withBirthActId(birthActId: await getBirthActId()));
-    try {
-      Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/clientService",
-          data: requestDto.toJsonInsuredInfant());
-      log("${response.data}");
-      return response.data;
-    } catch (e) {
-      return "No Internet connection (getInsuredInfant)";
-    }
+    Response response = await dio.post(
+        "${URLS.BASE_URL}/${URLS.PATH}/clientService",
+        data: requestDto.toJsonInsuredInfant());
+    return response.data;
   }
 
   //Получение информации о мед. организациях

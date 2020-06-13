@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/models/hospital.dart';
-import 'package:mvp_platform/providers/medical_organizations/medical_organizations_data.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class MedicalOrganizationsProvider with ChangeNotifier {
-  final MedicalOrganizationsData _data = MedicalOrganizationsData();
+
+  List<MedicalOrganization> data = [];
+  RequestStatus requestStatus;
 
   MedicalOrganizationsProvider._();
 
@@ -19,16 +20,14 @@ class MedicalOrganizationsProvider with ChangeNotifier {
   }
 
   Future<MedicalOrganizationsProvider> fetchData() async {
-    _data.responseStatus = null;
+    requestStatus = null;
     notifyListeners();
     List<MedicalOrganization> medicalOrganizations = await _fetchData();
-    _data.data = medicalOrganizations;
-    _data.responseStatus = ResponseStatus.success;
+    data = medicalOrganizations;
+    requestStatus = RequestStatus.success;
     notifyListeners();
     return this;
   }
-
-  MedicalOrganizationsData get data => _data;
 
   Future<List<MedicalOrganization>> _fetchData() async {
     String response = await Service().getMedicalOrganizations();

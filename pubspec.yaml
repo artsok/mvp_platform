@@ -58,8 +58,12 @@ flutter:
     - assets/icons/phonedoscope.png
     - assets/icons/notificationIcon.png
     - assets/icons/backdeletebackspace.png
-    - assets/map/dekabristov-24.png
-    - assets/map/snezhnaya-22.png
+    - assets/map/1.png
+    - assets/map/2.png
+    - assets/map/3.png
+    - assets/map/4.png
+    - assets/map/5.png
+    - assets/map/6.png
     - assets/svg/icons8-search.svg
     - assets/svg/backspace-arrow.svg
     - assets/svg/fingerprint.svg

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
@@ -19,7 +19,7 @@ class VisitsInfoProvider extends ChangeNotifier {
   }
 
   Future<VisitsInfoProvider> fetchData() async {
-    _data.responseStatus = null;
+    _data.requestStatus = null;
     notifyListeners();
     List<VisitInfo> allVisitsInfo = await _fetchData();
     Client client = allVisitsInfo
@@ -28,7 +28,7 @@ class VisitsInfoProvider extends ChangeNotifier {
     _data.client = client;
     allVisitsInfo.forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
     _data.setActiveMonth(DateTime.now());
-    _data.responseStatus = ResponseStatus.success;
+    _data.requestStatus = RequestStatus.success;
     notifyListeners();
     return this;
   }

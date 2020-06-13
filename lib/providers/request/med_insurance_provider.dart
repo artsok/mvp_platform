@@ -30,6 +30,8 @@ class MedInsuranceProvider extends ChangeNotifier {
     notifyListeners();
     List<MedicalInsuranceOrganization> organizations =
         await _fetchMedicalInsuranceData();
+    organizations = organizations.where((f) => f.id.startsWith("39")).toList();
+
     data = organizations;
     requestStatus = RequestStatus.success;
     notifyListeners();

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
@@ -82,8 +82,8 @@ class _CalendarScreenState extends State<CalendarScreen>
                   child: GosCupertinoLoadingIndicator(),
                 );
               } else {
-                switch (visitsInfo.data.responseStatus) {
-                  case ResponseStatus.success:
+                switch (visitsInfo.data.requestStatus) {
+                  case RequestStatus.success:
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: TableCalendar(
@@ -119,7 +119,7 @@ class _CalendarScreenState extends State<CalendarScreen>
                         headerStyle: HeaderStyle(),
                       ),
                     );
-                  case ResponseStatus.error:
+                  case RequestStatus.error:
                     return Center(
                       child: const Text(
                         'Ошибка при загрузке данных',
@@ -140,8 +140,8 @@ class _CalendarScreenState extends State<CalendarScreen>
                   if (visitsInfoData == null) {
                     return CupertinoActivityIndicator(radius: 25.0);
                   } else {
-                    switch (visitsInfoData.responseStatus) {
-                      case ResponseStatus.success:
+                    switch (visitsInfoData.requestStatus) {
+                      case RequestStatus.success:
                         return ListView.builder(
                           key: listKey,
                           itemCount: visitsInfoData.visitsOfMonth.length,
@@ -154,7 +154,7 @@ class _CalendarScreenState extends State<CalendarScreen>
                             ),
                           ),
                         );
-                      case ResponseStatus.error:
+                      case RequestStatus.error:
                         return Center(
                           child: const Text(
                             'Ошибка при загрузке данных',

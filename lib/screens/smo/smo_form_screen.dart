@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/child.dart';
-import 'package:mvp_platform/models/enums/dialog_process_status.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
-import 'package:mvp_platform/providers/dialogs/select_med_organization/select_med_organization_provider.dart';
-import 'package:mvp_platform/providers/smo_form/med_insurance_provider.dart';
+import 'package:mvp_platform/providers/request/dialogs/select_smo_dialog_provider.dart';
+import 'package:mvp_platform/providers/request/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
-import 'package:mvp_platform/repository/rest_api.dart';
 import 'package:mvp_platform/screens/medical_organization/medical_organization_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -96,8 +94,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
               if (organizations == null) {
                 return const GosCupertinoLoadingIndicator();
               } else {
-                switch (organizations.responseStatus) {
-                  case ResponseStatus.success:
+                switch (organizations.requestStatus) {
+                  case RequestStatus.success:
                     if (selectedOrganization == null) {
                       final defaultOrganization =
                           organizations.getDefaultOrganization();
@@ -162,8 +160,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                       .map(
                                         (company) => DropdownMenuItem(
                                           child: Container(
-                                              width: 240,
-                                              child: Text('${company.name}\n')),
+                                            width: 240,
+                                            child: Text('${company.name}\n'),
+                                          ),
                                           value: company.name,
                                         ),
                                       )
@@ -176,7 +175,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                       ),
                     );
 
-                  case ResponseStatus.error:
+                  case RequestStatus.error:
                     return Center(
                       child: const Text(
                         'Ошибка при загрузке данных',
@@ -229,16 +228,16 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                     showDialog(
                       context: context,
                       builder: (context) => ChangeNotifierProvider(
-                        create: (_) => SelectMedOrganizationProvider(),
-                        child: Consumer<SelectMedOrganizationProvider>(
+                        create: (_) => SelectSmoDialogProvider(),
+                        child: Consumer<SelectSmoDialogProvider>(
                           builder: (_, medOrganizationSelect, __) {
                             return CupertinoAlertDialog(
                               title: medOrganizationSelect.processStatus ==
-                                      DialogProcessStatus.started
+                                      RequestStatus.processing
                                   ? const CupertinoActivityIndicator(
                                       radius: 25.0)
                                   : medOrganizationSelect.processStatus ==
-                                          DialogProcessStatus.error
+                                          RequestStatus.error
                                       ? Container(
                                           width: double.infinity,
                                           child: const Text(
@@ -270,33 +269,37 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                               actions: <Widget>[
                                 CupertinoDialogAction(
                                   child: const Text('Отменить'),
-                                  onPressed: () => Navigator.of(context).pop(),
+                                  onPressed: medOrganizationSelect
+                                                  .processStatus ==
+                                              RequestStatus.ready ||
+                                          medOrganizationSelect.processStatus ==
+                                              RequestStatus.error
+                                      ? () => Navigator.of(context).pop()
+                                      : () {},
                                 ),
                                 CupertinoDialogAction(
-                                    child: const Text('Да, согласен'),
-                                    onPressed: () => {
-                                          medOrganizationSelect
-                                              .applyForInsurance(
-                                                  selectedOrganization.id)
-                                              .then((result) {
-                                            if (medOrganizationSelect
-                                                    .processStatus ==
-                                                DialogProcessStatus.success) {
-                                              Navigator.of(context).pushNamed(
-                                                  MedicalOrganizationInfoScreen
-                                                      .routeName);
-                                            }
-                                          }),
-                                        }
-//                                  onPressed: () =>
-//                                      Navigator.of(context).pushNamed(
-//                                    SmoSuccessScreen.routeName,
-//                                    arguments: SmoSuccessScreenArguments(
-//                                      selectedChild,
-//                                      selectedInsuranceCompany,
-//                                    ),
-//                                  ),
-                                    ),
+                                  child: const Text('Да, согласен'),
+                                  onPressed: medOrganizationSelect
+                                                  .processStatus ==
+                                              RequestStatus.ready ||
+                                          medOrganizationSelect.processStatus ==
+                                              RequestStatus.error
+                                      ? () => {
+                                            medOrganizationSelect
+                                                .applyForInsurance(
+                                                    selectedOrganization.id)
+                                                .then((result) {
+                                              if (medOrganizationSelect
+                                                      .processStatus ==
+                                                  RequestStatus.success) {
+                                                Navigator.of(context).pushNamed(
+                                                    MedicalOrganizationInfoScreen
+                                                        .routeName);
+                                              }
+                                            }),
+                                          }
+                                      : () {},
+                                ),
                               ],
                             );
                           },

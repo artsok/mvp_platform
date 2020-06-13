@@ -2,15 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
-import 'package:mvp_platform/providers/birth_smo/birth_smo_data.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
-import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
-import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 
 class BirthSmoProvider extends ChangeNotifier {
-  final BirthInfoData _data = BirthInfoData();
+
+  Client client;
+  RequestStatus requestStatus;
 
   BirthSmoProvider._();
 
@@ -21,15 +20,12 @@ class BirthSmoProvider extends ChangeNotifier {
   }
 
   Future<BirthSmoProvider> fetchData() async {
-    _data.responseStatus = null;
     Client client = await _fetchClientData();
-    _data.client = client;
-    _data.responseStatus = ResponseStatus.success;
+    this.client = client;
+    requestStatus = RequestStatus.success;
     notifyListeners();
     return this;
   }
-
-  BirthInfoData get data => _data;
 
   Future<Client> _fetchClientData() async {
     String response = await Service().getInsuredInfant();

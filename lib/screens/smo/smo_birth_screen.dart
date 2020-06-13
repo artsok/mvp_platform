@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/enums/insurance_type.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
-import 'package:mvp_platform/providers/birth_smo/birth_smo_insured_infant_provider.dart';
-import 'package:mvp_platform/providers/children_provider.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
+import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
@@ -48,10 +46,10 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                     if (birthInfoData == null) {
                       return const GosCupertinoLoadingIndicator();
                     } else {
-                      switch (birthInfoData.data.responseStatus) {
-                        case ResponseStatus.success:
-                          return ActInfo(birthInfoData.data.client);
-                        case ResponseStatus.error:
+                      switch (birthInfoData.requestStatus) {
+                        case RequestStatus.success:
+                          return ActInfo(birthInfoData.client);
+                        case RequestStatus.error:
                           return Center(
                             child: const Text(
                               'Ошибка при загрузке данных',

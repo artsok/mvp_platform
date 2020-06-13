@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mvp_platform/models/enums/response_status.dart';
+import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
@@ -9,15 +9,15 @@ class VisitsInfoData with ChangeNotifier {
   Client client;
   List<VisitExt> visits = [];
   List<VisitExt> visitsOfMonth = [];
-  ResponseStatus _responseStatus;
+  RequestStatus _requestStatus;
   DateTime activeMonth;
 
-  set responseStatus(ResponseStatus responseStatus) {
-    _responseStatus = responseStatus;
+  set requestStatus(RequestStatus requestStatus) {
+    _requestStatus = requestStatus;
     notifyListeners();
   }
 
-  get responseStatus => _responseStatus;
+  get requestStatus => _requestStatus;
 
   void setActiveMonth(DateTime date) {
     if (date.roundToMonth() != activeMonth) {

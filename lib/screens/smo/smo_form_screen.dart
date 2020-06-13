@@ -152,7 +152,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                   },
                                   value: selectedOrganization.name,
                                   style: TextStyle(
-                                    fontSize: 12.0,
+                                    fontSize: 14.0,
                                     color: Colors.black,
                                   ),
                                   underline: Container(),

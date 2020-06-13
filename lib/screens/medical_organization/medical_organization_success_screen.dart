@@ -70,7 +70,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
-                      "АО «СОГАЗ Мед» СОГАЗ МЕД",
+                      "АО «СОГАЗ Мед»",
                     ),
                     SingleInfoItem(
                       'Прикреплен к',

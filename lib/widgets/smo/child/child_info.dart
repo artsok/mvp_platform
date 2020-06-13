@@ -82,7 +82,17 @@ class ActInfo extends StatelessWidget {
         birthDate: DateFormat('dd.MM.yyyy').format(client.birthDate) ?? "",
         birthCertificateId:
             "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
-        birthPlace: "г.Калининград, Калининградская область, Россия");
+        birthPlace: _concatText([
+          client.birthPlace.getCountry(),
+          client.birthPlace.getRegion(),
+          '\n${client.getBirthPlace().getCity()}'
+        ], ", "),
+        oms: client.getPolicy()?.getNumber(),
+        address: _concatText([
+          client.birthPlace.getCountry(),
+          client.birthPlace.getRegion(),
+          '\n${client.getBirthPlace().getCity()}'
+        ], ", "));
 
     if (Children.children.length == 0) {
       Children.children.add(child);
@@ -117,7 +127,7 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Запись акта о рождении',
-            '${client.birthAct?.getNumber()} от ${DateFormat('dd.MM.yyyy').format(client.birthAct.getDate())} ' ,
+            '${client.birthAct?.getNumber()} от ${DateFormat('dd.MM.yyyy').format(client.birthAct.getDate())} ',
           ),
           SingleInfoItem(
             'Информация о родителях',

@@ -299,6 +299,7 @@ class Service {
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/clientService",
         data: requestDto.toJsonInsuredInfant());
+    log("${response.data}");
     return response.data;
   }
 

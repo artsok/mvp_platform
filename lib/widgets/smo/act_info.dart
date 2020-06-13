@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/client/parent.dart';
-import 'package:mvp_platform/widgets/common/single_info_item.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/widgets/common/single_info_item.dart';
 
 class ActInfo extends StatelessWidget {
   final Client client;
@@ -18,10 +18,10 @@ class ActInfo extends StatelessWidget {
         surname: client.lastName,
         name: client.firstName,
         patronym: client.midName,
-        birthDate: DateFormat('dd.MM.yyyy').format(client.birthDate) ?? "",
+        birthDate: client.birthDate.toDmy() ?? '',
         birthCertificateId:
-            "серия ${client.birthCertificate.series} № ${client.birthCertificate.number}",
-        birthPlace: "г.Калининград, Калининградская область, Россия");
+            'серия ${client.birthCertificate.series} № ${client.birthCertificate.number}',
+        birthPlace: 'г.Калининград, Калининградская область, Россия');
 
     if (Children.children.length == 0) {
       Children.children.add(child);
@@ -40,17 +40,17 @@ class ActInfo extends StatelessWidget {
           ),
           SingleInfoItem(
             'Фамилия, имя, отество',
-            "${client.lastName} ${client.firstName} ${client.midName}",
+            client.fullName,
           ),
           SingleInfoItem(
             'Дата рождения',
-            DateFormat('dd.MM.yyyy').format(client.birthDate),
+            client.birthDate?.toDmy() ?? 'не указана',
           ),
           SingleInfoItem('Место рождения',
               '${client.birthPlace.country} ${client.birthPlace.region}\n${client.birthPlace.city}'),
           SingleInfoItem(
             'Запись акта о рождении',
-            '${client.birthAct?.getNumber()} от ${DateFormat('dd.MM.yyyy').format(client.birthAct.getDate())} ' ,
+            '${client.birthAct?.number} от ${client.birthAct.date.toDmy()}',
           ),
           SingleInfoItem(
             'Информация о родителях',
@@ -77,13 +77,7 @@ class ActInfo extends StatelessWidget {
 
     List<String> formattedInfo = new List<String>();
     parents.forEach((element) {
-      String parent = element.title +
-          ": " +
-          element.name +
-          ", " +
-          DateFormat('dd.MM.yyyy').format(element.birthDate) +
-          ", " +
-          element.nationality;
+      String parent = '${element.title}: ${element.name}, ${element.birthDate.toDmy()}, ${element.nationality}';
       formattedInfo.add(parent);
     });
 

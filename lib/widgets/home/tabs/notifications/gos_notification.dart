@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/gos_notification.dart'
     as GosNotificationModel;
 import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
@@ -25,7 +24,7 @@ class GosNotification extends StatelessWidget {
               style: TextStyle(fontSize: 12, color: Colors.black54),
             ),
             Text(
-              DateFormat('HH:mm').format(notification.date),
+              notification.date.toHm(),
               style: TextStyle(fontSize: 12, color: Colors.black54),
             )
           ],

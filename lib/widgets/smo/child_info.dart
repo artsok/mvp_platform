@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 
@@ -23,8 +22,7 @@ class ChildInfo extends StatelessWidget {
           SingleInfoItem('Фамилия', child.lastName),
           SingleInfoItem('Имя', child.firstName),
           SingleInfoItem('Отчество', child.midName),
-          SingleInfoItem('Дата рождения',
-              DateFormat('dd.MM.yyyy').format(child.birthDate)),
+          SingleInfoItem('Дата рождения', child.birthDate.toDmy()),
           SingleInfoItem('Место рождения',
               '${child.birthPlace.country} ${child.birthPlace.region}\n${child.birthPlace.city}',
               last: true),

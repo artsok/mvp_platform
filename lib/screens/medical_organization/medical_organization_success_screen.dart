@@ -1,15 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
 import 'package:mvp_platform/providers/request/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
-import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/calendar/calendar_screen.dart';
+import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
@@ -64,7 +62,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Дата рождения',
-                      DateFormat('dd.MM.yyyy').format(client.birthDate),
+                      client.birthDate.toDmy(),
                     ),
                     SingleInfoItem(
                       'Адрес проживания',

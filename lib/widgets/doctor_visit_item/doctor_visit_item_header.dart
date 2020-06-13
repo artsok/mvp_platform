@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
-import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/enums/visit_status.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
-import 'package:provider/provider.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:provider/provider.dart';
 
 class DoctorVisitItemHeader extends StatelessWidget {
   @override
@@ -38,14 +37,14 @@ class DoctorVisitItemHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          '${DateFormat(DateFormat.MONTH, locale).format(visit.planDate)}',
+                          '${visit.planDate.toMonth()}',
                           style: TextStyle(
                             fontSize: 18.0,
                             color: visit.status.toVisitStatus().colors().item1,
                           ),
                         ),
                         Text(
-                          '(${DateFormat(DateFormat.WEEKDAY, locale).format(visit.planDate)})',
+                          '(${visit.planDate.toWeekday()})',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: visit.status.toVisitStatus().colors().item1,
@@ -90,7 +89,7 @@ class DoctorVisitItemHeader extends StatelessWidget {
                           return Row(
                             children: <Widget>[
                               Text(
-                                '${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate)} - ${DateFormat(DateFormat.HOUR24_MINUTE).format(visit.planDate.add(Duration(minutes: 30)))}',
+                                '${visit.planDate.toH24m()} - ${visit.planDate.add(Duration(minutes: 30)).toH24m()}',
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   color: visit.status

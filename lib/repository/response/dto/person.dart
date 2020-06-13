@@ -36,7 +36,7 @@ class Person extends ChangeNotifier {
 
   Person();
 
-  String get fullName => '$lastName $firstName $lastName';
+  String get fullName => '$lastName $firstName $midName';
 
   String getFirstName() {
     return firstName;

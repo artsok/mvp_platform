@@ -1,17 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mvp_platform/models/child.dart';
 import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/doctor_provider.dart';
+import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/request/medical_organizations_provider.dart';
+import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
+import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/common/timestamp_picker.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
-import 'package:mvp_platform/widgets/smo/child/child_info.dart';
-import 'package:mvp_platform/utils/extensions/string_extensions.dart';
+import 'package:mvp_platform/widgets/smo/child_info.dart';
+import 'package:provider/provider.dart';
 
 class DoctorFormScreen extends StatefulWidget {
   static final routeName = '/doctor-form-screen';
@@ -21,14 +24,18 @@ class DoctorFormScreen extends StatefulWidget {
 }
 
 class _DoctorFormScreenState extends State<DoctorFormScreen> {
-  Child selectedChild = Children.children[0];
+  Client selectedChild;
   Doctor selectedDoctor = Doctors.doctors[0];
   Hospital selectedHospital = MedicalOrganizationsProvider.hospitals[0];
 
-  int currentStep = 0;
-  bool complete = false;
   DateTime selectedTime = DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 30);
+      DateTime
+          .now()
+          .year, DateTime
+      .now()
+      .month, DateTime
+      .now()
+      .day, 17, 30);
 
   void selectTime(DateTime time) {
     setState(() {
@@ -38,6 +45,9 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BirthSmoProvider smoProvider = BirthSmoProvider();
+    smoProvider.client ?? smoProvider.fetchData();
+    selectedChild = smoProvider.client;
     List<Step> steps = [
       Step(
         title: Container(
@@ -46,31 +56,39 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
             'Пожалуйста, выберите ребенка, которому требуется выбрать страховую медицинскую организацию и оформить полис ОМС',
           ),
         ),
-        content: Wrap(
-          children: <Widget>[
-            DropdownButton(
-              hint: Container(
-                width: 265,
-                child: const Text('Фамилия, имя, отчество новорожденного(-ой)'),
-              ),
-              onChanged: (fullname) {
-                setState(() {
-                  selectedChild = Children.children
-                      .firstWhere((c) => c.fullname == fullname);
-                });
-              },
-              value: selectedChild.fullname,
-              items: Children.children
-                  .map(
-                    (child) => DropdownMenuItem(
-                      child: Text(child.fullname),
-                      value: child.fullname,
-                    ),
+        content: Consumer<BirthSmoProvider>(
+          builder: (_, birthSmo, __) {
+            if (birthSmo == null) {
+              return const GosCupertinoLoadingIndicator();
+            }
+            return Wrap(
+              children: <Widget>[
+                DropdownButton(
+                  hint: Container(
+                    width: 265,
+                    child: const Text(
+                        'Фамилия, имя, отчество новорожденного(-ой)'),
+                  ),
+                  onChanged: (fullname) {
+                    setState(() {
+                      selectedChild = birthSmo.client;
+                    });
+                  },
+                  value: '${selectedChild.lastName} ${selectedChild.firstName} ${selectedChild.lastName}',
+                  items: Children.children
+                      .map(
+                        (child) =>
+                        DropdownMenuItem(
+                          child: Text(child.fullname),
+                          value: child.fullname,
+                        ),
                   )
-                  .toList(),
-            ),
-            ChildInfo(selectedChild),
-          ],
+                      .toList(),
+                ),
+                ChildInfo(selectedChild),
+              ],
+            );
+          },
         ),
         state: StepState.complete,
         isActive: true,
@@ -96,11 +114,12 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           value: selectedDoctor.profession,
           items: Doctors.doctors
               .map(
-                (doctor) => DropdownMenuItem(
+                (doctor) =>
+                DropdownMenuItem(
                   child: Container(width: 240, child: Text(doctor.profession)),
                   value: doctor.profession,
                 ),
-              )
+          )
               .toList(),
         ),
         state: StepState.complete,
@@ -129,7 +148,8 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
               value: selectedHospital.name,
               items: MedicalOrganizationsProvider.hospitals
                   .map(
-                    (hospital) => DropdownMenuItem(
+                    (hospital) =>
+                    DropdownMenuItem(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
@@ -142,7 +162,7 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
                       ),
                       value: hospital.name,
                     ),
-                  )
+              )
                   .toList(),
             ),
             Padding(
@@ -171,10 +191,22 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           ),
         ),
         content: TimestampPicker(
-          from: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 16, 30),
-          to: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 19, 45),
+          from: DateTime(DateTime
+              .now()
+              .year, DateTime
+              .now()
+              .month,
+              DateTime
+                  .now()
+                  .day, 16, 30),
+          to: DateTime(DateTime
+              .now()
+              .year, DateTime
+              .now()
+              .month,
+              DateTime
+                  .now()
+                  .day, 19, 45),
           interval: Duration(minutes: 15),
           callback: (time) => selectedTime = time,
         ),
@@ -182,22 +214,6 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
         isActive: true,
       ),
     ];
-
-    void goTo(int step) {
-      setState(() => currentStep = step);
-    }
-
-    void nextStep() {
-      currentStep + 1 != steps.length
-          ? goTo(currentStep + 1)
-          : setState(() => complete = true);
-    }
-
-    void cancelStep() {
-      if (currentStep > 0) {
-        goTo(currentStep - 1);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -207,65 +223,69 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
         ),
         title: const Text('Запись на профилактический осмотр'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            WizardHeader(
-              'assets/icons/notificationIcon.png',
-              'Запись на профилактический осмотр',
-            ),
-            Stepper(
-              physics: ClampingScrollPhysics(),
-              controlsBuilder: (BuildContext context,
-                      {VoidCallback onStepContinue,
+      body: ChangeNotifierProvider.value(
+        value: smoProvider,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              WizardHeader(
+                'assets/icons/notificationIcon.png',
+                'Запись на профилактический осмотр',
+              ),
+              Stepper(
+                physics: ClampingScrollPhysics(),
+                controlsBuilder: (BuildContext context,
+                    {VoidCallback onStepContinue,
                       VoidCallback onStepCancel}) =>
-                  Container(),
-              steps: steps,
-              currentStep: currentStep,
-              onStepContinue: nextStep,
-              onStepCancel: cancelStep,
-              onStepTapped: (step) => goTo(step),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 56),
-                child: GosFlatButton(
-                  width: 320,
-                  textColor: Colors.white,
-                  backgroundColor: '#2763AA'.colorFromHex(),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CupertinoAlertDialog(
-                        title: Text(
-                          'Вы выбрали дату для записи: 16 июня, 2020 г., вторник, ${selectedTime.hour}:${selectedTime.minute == 0 ? "00" : selectedTime.minute}',
-                        ),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: const Text('Отменить'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                            child: const Text('Да, подтверждаю'),
-                            onPressed: () => Navigator.of(context).pushNamed(
-                              DoctorSuccessScreen.routeName,
-                              arguments: DoctorSuccessScreenArguments(
-                                selectedHospital,
-                                selectedDoctor,
-                                selectedTime,
+                    Container(),
+                steps: steps,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 56),
+                  child: GosFlatButton(
+                    width: 320,
+                    textColor: Colors.white,
+                    backgroundColor: '#2763AA'.colorFromHex(),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            CupertinoAlertDialog(
+                              title: Text(
+                                'Вы выбрали дату для записи: 16 июня, 2020 г., вторник, ${selectedTime
+                                    .hour}:${selectedTime.minute == 0
+                                    ? "00"
+                                    : selectedTime.minute}',
                               ),
+                              actions: <Widget>[
+                                CupertinoDialogAction(
+                                  child: const Text('Отменить'),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                                CupertinoDialogAction(
+                                  child: const Text('Да, подтверждаю'),
+                                  onPressed: () =>
+                                      Navigator.of(context).pushNamed(
+                                        DoctorSuccessScreen.routeName,
+                                        arguments: DoctorSuccessScreenArguments(
+                                          selectedHospital,
+                                          selectedDoctor,
+                                          selectedTime,
+                                        ),
+                                      ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  text: 'Выбрать',
+                      );
+                    },
+                    text: 'Выбрать',
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

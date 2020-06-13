@@ -7,7 +7,7 @@ import 'package:mvp_platform/screens/smo/smo_info_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
-import 'package:mvp_platform/widgets/smo/child/child_info.dart';
+import 'package:mvp_platform/widgets/smo/act_info.dart';
 import 'package:provider/provider.dart';
 
 class SmoBirthInfoScreen extends StatefulWidget {

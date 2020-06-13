@@ -33,10 +33,11 @@ class BirthSmoProvider extends ChangeNotifier {
       notifyListeners();
     }).catchError((error) {
       if (error is DioError) {
-        requestStatus = RequestStatus.error;
         errorMessage = error.message;
-        notifyListeners();
       }
+      requestStatus = RequestStatus.error;
+      errorMessage = 'Unknown error';
+      notifyListeners();
     });
   }
 }

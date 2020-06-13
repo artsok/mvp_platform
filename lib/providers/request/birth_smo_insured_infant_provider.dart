@@ -8,7 +8,6 @@ import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class BirthSmoProvider extends ChangeNotifier {
-
   Client client;
   RequestStatus requestStatus = RequestStatus.ready;
   String errorMessage;
@@ -21,23 +20,23 @@ class BirthSmoProvider extends ChangeNotifier {
     return _instance;
   }
 
-  Future<BirthSmoProvider> fetchData() async {
+  void fetchData() {
     requestStatus = RequestStatus.processing;
     notifyListeners();
-    try {
-      final response = await Service().getInsuredInfant();
-      final jsonData = json.decode(response);
+    Service().getInsuredInfant().then((result) {
+      final jsonData = json.decode(result);
       var jsonMap = Map<String, dynamic>.from(jsonData);
       var client = Client.fromJson(jsonMap['result']);
       this.client = client;
       requestStatus = RequestStatus.success;
       log('Received client: $client');
       notifyListeners();
-    } on DioError catch (error) {
-      requestStatus = RequestStatus.error;
-      errorMessage = error.message;
-      notifyListeners();
-    }
-    return this;
+    }).catchError((error) {
+      if (error is DioError) {
+        requestStatus = RequestStatus.error;
+        errorMessage = error.message;
+        notifyListeners();
+      }
+    });
   }
 }

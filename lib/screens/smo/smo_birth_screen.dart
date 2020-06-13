@@ -23,7 +23,7 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final BirthSmoProvider provider = BirthSmoProvider();
+    final BirthSmoProvider birthSmoProvider = BirthSmoProvider()..fetchData();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,8 +34,8 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
           'Запись акта о рождении',
         ),
       ),
-      body: FutureProvider(
-        create: (_) => provider.fetchData(),
+      body: ChangeNotifierProvider.value(
+        value: birthSmoProvider,
         child: Consumer<BirthSmoProvider>(
           builder: (_, birthInfo, __) {
             if (birthInfo == null) {

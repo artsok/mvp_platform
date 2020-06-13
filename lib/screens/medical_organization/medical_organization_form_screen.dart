@@ -60,7 +60,9 @@ class _MedicalOrganizationFormScreenState
               }
               switch (medicalOrganizations.data.responseStatus) {
                 case (ResponseStatus.success):
-                  selectedOrganization = medicalOrganizations.data.data[0];
+                  if (selectedOrganization == null) {
+                    selectedOrganization = medicalOrganizations.data.data[0];
+                  }
                   return Wrap(
                     children: <Widget>[
                       Padding(

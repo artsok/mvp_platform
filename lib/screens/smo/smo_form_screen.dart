@@ -101,7 +101,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
               } else {
                 switch (organizations.responseStatus) {
                   case ResponseStatus.success:
-                    selectedOrganization = organizations.data[0];
+                    if (selectedOrganization == null) {
+                      selectedOrganization = organizations.data[0];
+                    }
                     return Container(
                       width: double.infinity,
                       child: Column(

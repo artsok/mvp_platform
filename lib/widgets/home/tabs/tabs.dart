@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mvp_platform/widgets/home/services/gos_services.dart';
 import 'package:mvp_platform/widgets/home/tabs/notifications/gos_notifications.dart';
-import 'package:mvp_platform/widgets/home/tabs/services.dart';
 
 class Tabs extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> with TickerProviderStateMixin {
   final List<Tab> tabs = [
     Tab(text: GosNotificationsTab.tabName),
-    Tab(text: Services.tabName),
+    Tab(text: GosServicesTab.tabName),
   ];
   TabController tabController;
 
@@ -48,7 +48,7 @@ class _TabsState extends State<Tabs> with TickerProviderStateMixin {
               controller: tabController,
               children: <Widget>[
                 GosNotificationsTab(),
-                Services(),
+                GosServicesTab(),
               ],
             ),
           ),

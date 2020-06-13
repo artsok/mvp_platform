@@ -14,18 +14,17 @@ class GosNotificationsTab extends StatefulWidget {
 }
 
 class _GosNotificationsTabState extends State<GosNotificationsTab> {
-
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Consumer<GosNotifications>(
           builder: (_, notifications, __) => Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
+
+              separatorBuilder: (_, __) => Divider(color: Colors.black),
               itemCount: notifications.items.length,
-              itemBuilder:(ctx, i) =>
-                GosNotification(notifications.items[i]),
+              itemBuilder: (ctx, i) => GosNotification(notifications.items[i]),
             ),
           ),
         ),

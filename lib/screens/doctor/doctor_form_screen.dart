@@ -5,7 +5,7 @@ import 'package:mvp_platform/models/doctor.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/doctor_provider.dart';
-import 'package:mvp_platform/providers/medical_organizations/medical_organizations_provider.dart';
+import 'package:mvp_platform/providers/request/medical_organizations_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_success_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/timestamp_picker.dart';

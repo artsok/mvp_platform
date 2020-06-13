@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
@@ -7,7 +8,6 @@ import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class MedicalOrganizationsProvider with ChangeNotifier {
-
   List<MedicalOrganization> data = [];
   RequestStatus requestStatus;
 
@@ -37,6 +37,8 @@ class MedicalOrganizationsProvider with ChangeNotifier {
         .map<MedicalOrganization>(
             (visitInfo) => MedicalOrganization.fromJson(visitInfo))
         .toList();
+    list.forEach(
+        (mo) => mo.photoPath = 'assets/map/${Random().nextInt(6) + 1}.png');
     print('Received medical organizations: $list');
     return list;
   }

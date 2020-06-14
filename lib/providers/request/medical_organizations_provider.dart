@@ -37,8 +37,16 @@ class MedicalOrganizationsProvider with ChangeNotifier {
         .map<MedicalOrganization>(
             (visitInfo) => MedicalOrganization.fromJson(visitInfo))
         .toList();
-    list.forEach(
-        (mo) => mo.photoPath = 'assets/map/${Random().nextInt(6) + 1}.png');
+    list.forEach((mo) => {
+          if (mo.code.contains("2"))
+            {mo.photoPath = 'assets/medOrganization/2.png'}
+          else if (mo.code.contains("4"))
+            {mo.photoPath = 'assets/medOrganization/4.png'}
+          else
+            {
+              {mo.photoPath = 'assets/medOrganization/3.png'}
+            }
+        });
     print('Received medical organizations: $list');
     return list;
   }

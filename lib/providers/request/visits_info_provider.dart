@@ -13,7 +13,7 @@ class VisitsInfoProvider extends ChangeNotifier {
   Client client;
   List<VisitExt> visits = [];
   List<VisitExt> visitsOfMonth = [];
-  RequestStatus requestStatus;
+  RequestStatus requestStatus = RequestStatus.ready;
   DateTime activeMonth = DateTime.now();
   String errorMessage;
 

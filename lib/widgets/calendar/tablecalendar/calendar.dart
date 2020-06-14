@@ -146,6 +146,7 @@ class TableCalendar extends StatefulWidget {
 class _TableCalendarState extends State<TableCalendar>
     with TickerProviderStateMixin {
   AnimationController animationController;
+  CalendarState calendarState = CalendarState.opened;
 
   @override
   void initState() {
@@ -311,7 +312,11 @@ class _TableCalendarState extends State<TableCalendar>
               Positioned(
                 bottom: -9,
                 left: constraints.maxWidth / 2 - 25,
-                child: Pin(),
+                child: GestureDetector(
+                    onTap: () {
+                      print('Pin tapped');
+                    },
+                    child: Pin()),
               ),
             ],
           ),
@@ -618,4 +623,9 @@ class _TableCalendarState extends State<TableCalendar>
     }
     return firstEvent;
   }
+}
+
+enum CalendarState {
+  closed,
+  opened,
 }

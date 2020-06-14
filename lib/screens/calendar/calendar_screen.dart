@@ -73,71 +73,56 @@ class _CalendarScreenState extends State<CalendarScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
-              switch (visitsInfo.requestStatus) {
-                case RequestStatus.success:
-                  return Column(
-                    children: <Widget>[
-                      visitsInfo.client == null
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Text(
-                                visitsInfo.client.fullName,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: TableCalendar(
-                          onDaySelected: (day, visits) {
-                            if (visits.isNotEmpty) {
-                              Navigator.pushNamed(
-                                context,
-                                DoctorVisitDetailsScreen.routeName,
-                                arguments: DoctorVisitDetailsScreenArguments(
-                                  visitsInfo.client,
-                                  visits[0],
-                                ),
-                              );
-                            }
-                          },
-                          locale: locale,
-                          visitsInfo: visitsInfo,
-                          calendarController: calendarController,
-                          daysOfWeekStyle: DaysOfWeekStyle(
-                            weekdayStyle: defaultTextStyle,
-                            weekendStyle: defaultTextStyle,
-                          ),
-                          calendarStyle: CalendarStyle(
-                            highlightToday: false,
-                            selectedColor: null,
-                            selectedStyle: defaultTextStyle,
-                            outsideDaysVisible: true,
-                            highlightSelected: false,
-                            weekdayStyle: defaultTextStyle,
-                            weekendStyle: defaultTextStyle,
-                          ),
-                          headerStyle: HeaderStyle(
-                            headerPadding: const EdgeInsets.all(0.0),
-                            headerMargin: const EdgeInsets.all(0.0),
+              return Column(
+                children: <Widget>[
+                  visitsInfo.client == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            visitsInfo.client.fullName,
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: TableCalendar(
+                      onDaySelected: (day, visits) {
+                        if (visits.isNotEmpty) {
+                          Navigator.pushNamed(
+                            context,
+                            DoctorVisitDetailsScreen.routeName,
+                            arguments: DoctorVisitDetailsScreenArguments(
+                              visitsInfo.client,
+                              visits[0],
+                            ),
+                          );
+                        }
+                      },
+                      locale: locale,
+                      visitsInfo: visitsInfo,
+                      calendarController: calendarController,
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                        weekdayStyle: defaultTextStyle,
+                        weekendStyle: defaultTextStyle,
                       ),
-                    ],
-                  );
-                case RequestStatus.error:
-                  return Center(
-                    child: const Text(
-                      'Ошибка при загрузке данных',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.red,
+                      calendarStyle: CalendarStyle(
+                        highlightToday: false,
+                        selectedColor: null,
+                        selectedStyle: defaultTextStyle,
+                        outsideDaysVisible: true,
+                        highlightSelected: false,
+                        weekdayStyle: defaultTextStyle,
+                        weekendStyle: defaultTextStyle,
+                      ),
+                      headerStyle: HeaderStyle(
+                        headerPadding: const EdgeInsets.all(0.0),
+                        headerMargin: const EdgeInsets.all(0.0),
                       ),
                     ),
-                  );
-                default:
-                  return const GosCupertinoLoadingIndicator();
-              }
+                  ),
+                ],
+              );
             }),
             Expanded(
               child: Consumer<VisitsInfoProvider>(

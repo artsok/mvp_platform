@@ -148,18 +148,11 @@ class TableCalendar extends StatefulWidget {
 
 class _TableCalendarState extends State<TableCalendar>
     with TickerProviderStateMixin {
-  bool collapsed = false;
-  double opacity = 1.0;
   AnimationController animationController;
-  Animation<double> calendarHeightAnimation;
-  Animation<double> calendarOpacityAnimation;
-  GlobalKey calendarKey;
 
   @override
   void initState() {
     super.initState();
-
-    calendarKey = GlobalKey();
 
     animationController = AnimationController(
       duration: const Duration(seconds: 1),
@@ -175,34 +168,6 @@ class _TableCalendarState extends State<TableCalendar>
       onCalendarCreated: widget.onCalendarCreated,
       includeInvisibleDays: widget.calendarStyle.outsideDaysVisible,
     );
-
-    calendarOpacityAnimation = Tween<double>(
-      begin: 1,
-      end: 0,
-    ).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Interval(0, 1, curve: Curves.ease),
-      ),
-    );
-
-    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-  }
-
-  void _afterLayout(_) {
-    if (calendarHeightAnimation == null) {
-      setState(() {
-        final RenderBox renderBox =
-            calendarKey.currentContext.findRenderObject();
-        calendarHeightAnimation = calendarHeightAnimation = Tween<double>(
-          begin: renderBox.size.height,
-          end: 18.0,
-        ).animate(CurvedAnimation(
-          parent: animationController,
-          curve: Interval(0, 1, curve: Curves.ease),
-        ));
-      });
-    }
   }
 
   @override
@@ -311,32 +276,6 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
-  Future<void> _toggleCalendar() async {
-    setState(() {
-      collapsed = !collapsed;
-    });
-    try {
-      if (!collapsed) {
-        print('Opening calendar');
-        await animationController.forward();
-      } else {
-        print('Collapsing calendar');
-        await animationController.reverse();
-      }
-    } on TickerCanceled {}
-  }
-
-//  void _toggleCalendar() {
-//    setState(() {
-//      collapsed = !collapsed;
-//    });
-//    if (collapsed) {
-//      animationController.forward();
-//    } else {
-//      animationController.reverse();
-//    }
-//  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -345,9 +284,6 @@ class _TableCalendarState extends State<TableCalendar>
         return child;
       },
       child: Container(
-        height: calendarHeightAnimation == null
-            ? null
-            : calendarHeightAnimation.value,
         margin: const EdgeInsets.all(0.0),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -363,31 +299,22 @@ class _TableCalendarState extends State<TableCalendar>
           builder: (_, constraints) => Stack(
             overflow: Overflow.visible,
             children: <Widget>[
-              Opacity(
-                opacity: calendarHeightAnimation == null
-                    ? 1.0
-                    : calendarOpacityAnimation.value,
-                child: Column(
-                  key: calendarKey,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    if (widget.headerVisible) _buildHeader(),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  if (widget.headerVisible) _buildHeader(),
 //                Padding(
 //                  padding: widget.calendarStyle.contentPadding,
 //                  child:
-                    _buildCalendarContent(),
+                  _buildCalendarContent(),
 //                ),
-                  ],
-                ),
+                ],
               ),
               Positioned(
                 bottom: -9,
                 left: constraints.maxWidth / 2 - 25,
                 child: GestureDetector(
-                  onTap: () {
-                    print('Calendar pin tapped');
-                    _toggleCalendar();
-                  },
+                  onTap: () {},
                   child: const Pin(),
                 ),
               ),
@@ -443,7 +370,7 @@ class _TableCalendarState extends State<TableCalendar>
   Widget _buildCalendarContent() {
     return AnimatedSize(
       duration: Duration(milliseconds: 220),
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.ease,
       alignment: Alignment(0, -1),
       vsync: this,
       child: _buildWrapper(),
@@ -466,7 +393,7 @@ class _TableCalendarState extends State<TableCalendar>
   Widget _buildHorizontalSwipeWrapper({Widget child}) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
-      switchInCurve: Curves.decelerate,
+      switchInCurve: Curves.ease,
       transitionBuilder: (child, animation) {
         return SlideTransition(
           position: Tween<Offset>(

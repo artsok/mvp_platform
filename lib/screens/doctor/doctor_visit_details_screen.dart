@@ -381,7 +381,7 @@ class AvailableActions extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        'Оценить специалиста',
+                        'Оценить визит',
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.blue[600],

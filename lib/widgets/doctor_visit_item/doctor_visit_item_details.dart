@@ -13,7 +13,6 @@ class DoctorVisitItemDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visit = Provider.of<VisitExt>(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
@@ -88,62 +87,57 @@ class DoctorVisitItemDetails extends StatelessWidget {
                                 .toString()
                                 .split('.')[1];
                           },
-                          child: Consumer<Doctor>(
-                            builder: (BuildContext context, Doctor doctor,
-                                Widget child) {
-                              if (doctor.rating != 0.0) {
-                                return Container();
-                              }
-                              return PopupMenuButton(
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Оцените услугу',
-                                    style: TextStyle(
-                                      color: Colors.blue[600],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                                itemBuilder: (BuildContext context) => [
-                                  RatePopupMenu(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4.0),
-                                      child: Row(
-                                        children: <Widget>[
-                                          RatePopupMenuButton(
-                                            callback: () => doctor.rating =
-                                                Rate.rate1.value.toDouble(),
-                                            rate: Rate.rate1,
-                                          ),
-                                          RatePopupMenuButton(
-                                            callback: () => doctor.rating =
-                                                Rate.rate2.value.toDouble(),
-                                            rate: Rate.rate2,
-                                          ),
-                                          RatePopupMenuButton(
-                                            callback: () => doctor.rating =
-                                                Rate.rate3.value.toDouble(),
-                                            rate: Rate.rate3,
-                                          ),
-                                          RatePopupMenuButton(
-                                            callback: () => doctor.rating =
-                                                Rate.rate4.value.toDouble(),
-                                            rate: Rate.rate4,
-                                          ),
-                                          RatePopupMenuButton(
-                                            callback: () => doctor.rating =
-                                                Rate.rate5.value.toDouble(),
-                                            rate: Rate.rate5,
-                                          ),
-                                        ],
+                          child: visit.rating != null
+                              ? Container()
+                              : PopupMenuButton(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Оцените услугу',
+                                      style: TextStyle(
+                                        color: Colors.blue[600],
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
-                                ],
-                              );
-                            },
-                          ),
+                                  itemBuilder: (_) => [
+                                    RatePopupMenu(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 4.0),
+                                        child: Row(
+                                          children: <Widget>[
+                                            RatePopupMenuButton(
+                                              callback: () => visit.rating =
+                                                  Rate.rate1.value,
+                                              rate: Rate.rate1,
+                                            ),
+                                            RatePopupMenuButton(
+                                              callback: () => visit.rating =
+                                                  Rate.rate2.value,
+                                              rate: Rate.rate2,
+                                            ),
+                                            RatePopupMenuButton(
+                                              callback: () => visit.rating =
+                                                  Rate.rate3.value,
+                                              rate: Rate.rate3,
+                                            ),
+                                            RatePopupMenuButton(
+                                              callback: () => visit.rating =
+                                                  Rate.rate4.value,
+                                              rate: Rate.rate4,
+                                            ),
+                                            RatePopupMenuButton(
+                                              callback: () => visit.rating =
+                                                  Rate.rate5.value,
+                                              rate: Rate.rate5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                         ),
                     ],
                   ),

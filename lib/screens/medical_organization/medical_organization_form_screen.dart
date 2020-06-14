@@ -55,7 +55,9 @@ class _MedicalOrganizationFormScreenState
               switch (medicalOrganizations.requestStatus) {
                 case (RequestStatus.success):
                   if (selectedOrganization == null) {
-                    selectedOrganization = medicalOrganizations.data[0];
+                    final String defaultMedical = "№ 2";
+                    selectedOrganization = medicalOrganizations.data.firstWhere(
+                        (element) => element.code.contains(defaultMedical));
                   }
                   return Wrap(
                     children: <Widget>[
@@ -69,19 +71,19 @@ class _MedicalOrganizationFormScreenState
                           ),
                           onChanged: (organizationName) {
                             selectOrganization(medicalOrganizations.data
-                                .firstWhere((c) => c.name == organizationName));
+                                .firstWhere((c) => c.code == organizationName));
                           },
                           underline: Container(),
                           style: TextStyle(fontSize: 14.0, color: Colors.black),
-                          value: selectedOrganization.name ?? '',
+                          value: selectedOrganization.code ?? '',
                           items: medicalOrganizations.data
                               .map(
                                 (hospital) => DropdownMenuItem(
                                   child: Container(
                                     width: 240,
-                                    child: Text('${hospital.name}\n'),
+                                    child: Text('${hospital.code}\n'),
                                   ),
-                                  value: hospital.name,
+                                  value: hospital.code,
                                 ),
                               )
                               .toList(),

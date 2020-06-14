@@ -156,14 +156,14 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                   width: 260,
                                   child: const Text('Страховая компания'),
                                 ),
-                                onChanged: (name) {
+                                onChanged: (code) {
                                   selectInsuranceOrganization(organizations.data
-                                      .firstWhere((c) => c.name == name));
+                                      .firstWhere((c) => c.code == code));
                                   organizations.selectedOrganization = selectedOrganization;
                                 },
-                                value: selectedOrganization.name,
+                                value: selectedOrganization.code,
                                 style: TextStyle(
-                                  fontSize: 12.0,
+                                  //fontSize: 12.0,
                                   color: Colors.black,
                                 ),
                                 underline: Container(),
@@ -172,9 +172,9 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                       (company) => DropdownMenuItem(
                                         child: Container(
                                           width: 240,
-                                          child: Text('${company.name}\n'),
+                                          child: Text('${company.code}\n'),
                                         ),
-                                        value: company.name,
+                                        value: company.code,
                                       ),
                                     )
                                     .toList(),
@@ -263,7 +263,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                         : Column(
                                             children: [
                                               Text(
-                                                'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.name}. Нажимая на кнопку «Да, согласен» Вы подтверждаете согласие с условиями договора ${selectedOrganization.name}.',
+                                                'Вы выбрали страховую медицинскую организацию  ${selectedOrganization.code}. Нажимая на кнопку «Да, согласен» вы подтверждаете свой выбор.',
                                               ),
                                             ],
                                           ),

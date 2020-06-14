@@ -18,7 +18,7 @@ class ChildInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SingleInfoItem('№ свидетельства о рождении',
-              child.birthAct?.getNumber() ?? 'нет'),
+              child.birthAct?.getNumber()),
           SingleInfoItem('Фамилия', child.lastName),
           SingleInfoItem('Имя', child.firstName),
           SingleInfoItem('Отчество', child.midName),

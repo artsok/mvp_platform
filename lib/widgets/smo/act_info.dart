@@ -74,7 +74,7 @@ class ActInfo extends StatelessWidget {
       ? ''
       : parents
           .map((p) =>
-              '${p.title}: ${p.name}, ${p.birthDate.toDmy()}, ${p.nationality}')
+              '${p.title}: ${p.lastName} ${p.midName} ${p.firstName}, ${p.birthDate.toDmy()}, ${p.nationality}')
           .toList()
           .join('\n\n');
 }

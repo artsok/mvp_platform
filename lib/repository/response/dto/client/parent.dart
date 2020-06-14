@@ -1,12 +1,16 @@
 class Parent {
   String title;
-  String name;
+  String firstName;
+  String midName;
+  String lastName;
   DateTime birthDate;
   String nationality;
 
   Parent.fromJson(Map<String, dynamic> json) {
     title = json['title'] != null ? json['title'] : null;
-    name = json['name'] != null ? json['name'] : null;
+    firstName = json['firstName'] != null ? json['firstName'] : null;
+    midName = json['midName'] != null ? json['midName'] : null;
+    lastName = json['lastName'] != null ? json['lastName'] : null;
     birthDate =
         json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
     nationality = json['nationality'] != null ? json['nationality'] : null;
@@ -18,14 +22,6 @@ class Parent {
 
   void setTitle(String title) {
     this.title = title;
-  }
-
-  String getName() {
-    return name;
-  }
-
-  void setName(String name) {
-    this.name = name;
   }
 
   DateTime getBirthDate() {
@@ -46,6 +42,6 @@ class Parent {
 
   @override
   String toString() {
-    return 'Parent{title: $title, name: $name, birthDate: $birthDate, nationality: $nationality}';
+    return 'Parent{title: $title, firstName: $firstName, lastName: $lastName, birthDate: $birthDate, nationality: $nationality}';
   }
 }

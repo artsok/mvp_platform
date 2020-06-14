@@ -275,6 +275,10 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
+  void onPinTap() {
+    print('Pin tapped');
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -297,6 +301,7 @@ class _TableCalendarState extends State<TableCalendar>
         child: LayoutBuilder(
           builder: (_, constraints) => Stack(
             overflow: Overflow.visible,
+            fit: StackFit.expand,
             children: <Widget>[
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -312,11 +317,7 @@ class _TableCalendarState extends State<TableCalendar>
               Positioned(
                 bottom: -9,
                 left: constraints.maxWidth / 2 - 25,
-                child: GestureDetector(
-                    onTap: () {
-                      print('Pin tapped');
-                    },
-                    child: Pin()),
+                child: GestureDetector(onTap: () => onPinTap(), child: Pin()),
               ),
             ],
           ),

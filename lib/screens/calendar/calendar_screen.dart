@@ -22,7 +22,6 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen>
     with TickerProviderStateMixin {
   GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
-  AnimationController animationController;
   CalendarController calendarController;
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
@@ -31,17 +30,10 @@ class _CalendarScreenState extends State<CalendarScreen>
   void initState() {
     super.initState();
     calendarController = CalendarController();
-    animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-
-    animationController.forward();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
     calendarController.dispose();
     super.dispose();
   }

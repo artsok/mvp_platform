@@ -27,11 +27,9 @@ class Person extends ChangeNotifier {
     phone = json['phone'] != null ? json['phone'] : null;
     email = json['email'] != null ? json['email'] : null;
 
-    if (lastName == 'Закруткина') {
-      photoPath = 'assets/images/doctor-2.jpg';
-    } else {
-      photoPath = 'assets/images/doctor.jpg';
-    }
+    photoPath = id == null
+        ? 'assets/images/doctors/doctor.jpg'
+        : 'assets/images/doctors/$id.jpg';
   }
 
   Person();

@@ -29,13 +29,7 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
   Hospital selectedHospital = MedicalOrganizationsProvider.hospitals[0];
 
   DateTime selectedTime = DateTime(
-      DateTime
-          .now()
-          .year, DateTime
-      .now()
-      .month, DateTime
-      .now()
-      .day, 17, 30);
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 17, 30);
 
   void selectTime(DateTime time) {
     setState(() {
@@ -74,15 +68,15 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
                       selectedChild = birthSmo.client;
                     });
                   },
-                  value: '${selectedChild.lastName} ${selectedChild.firstName} ${selectedChild.lastName}',
+                  value:
+                      '${selectedChild.lastName} ${selectedChild.firstName} ${selectedChild.lastName}',
                   items: Children.children
                       .map(
-                        (child) =>
-                        DropdownMenuItem(
+                        (child) => DropdownMenuItem(
                           child: Text(child.fullname),
                           value: child.fullname,
                         ),
-                  )
+                      )
                       .toList(),
                 ),
                 ChildInfo(selectedChild),
@@ -114,12 +108,11 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           value: selectedDoctor.profession,
           items: Doctors.doctors
               .map(
-                (doctor) =>
-                DropdownMenuItem(
+                (doctor) => DropdownMenuItem(
                   child: Container(width: 240, child: Text(doctor.profession)),
                   value: doctor.profession,
                 ),
-          )
+              )
               .toList(),
         ),
         state: StepState.complete,
@@ -148,8 +141,7 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
               value: selectedHospital.name,
               items: MedicalOrganizationsProvider.hospitals
                   .map(
-                    (hospital) =>
-                    DropdownMenuItem(
+                    (hospital) => DropdownMenuItem(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Container(
@@ -162,7 +154,7 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
                       ),
                       value: hospital.name,
                     ),
-              )
+                  )
                   .toList(),
             ),
             Padding(
@@ -191,22 +183,10 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
           ),
         ),
         content: TimestampPicker(
-          from: DateTime(DateTime
-              .now()
-              .year, DateTime
-              .now()
-              .month,
-              DateTime
-                  .now()
-                  .day, 16, 30),
-          to: DateTime(DateTime
-              .now()
-              .year, DateTime
-              .now()
-              .month,
-              DateTime
-                  .now()
-                  .day, 19, 45),
+          from: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 16, 30),
+          to: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 19, 45),
           interval: Duration(minutes: 15),
           callback: (time) => selectedTime = time,
         ),
@@ -235,8 +215,8 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
               Stepper(
                 physics: ClampingScrollPhysics(),
                 controlsBuilder: (BuildContext context,
-                    {VoidCallback onStepContinue,
-                      VoidCallback onStepCancel}) =>
+                        {VoidCallback onStepContinue,
+                        VoidCallback onStepCancel}) =>
                     Container(),
                 steps: steps,
               ),
@@ -251,33 +231,28 @@ class _DoctorFormScreenState extends State<DoctorFormScreen> {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) =>
-                            CupertinoAlertDialog(
-                              title: Text(
-                                'Вы выбрали дату для записи: 16 июня, 2020 г., вторник, ${selectedTime
-                                    .hour}:${selectedTime.minute == 0
-                                    ? "00"
-                                    : selectedTime.minute}',
-                              ),
-                              actions: <Widget>[
-                                CupertinoDialogAction(
-                                  child: const Text('Отменить'),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                ),
-                                CupertinoDialogAction(
-                                  child: const Text('Да, подтверждаю'),
-                                  onPressed: () =>
-                                      Navigator.of(context).pushNamed(
-                                        DoctorSuccessScreen.routeName,
-                                        arguments: DoctorSuccessScreenArguments(
-                                          selectedHospital,
-                                          selectedDoctor,
-                                          selectedTime,
-                                        ),
-                                      ),
-                                ),
-                              ],
+                        builder: (context) => CupertinoAlertDialog(
+                          title: Text(
+                            'Вы выбрали дату для записи: 16 июня, 2020 г., вторник, ${selectedTime.hour}:${selectedTime.minute == 0 ? "00" : selectedTime.minute}',
+                          ),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              child: const Text('Отменить'),
+                              onPressed: () => Navigator.of(context).pop(),
                             ),
+                            CupertinoDialogAction(
+                              child: const Text('Да, подтверждаю'),
+                              onPressed: () => Navigator.of(context).pushNamed(
+                                DoctorSuccessScreen.routeName,
+                                arguments: DoctorSuccessScreenArguments(
+                                  selectedHospital,
+                                  selectedDoctor,
+                                  selectedTime,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
                     },
                     text: 'Выбрать',

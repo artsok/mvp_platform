@@ -6,10 +6,10 @@ class Doctors with ChangeNotifier {
     Doctor(
         profession: 'Врач - кардиолог',
         name: 'Захарова Татьяна Владимировна',
-        photoPath: 'assets/images/doctor-2.jpg'),
+        photoPath: 'assets/images/15763827807.jpg'),
     Doctor(
         profession: 'Врач ультразвуковой диагностики',
         name: 'Безруков Сергей Валерьевич',
-        photoPath: 'assets/images/doctor-bezrukov.jpg')
+        photoPath: 'assets/images/doctors/doctor-bezrukov.jpg')
   ];
 }

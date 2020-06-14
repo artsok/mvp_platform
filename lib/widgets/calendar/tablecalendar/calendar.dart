@@ -313,10 +313,7 @@ class _TableCalendarState extends State<TableCalendar>
               Positioned(
                 bottom: -9,
                 left: constraints.maxWidth / 2 - 25,
-                child: GestureDetector(
-                  onTap: () {},
-                  child: const Pin(),
-                ),
+                child: Pin(),
               ),
             ],
           ),

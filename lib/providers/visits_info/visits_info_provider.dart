@@ -19,12 +19,31 @@ class VisitsInfoProvider extends ChangeNotifier {
   }
 
   Future<VisitsInfoProvider> fetchData() async {
+//    requestStatus = RequestStatus.processing;
+//    notifyListeners();
+//    Service().getInsuredInfant().then((result) {
+//      final jsonData = json.decode(result);
+//      var jsonMap = Map<String, dynamic>.from(jsonData);
+//      var client = Client.fromJson(jsonMap['result']);
+//      this.client = client;
+//      requestStatus = RequestStatus.success;
+//      log('Received client: $client');
+//      notifyListeners();
+//    }).catchError((error) {
+//      errorMessage = 'Unknown error';
+//      if (error is DioError) {
+//        errorMessage = error.message;
+//      }
+//      requestStatus = RequestStatus.error;
+//      notifyListeners();
+//    });
     _data.requestStatus = null;
     notifyListeners();
     List<VisitInfo> allVisitsInfo = await _fetchData();
     Client client = allVisitsInfo
-        .firstWhere((visitInfo) => visitInfo.client?.id == null)
-        .client;
+        .firstWhere((visitInfo) => visitInfo.client?.id == null,
+            orElse: () => null)
+        ?.client;
     _data.client = client;
     allVisitsInfo.forEach((visitInfo) => _data.visits.addAll(visitInfo.visits));
     _data.setActiveMonth(DateTime.now());

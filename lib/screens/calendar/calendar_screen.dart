@@ -85,14 +85,15 @@ class _CalendarScreenState extends State<CalendarScreen>
                   case RequestStatus.success:
                     return Column(
                       children: <Widget>[
-                        birthSmo.requestStatus == RequestStatus.success ?
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              birthSmo.client.fullName,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ) : Container(),
+                        birthSmo.requestStatus == RequestStatus.success
+                            ? Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  birthSmo.client.fullName,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              )
+                            : Container(),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: TableCalendar(

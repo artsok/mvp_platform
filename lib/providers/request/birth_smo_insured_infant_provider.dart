@@ -32,11 +32,11 @@ class BirthSmoProvider extends ChangeNotifier {
       log('Received client: $client');
       notifyListeners();
     }).catchError((error) {
+      errorMessage = 'Unknown error';
       if (error is DioError) {
         errorMessage = error.message;
       }
       requestStatus = RequestStatus.error;
-      errorMessage = 'Unknown error';
       notifyListeners();
     });
   }

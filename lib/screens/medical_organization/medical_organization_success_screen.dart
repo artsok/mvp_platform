@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
@@ -15,6 +17,7 @@ import 'package:provider/provider.dart';
 
 class MedicalOrganizationSuccessScreen extends StatelessWidget {
   static const routeName = '/medical-organizatios-success-screen';
+  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
-                'Заявление о прикреплении к медицинской организации № ${medOrganization.ogrn}',
+                'Заявление о прикреплении к медицинской организации № $randomNumber',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -66,15 +69,15 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Адрес проживания',
-                      client.registrationAddress ?? 'не указан',
+                      client.parents[0].registrationAddress,
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
-                      medInsuranceProvider.selectedOrganization.name ?? 'не выбрана',
+                      medInsuranceProvider.selectedOrganization.code ?? 'не выбрана',
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.medicalOrganization.name ?? '',
+                      args.medicalOrganization.code ?? '',
                     ),
                     Center(
                       child: Padding(

@@ -5,6 +5,8 @@ class Parent {
   String lastName;
   DateTime birthDate;
   String nationality;
+  String registrationAddress;
+
 
   Parent.fromJson(Map<String, dynamic> json) {
     title = json['title'] != null ? json['title'] : null;
@@ -14,6 +16,7 @@ class Parent {
     birthDate =
         json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
     nationality = json['nationality'] != null ? json['nationality'] : null;
+    registrationAddress = json['registrationAddress'] != null ? json['registrationAddress'] : null;
   }
 
   String getTitle() {

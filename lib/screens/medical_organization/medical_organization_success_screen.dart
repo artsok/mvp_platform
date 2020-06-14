@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';

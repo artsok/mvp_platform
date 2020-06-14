@@ -10,6 +10,6 @@ class Doctors with ChangeNotifier {
     Doctor(
         profession: 'Врач ультразвуковой диагностики',
         name: 'Безруков Сергей Валерьевич',
-        photoPath: 'assets/images/doctors/doctor-bezrukov.jpg')
+        photoPath: 'assets/images/doctors/09371194987.jpg')
   ];
 }

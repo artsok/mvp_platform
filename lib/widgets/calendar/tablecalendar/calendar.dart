@@ -26,7 +26,7 @@ class TableCalendar extends StatefulWidget {
 
   final dynamic locale;
 
-  final VisitsInfoData visits;
+  final VisitsInfoProvider visitsInfo;
 
   /// `Map` of holidays.
   /// This property allows you to provide custom holiday rules.
@@ -101,14 +101,11 @@ class TableCalendar extends StatefulWidget {
   /// Set of Builders for `TableCalendar` to work with.
   final CalendarBuilders builders;
 
-  final Client client;
-
   TableCalendar({
     Key key,
     @required this.calendarController,
-    @required this.client,
     this.locale,
-    this.visits,
+    this.visitsInfo,
     this.holidays = const {},
     this.onDaySelected,
     this.onDayLongPressed,
@@ -160,7 +157,7 @@ class _TableCalendarState extends State<TableCalendar>
     );
 
     widget.calendarController._init(
-      visits: widget.visits,
+      visitsInfo: widget.visitsInfo,
       holidays: widget.holidays,
       initialDay: widget.initialSelectedDay,
       selectedDayCallback: _selectedDayCallback,
@@ -174,8 +171,9 @@ class _TableCalendarState extends State<TableCalendar>
   void didUpdateWidget(TableCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.visits != widget.visits) {
-      widget.calendarController._visits = widget.visits;
+    // @TODO
+    if (oldWidget.visitsInfo.visits != widget.visitsInfo.visits) {
+      widget.calendarController._visitsInfo = widget.visitsInfo;
     }
 
     if (oldWidget.holidays != widget.holidays) {
@@ -194,14 +192,14 @@ class _TableCalendarState extends State<TableCalendar>
     setState(() {
       widget.calendarController._selectPrevious();
     });
-    widget.visits.setActiveMonth(widget.calendarController.visibleDays[15]);
+    widget.visitsInfo.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectNext() {
     setState(() {
       widget.calendarController._selectNext();
     });
-    widget.visits.setActiveMonth(widget.calendarController.visibleDays[15]);
+    widget.visitsInfo.setActiveMonth(widget.calendarController.visibleDays[15]);
   }
 
   void _selectDay(DateTime day) {
@@ -612,7 +610,7 @@ class _TableCalendarState extends State<TableCalendar>
 
   VisitExt getFirstEventOfDay(DateTime date) {
     Map<DateTime, List<VisitExt>> visits =
-        widget.visits.getDateTimeToVisitsList();
+        widget.visitsInfo.getDateTimeToVisitsList();
     VisitExt firstEvent;
     List<VisitExt> dayVisits = visits[date.roundToDay()];
     if (dayVisits != null && dayVisits.isNotEmpty) {

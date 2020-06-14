@@ -83,6 +83,16 @@ class RequestDto {
     data['params'] = this.params.toJsonChangeMedicalOrganization();
     return data;
   }
+
+  Map<String, dynamic> toJsonWithFilter() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = this.params.toJsonWithFilter();
+    return data;
+  }
+
 }
 
 class Params {
@@ -96,6 +106,7 @@ class Params {
   GetVisitParams getVisitParams;
   InsuranceApplicationDetails insuranceApplicationDetails;
   Assignment assignment;
+  Filter filter;
 
   Params();
 
@@ -114,6 +125,8 @@ class Params {
   Params.applyForInsurance({this.insuranceApplicationDetails});
 
   Params.changeMedicalOrganization({this.assignment});
+
+  Params.withFilter({this.filter});
 
   Map<String, dynamic> toJsonBirthActId() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -155,6 +168,12 @@ class Params {
   Map<String, dynamic> toJsonChangeMedicalOrganization() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['assignment'] = this.assignment;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonWithFilter() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['filter'] = this.assignment;
     return data;
   }
 }
@@ -225,6 +244,29 @@ class Assignment {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['policyNumber'] = this.policyNumber;
     data['medicalOrganizationCode'] = this.medicalOrganizationCode;
+    return data;
+  }
+}
+
+
+class Filter {
+  String id;
+  String code;
+  String name;
+
+  Filter.all(this.id, this.code, this.name);
+
+  Filter.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    code = json['code'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['code'] = this.code;
+    data['name'] = this.name;
     return data;
   }
 }

@@ -332,11 +332,11 @@ class Service {
       return httpClient;
     };
     var requestDto =
-        RequestDto(method: "getMedicalOrganizations", id: 1, params: Params());
+        RequestDto(method: "getMedicalOrganizations", id: 1, params: Params.withFilter(filter: Filter.all(null, null, null)));
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/infoService",
-          data: requestDto.toJsonGetMedicalOrganizations());
+          data: requestDto.toJsonWithFilter());
       log("${response.data}");
       return response.data;
     } catch (e) {
@@ -371,12 +371,11 @@ class Service {
         return true;
       };
       return httpClient;
-    };
-    var requestDto = RequestDto(
-        method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
+    };var requestDto = RequestDto(
+        method: "getMedicalInsuranceOrganizations", id: 1, params: Params.withFilter(filter: Filter.all(null, null, null)));
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/infoService",
-        data: requestDto.toJsonGetMedicalOrganizations());
+        data: requestDto.toJsonWithFilter());
     log("${response.data}");
     return response.data;
   }

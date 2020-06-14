@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/enums/visit_status.dart';
 import 'package:mvp_platform/models/hospital.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/visit_info.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/popup_menu.dart';
 import 'package:mvp_platform/widgets/common/rate_popup_menu_button.dart';
@@ -91,7 +91,7 @@ class VisitStatusHeader extends StatelessWidget {
                     ),
                     SizedBox(height: 4.0),
                     Text(
-                      '${DateFormat('dd.MM.yyyy HH:mm').format(DateTime.now())}',
+                      '${DateTime.now().toDmyHm()}',
                       style: TextStyle(color: Colors.black54),
                     )
                   ],
@@ -139,7 +139,7 @@ class VisitDateTime extends StatelessWidget {
                   ),
                   SizedBox(height: 4.0),
                   Text(
-                    DateFormat('dd.MM.yyyy HH:mm').format(visit.planDate),
+                    visit.planDate.toDmyHm(),
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,

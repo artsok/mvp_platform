@@ -2,22 +2,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
-import 'package:mvp_platform/providers/children_provider.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
+import 'package:mvp_platform/providers/request/med_insurance_provider.dart';
 import 'package:mvp_platform/repository/response/dto/client.dart';
 import 'package:mvp_platform/repository/response/dto/medical_organization.dart';
+import 'package:mvp_platform/screens/calendar/calendar_screen.dart';
 import 'package:mvp_platform/screens/doctor/doctor_info_screen.dart';
-import 'package:mvp_platform/screens/events/calendar_screen.dart';
 import 'package:mvp_platform/screens/home_screen.dart';
+import 'package:mvp_platform/utils/extensions/datetime_extensions.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/single_info_item.dart';
 import 'package:provider/provider.dart';
 
 class MedicalOrganizationSuccessScreen extends StatelessWidget {
-  static const routeName = '/hospital-success-screen';
-
-  final int randomNumber = Random().nextInt(9000) + 10000;
+  static const routeName = '/medical-organizatios-success-screen';
+  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,9 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
 
     final notifications = Provider.of<GosNotifications>(context);
+    final medOrganization = args.medicalOrganization;
+    final medInsuranceProvider = MedInsuranceProvider();
+    final client = args.client;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -54,27 +57,27 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                   children: <Widget>[
                     SingleInfoItem(
                       'Полис ОМС',
-                      Children.children[0].oms ?? "",
+                      client.policy?.number ?? '',
                     ),
                     SingleInfoItem(
                       'Фамилия, имя, отчество',
-                      Children.children[0].fullname ?? "",
+                      client.fullName,
                     ),
                     SingleInfoItem(
                       'Дата рождения',
-                      Children.children[0].birthDate ?? "",
+                      client.birthDate.toDmy(),
                     ),
                     SingleInfoItem(
                       'Адрес проживания',
-                      Children.children[0].address ?? "",
+                      client.parents[0].registrationAddress,
                     ),
                     SingleInfoItem(
                       'Страховая медицинская организация',
-                      "АО «СОГАЗ Мед»",
+                      medInsuranceProvider.selectedOrganization.code ?? 'не выбрана',
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.medicalOrganization.name ?? "",
+                      args.medicalOrganization.code ?? '',
                     ),
                     Center(
                       child: Padding(

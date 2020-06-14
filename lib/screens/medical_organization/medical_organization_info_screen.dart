@@ -7,7 +7,7 @@ import 'package:mvp_platform/screens/home_screen.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/unfolded_stepper.dart';
 import 'package:mvp_platform/widgets/common/wizard_header.dart';
-import 'package:mvp_platform/wizards/hospital_wizard.dart';
+import 'package:mvp_platform/wizards/med_organization_wizard.dart';
 
 class MedicalOrganizationInfoScreen extends StatefulWidget {
   static const routeName = '/medical-organization-info-screen';
@@ -69,7 +69,7 @@ class _MedicalOrganizationInfoScreenState extends State<MedicalOrganizationInfoS
                       'Выберите предпочтительное для вас медицинское учреждение',
                     ),
                   ),
-                  content: Text(HospitalWizard.points[1]),
+                  content: Text(MedOrganizationWizard.steps[1]),
                   isActive: true,
                 ),
                 UnfoldedStep(

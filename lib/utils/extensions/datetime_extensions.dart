@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+import '../../main.dart';
 import 'int_extensions.dart';
 
 const second = 1000;
@@ -21,11 +22,19 @@ extension DateTimeExtensions on DateTime {
     if (date.day - this.day == 1) {
       return 'Вчера';
     }
-    return DateFormat('dd.MM.yyyy').format(this);
+    return this.toDmy();
   }
 
   DateTime roundToDay() => DateTime(this.year, this.month, this.day);
   DateTime roundToMonth() => DateTime(this.year, this.month);
+
+  String toMonth() => DateFormat(DateFormat.MONTH, locale).format(this);
+  String toWeekday() => DateFormat(DateFormat.WEEKDAY, locale).format(this);
+  String toH24m() => DateFormat(DateFormat.HOUR24_MINUTE, locale).format(this);
+  String toHm() => DateFormat('HH:mm').format(this);
+  String toDmy() => DateFormat('dd.MM.yyyy').format(this);
+  String toDmyHm() => DateFormat('dd.MM.yyyy HH:mm').format(this);
+
 
 //    if (diff.isIn(-9223372036854775808, -day * 365)) {
 //      humanizedDiff = 'более чем через год';

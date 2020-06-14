@@ -97,7 +97,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  content: Text(SmoWizard.points[3]),
+                  content: Text(SmoWizard.steps[3]),
                   isActive: true,
                 ),
                 UnfoldedStep(
@@ -155,7 +155,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
 //                    width: 290,
 //                    child: const Text('Выберите пункт выдачи полиса ОМС'),
 //                  ),
-//                  content: Text(SmoWizard.points[4]),
+//                  content: Text(SmoWizard.steps[4]),
 //                  isActive: true,
 //                ),
                 UnfoldedStep(
@@ -165,7 +165,7 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
                       'Выберите удобное для вас медицинское учреждение',
                     ),
                   ),
-                  content: Text(SmoWizard.points[5]),
+                  content: Text(SmoWizard.steps[5]),
                   isActive: true,
                 ),
 //                UnfoldedStep(

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'client/policy.dart';
 
 class Person extends ChangeNotifier {
-
   String id;
   String firstName;
   String midName;
@@ -19,15 +18,14 @@ class Person extends ChangeNotifier {
   Person.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : null;
     firstName = json['firstName'] != null ? json['firstName'] : null;
-    midName = json['midName'] !=null ? json['midName'] : null;
+    midName = json['midName'] != null ? json['midName'] : null;
     lastName = json['lastName'] != null ? json['lastName'] : null;
     policy = json['policy'] != null ? Policy.fromJson(json['policy']) : null;
     snils = json['snils'] != null ? json['snils'] : null;
     birthDate =
-    json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
+        json['birthDate'] != null ? DateTime.parse(json['birthDate']) : null;
     phone = json['phone'] != null ? json['phone'] : null;
     email = json['email'] != null ? json['email'] : null;
-
 
     if (lastName == 'Закруткина') {
       photoPath = 'assets/images/doctor-2.jpg';
@@ -37,6 +35,8 @@ class Person extends ChangeNotifier {
   }
 
   Person();
+
+  String get fullName => '$lastName $firstName $midName';
 
   String getFirstName() {
     return firstName;

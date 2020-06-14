@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
-import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
-import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
-import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
+import 'package:mvp_platform/providers/request/visits_info_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
+import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
+import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/doctor_visit_item/doctor_visit_item.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +24,8 @@ class _CalendarScreenState extends State<CalendarScreen>
   GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   AnimationController animationController;
   CalendarController calendarController;
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -52,17 +54,13 @@ class _CalendarScreenState extends State<CalendarScreen>
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
-    final birthSmo = BirthSmoProvider();
-    if (birthSmo.client == null) {
-      birthSmo.fetchData();
-    }
     final visitsInfo = VisitsInfoProvider();
-    return MultiProvider(
-      providers: [
-        FutureProvider(create: (_) => visitsInfo.fetchData()),
-        ChangeNotifierProvider.value(value: visitsInfo.data),
-        ChangeNotifierProvider.value(value: birthSmo),
-      ],
+    if (visitsInfo.visits.isEmpty) {
+      visitsInfo.fetchData();
+    }
+
+    return ChangeNotifierProvider.value(
+      value: visitsInfo,
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -75,82 +73,59 @@ class _CalendarScreenState extends State<CalendarScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
-              if (visitsInfo == null) {
-                return Container(
-                  width: double.infinity,
-                  child: GosCupertinoLoadingIndicator(),
-                );
-              } else {
-                switch (visitsInfo.data.requestStatus) {
-                  case RequestStatus.success:
-                    return Column(
-                      children: <Widget>[
-                        birthSmo.requestStatus == RequestStatus.success
-                            ? Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text(
-                                  birthSmo.client.fullName,
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              )
-                            : Container(),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: TableCalendar(
-                            onDaySelected: (day, visits) {
-                              if (visits.isNotEmpty) {
-                                Navigator.pushNamed(
-                                  context,
-                                  DoctorVisitDetailsScreen.routeName,
-                                  arguments: DoctorVisitDetailsScreenArguments(
-                                    visitsInfo.data.client,
-                                    visits[0],
-                                  ),
-                                );
-                              }
-                            },
-                            locale: locale,
-                            visits: visitsInfo.data,
-                            client: visitsInfo.data.client,
-                            calendarController: calendarController,
-                            daysOfWeekStyle: DaysOfWeekStyle(
-                              weekdayStyle: defaultTextStyle,
-                              weekendStyle: defaultTextStyle,
-                            ),
-                            calendarStyle: CalendarStyle(
-                              highlightToday: false,
-                              selectedColor: null,
-                              selectedStyle: defaultTextStyle,
-                              outsideDaysVisible: true,
-                              highlightSelected: false,
-                              weekdayStyle: defaultTextStyle,
-                              weekendStyle: defaultTextStyle,
-                            ),
-                            headerStyle: HeaderStyle(
-                              headerPadding: const EdgeInsets.all(0.0),
-                              headerMargin: const EdgeInsets.all(0.0),
-                            ),
+              return Column(
+                children: <Widget>[
+                  visitsInfo.client == null
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            visitsInfo.client.fullName,
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
-                      ],
-                    );
-                  case RequestStatus.error:
-                    return Center(
-                      child: const Text(
-                        'Ошибка при загрузке данных',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.red,
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: TableCalendar(
+                      onDaySelected: (day, visits) {
+                        if (visits.isNotEmpty) {
+                          Navigator.pushNamed(
+                            context,
+                            DoctorVisitDetailsScreen.routeName,
+                            arguments: DoctorVisitDetailsScreenArguments(
+                              visitsInfo.client,
+                              visits[0],
+                            ),
+                          );
+                        }
+                      },
+                      locale: locale,
+                      visitsInfo: visitsInfo,
+                      calendarController: calendarController,
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                        weekdayStyle: defaultTextStyle,
+                        weekendStyle: defaultTextStyle,
                       ),
-                    );
-                  default:
-                    return const GosCupertinoLoadingIndicator();
-                }
-              }
+                      calendarStyle: CalendarStyle(
+                        highlightToday: false,
+                        selectedColor: null,
+                        selectedStyle: defaultTextStyle,
+                        outsideDaysVisible: true,
+                        highlightSelected: false,
+                        weekdayStyle: defaultTextStyle,
+                        weekendStyle: defaultTextStyle,
+                      ),
+                      headerStyle: HeaderStyle(
+                        headerPadding: const EdgeInsets.all(0.0),
+                        headerMargin: const EdgeInsets.all(0.0),
+                      ),
+                    ),
+                  ),
+                ],
+              );
             }),
             Expanded(
-              child: Consumer<VisitsInfoData>(
+              child: Consumer<VisitsInfoProvider>(
                 builder: (_, visitsInfoData, __) {
                   if (visitsInfoData == null) {
                     return CupertinoActivityIndicator(radius: 25.0);
@@ -171,12 +146,33 @@ class _CalendarScreenState extends State<CalendarScreen>
                         );
                       case RequestStatus.error:
                         return Center(
-                          child: const Text(
-                            'Ошибка при загрузке данных',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.red,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Text(
+                                'Возникла ошибка',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Text(
+                                visitsInfoData.errorMessage,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              GosFlatButton(
+                                textColor: Colors.white,
+                                backgroundColor: getGosBlueColor(),
+                                onPressed: () => visitsInfoData.fetchData(),
+                                text: 'Попробовать снова',
+                                width: 320,
+                              ),
+                            ],
                           ),
                         );
                       default:

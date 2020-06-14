@@ -138,7 +138,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                     ),
                                     child: const Text(
                                       // @TODO
-                                      'АО «СОГАЗ Мед» СОГАЗ МЕД',
+                                      'АО «СК СОГАЗ-МЕД»',
                                     ),
                                   ),
                                 ],

@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
 
 class Pin extends StatelessWidget {
-  const Pin({Key key}) : super(key: key);
+  final VoidCallback callback = () {};
+
+  Pin({VoidCallback callback, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12.0),
-      child: Container(
-        color: Colors.lightBlue[800],
-        width: 50,
-        height: 18,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _Row(),
-            _Row(),
-            _Row(),
-          ],
+    return GestureDetector(
+      onTap: callback,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Container(
+          color: Colors.lightBlue[800],
+          width: 50,
+          height: 18,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _Row(),
+              _Row(),
+              _Row(),
+            ],
+          ),
         ),
       ),
     );
@@ -35,4 +40,3 @@ class _Row extends StatelessWidget {
     );
   }
 }
-

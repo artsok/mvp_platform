@@ -51,6 +51,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
     birthSmo.client ?? birthSmo.fetchData();
     selectedChild = birthSmo.client;
     final insurancesProvider = MedInsuranceProvider();
+    insurancesProvider.data ?? insurancesProvider.fetchData();
     List<UnfoldedStep> steps = [
       UnfoldedStep(
         title: Container(
@@ -97,13 +98,10 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
             'Пожалуйста, выберите страховую медицинскую организацию',
           ),
         ),
-        content: FutureProvider(
-          create: (_) => insurancesProvider.fetchData(),
+        content: ChangeNotifierProvider.value(
+          value: insurancesProvider,
           child: Consumer<MedInsuranceProvider>(
             builder: (_, organizations, __) {
-              if (organizations == null) {
-                return const Center(child: GosCupertinoLoadingIndicator());
-              }
               switch (organizations.requestStatus) {
                 case RequestStatus.success:
                   if (selectedOrganization == null) {
@@ -139,6 +137,7 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                       bottom: 16,
                                     ),
                                     child: const Text(
+                                      // @TODO
                                       'АО «СОГАЗ Мед» СОГАЗ МЕД',
                                     ),
                                   ),
@@ -159,7 +158,8 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                                 onChanged: (code) {
                                   selectInsuranceOrganization(organizations.data
                                       .firstWhere((c) => c.code == code));
-                                  organizations.selectedOrganization = selectedOrganization;
+                                  organizations.selectedOrganization =
+                                      selectedOrganization;
                                 },
                                 value: selectedOrganization.code,
                                 style: TextStyle(
@@ -185,15 +185,34 @@ class _SmoFormScreenState extends State<SmoFormScreen> {
                       ],
                     ),
                   );
-
                 case RequestStatus.error:
                   return Center(
-                    child: const Text(
-                      'Ошибка при загрузке данных',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.red,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          'Возникла ошибка',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 4.0),
+                        Text(
+                          insurancesProvider.errorMessage,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        SizedBox(height: 4.0),
+                        GosFlatButton(
+                          textColor: Colors.white,
+                          backgroundColor: getGosBlueColor(),
+                          onPressed: () => insurancesProvider.fetchData(),
+                          text: 'Попробовать снова',
+                        ),
+                      ],
                     ),
                   );
                 default:

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
@@ -17,7 +15,6 @@ import 'package:provider/provider.dart';
 
 class MedicalOrganizationSuccessScreen extends StatelessWidget {
   static const routeName = '/medical-organizatios-success-screen';
-  final int randomNumber = new Random().nextInt(9000) + 10000;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Text(
-                'Заявление о прикреплении к медицинской организации № $randomNumber',
+                'Заявление о прикреплении к медицинской организации № ${medOrganization.ogrn}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -77,7 +74,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                     ),
                     SingleInfoItem(
                       'Прикреплен к',
-                      args.medicalOrganization.code ?? '',
+                      medOrganization.code ?? '',
                     ),
                     Center(
                       child: Padding(
@@ -88,7 +85,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                             maxHeight: 400,
                           ),
                           child: Image.asset(
-                            args.medicalOrganization.photoPath,
+                            medOrganization.photoPath,
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -98,7 +95,7 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(0.0),
                       child: SingleInfoItem(
                         'Адрес пордазделения',
-                        args.medicalOrganization.address,
+                        medOrganization.address,
                         last: true,
                       ),
                     ),

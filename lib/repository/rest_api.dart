@@ -374,15 +374,11 @@ class Service {
     };
     var requestDto = RequestDto(
         method: "getMedicalInsuranceOrganizations", id: 1, params: Params());
-    try {
-      Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/infoService",
-          data: requestDto.toJsonGetMedicalOrganizations());
-      log("${response.data}");
-      return response.data;
-    } catch (e) {
-      return "No Internet connection (getMedicalInsuranceOrganizations)";
-    }
+    Response response = await dio.post(
+        "${URLS.BASE_URL}/${URLS.PATH}/infoService",
+        data: requestDto.toJsonGetMedicalOrganizations());
+    log("${response.data}");
+    return response.data;
   }
 
   ///Изменение информации о посещении (planDate в формате 2020-06-08T14:00:00)

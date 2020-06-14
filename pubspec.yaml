@@ -51,10 +51,10 @@ flutter:
         - asset: assets/fonts/AppIcons.ttf
   assets:
     - assets/images/gos-main-logo.png
-    - assets/images/doctor.jpg
-    - assets/images/doctor-bezrukov.jpg
-    - assets/images/doctor-2.jpg
-    - assets/images/doctor-3.jpg
+    - assets/images/doctors/doctor.jpg
+    - assets/images/doctors/09371194987.jpg
+    - assets/images/doctors/15763827807.jpg
+    - assets/images/doctors/doctor-3.jpg
     - assets/icons/phonedoscope.png
     - assets/icons/notificationIcon.png
     - assets/icons/backdeletebackspace.png
@@ -76,6 +76,6 @@ flutter:
     - assets/cert/ingress.foms_correct.crt
     - assets/cert/ingress.foms_correct.key
     - assets/cert/chain.crt
-    - assets/medOrganization/2.png
-    - assets/medOrganization/3.png
-    - assets/medOrganization/4.png
+    - assets/med_organization/2.png
+    - assets/med_organization/3.png
+    - assets/med_organization/4.png

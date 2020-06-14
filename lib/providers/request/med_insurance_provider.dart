@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/repository/response/dto/medical_insurance_organization.dart';
 import 'package:mvp_platform/repository/rest_api.dart';
 
 class MedInsuranceProvider extends ChangeNotifier {
-  List<MedicalInsuranceOrganization> data = [];
+  List<MedicalInsuranceOrganization> data;
   RequestStatus requestStatus = RequestStatus.ready;
   MedicalInsuranceOrganization selectedOrganization;
+  String errorMessage;
 
   MedInsuranceProvider._();
 
@@ -20,33 +22,33 @@ class MedInsuranceProvider extends ChangeNotifier {
   }
 
   MedicalInsuranceOrganization getDefaultOrganization() {
-    final organization = data.firstWhere((organization) => organization.id == "39002");
+    final organization =
+        data.firstWhere((organization) => organization.id == "39002");
     selectedOrganization = organization;
     return organization;
   }
 
-  Future<MedInsuranceProvider> fetchData() async {
+  void fetchData() {
     requestStatus = RequestStatus.processing;
     notifyListeners();
-    List<MedicalInsuranceOrganization> organizations =
-        await _fetchMedicalInsuranceData();
-    organizations = organizations.where((f) => f.id.startsWith("39")).toList();
-
-    data = organizations;
-    requestStatus = RequestStatus.success;
-    notifyListeners();
-    return this;
-  }
-
-  Future<List> _fetchMedicalInsuranceData() async {
-    String response = await Service().getMedicalInsuranceOrganizations();
-    final jsonData = json.decode(response);
-    var map = Map<String, dynamic>.from(jsonData);
-    List<MedicalInsuranceOrganization> insurances = map["result"]
-        .map<MedicalInsuranceOrganization>(
-            (i) => MedicalInsuranceOrganization.fromJson(i))
-        .toList();
-    log('Received MedicalInsuranceOrganizations: $MedicalInsuranceOrganization');
-    return insurances;
+    Service().getMedicalInsuranceOrganizations().then((result) {
+      final jsonData = json.decode(result);
+      var map = Map<String, dynamic>.from(jsonData);
+      data = map["result"]
+          .map<MedicalInsuranceOrganization>(
+              (i) => MedicalInsuranceOrganization.fromJson(i))
+          .toList();
+      data = data.where((f) => f.id.startsWith("39")).toList();
+      log('Received MedicalInsuranceOrganizations: $MedicalInsuranceOrganization');
+      requestStatus = RequestStatus.success;
+      notifyListeners();
+    }).catchError((e) {
+      errorMessage = 'Unknown error';
+      if (e is DioError) {
+        errorMessage = e.message;
+      }
+      requestStatus = RequestStatus.error;
+      notifyListeners();
+    });
   }
 }

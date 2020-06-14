@@ -1,9 +1,16 @@
 import 'package:mvp_platform/repository/response/dto/person.dart';
+import 'package:mvp_platform/utils/assets_utils.dart';
 
 class Doctor extends Person {
   String specialty;
 
-  Doctor() : super();
+  Doctor() : super() {
+    photoPath = 'assets/images/doctors/doctor.jpg';
+    if (id != null &&
+        AssetsUtils.loadAsset('assets/images/doctors/$id.jpg') != null) {
+      photoPath = 'assets/images/doctors/$id.jpg';
+    }
+  }
 
   String getSpecialty() {
     return specialty;

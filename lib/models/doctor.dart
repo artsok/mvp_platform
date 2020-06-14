@@ -16,7 +16,7 @@ class Doctor with ChangeNotifier {
   }) {
     assert(profession != null && profession.isNotEmpty);
     assert(name != null && name.isNotEmpty);
-    photoPath = photoPath ?? 'assets/images/doctor.jpg';
+    photoPath = photoPath ?? 'assets/images/doctors/doctor.jpg';
     return Doctor._(profession, name, photoPath, 0.0);
   }
 

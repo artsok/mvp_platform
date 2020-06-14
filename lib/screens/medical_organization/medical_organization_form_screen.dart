@@ -35,6 +35,7 @@ class _MedicalOrganizationFormScreenState
 
   @override
   Widget build(BuildContext context) {
+    final String defaultMedical = "№ 2";
     final MedicalOrganizationsProvider medicalOrganizations =
         MedicalOrganizationsProvider();
     List<UnfoldedStep> steps = [
@@ -55,7 +56,6 @@ class _MedicalOrganizationFormScreenState
               switch (medicalOrganizations.requestStatus) {
                 case (RequestStatus.success):
                   if (selectedOrganization == null) {
-                    final String defaultMedical = "№ 2";
                     selectedOrganization = medicalOrganizations.data.firstWhere(
                         (element) => element.code.contains(defaultMedical));
                   }
@@ -103,6 +103,16 @@ class _MedicalOrganizationFormScreenState
                             ),
                           ),
                         ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 18),
+                        child: Text((() {
+                          if (selectedOrganization.code
+                              .contains(defaultMedical)) {
+                            return "Выбрана ближайшая к месту жительства детская поликлинника";
+                          }
+                          return "";
+                        })(), style: TextStyle(fontWeight: FontWeight.w500),),
                       ),
                     ],
                   );
@@ -201,5 +211,17 @@ class _MedicalOrganizationFormScreenState
         ),
       ),
     );
+  }
+}
+
+class StatmentExample extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Text((() {
+      if (true) {
+        return "tis true";
+      }
+
+      return "anything but true";
+    })());
   }
 }

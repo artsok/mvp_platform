@@ -171,7 +171,7 @@ class _TableCalendarState extends State<TableCalendar>
   void didUpdateWidget(TableCalendar oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // @TODO
+    // @TODO redundant check ?
     if (oldWidget.visitsInfo.visits != widget.visitsInfo.visits) {
       widget.calendarController._visitsInfo = widget.visitsInfo;
     }

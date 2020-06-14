@@ -65,12 +65,14 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
                       client.birthDate.toDmy(),
                     ),
                     SingleInfoItem(
-                      'Адрес проживания',
-                      client.parents[0].registrationAddress,
-                    ),
+                        'Адрес проживания',
+                        client.parents.isNotEmpty
+                            ? client.parents[0].registrationAddress
+                            : 'не указан'),
                     SingleInfoItem(
                       'Страховая медицинская организация',
-                      medInsuranceProvider.selectedOrganization.code ?? 'не выбрана',
+                      medInsuranceProvider.selectedOrganization.code ??
+                          'не выбрана',
                     ),
                     SingleInfoItem(
                       'Прикреплен к',

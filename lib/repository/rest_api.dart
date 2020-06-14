@@ -295,10 +295,10 @@ class Service {
     var requestDto = RequestDto(
         method: "getInsuredInfant",
         id: 1,
-        params: Params.withBirthActId(birthActId: await getBirthActId()));
+        params: Params.withFilter(filter: Filter.all(null, null, null)));
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/clientService",
-        data: requestDto.toJsonInsuredInfant());
+        data: requestDto.toJsonWithFilter());
     log("${response.data}");
     return response.data;
   }

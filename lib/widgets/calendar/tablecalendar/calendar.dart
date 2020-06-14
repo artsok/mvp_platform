@@ -275,8 +275,22 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
+  double heihgt;
+  double opacity = 1.0;
+
   void onPinTap() {
     print('Pin tapped');
+    setState(() {
+      if (calendarState == CalendarState.opened) {
+        heihgt = 9.0;
+        opacity = 0.0;
+        calendarState = CalendarState.closed;
+      } else {
+        heihgt = null;
+        calendarState = CalendarState.opened;
+        opacity = 1.0;
+      }
+    });
   }
 
   @override
@@ -298,28 +312,43 @@ class _TableCalendarState extends State<TableCalendar>
             ),
           ],
         ),
-        child: LayoutBuilder(
-          builder: (_, constraints) => Stack(
-            overflow: Overflow.visible,
-            fit: StackFit.expand,
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
+        child: AnimatedSize(
+          curve: Curves.ease,
+          vsync: this,
+          duration: Duration(seconds: 1),
+          child: Container(
+            height: heihgt,
+            child: LayoutBuilder(
+              builder: (_, constraints) => Stack(
+                overflow: Overflow.visible,
+//                fit: StackFit.expand,
                 children: <Widget>[
-                  if (widget.headerVisible) _buildHeader(),
+                  AnimatedOpacity(
+                    duration: const Duration(seconds: 1),
+                    opacity: opacity,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        if (widget.headerVisible) _buildHeader(),
 //                Padding(
 //                  padding: widget.calendarStyle.contentPadding,
 //                  child:
-                  _buildCalendarContent(),
+                        _buildCalendarContent(),
 //                ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: -9,
+                    left: constraints.maxWidth / 2 - 25,
+                    child: GestureDetector(
+                      onTap: () => onPinTap(),
+                      child: Pin(),
+                    ),
+                  ),
                 ],
               ),
-              Positioned(
-                bottom: -9,
-                left: constraints.maxWidth / 2 - 25,
-                child: GestureDetector(onTap: () => onPinTap(), child: Pin()),
-              ),
-            ],
+            ),
           ),
         ),
       ),

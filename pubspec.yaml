@@ -76,3 +76,6 @@ flutter:
     - assets/cert/ingress.foms_correct.crt
     - assets/cert/ingress.foms_correct.key
     - assets/cert/chain.crt
+    - assets/medOrganization/2.png
+    - assets/medOrganization/3.png
+    - assets/medOrganization/4.png

@@ -89,7 +89,7 @@ class RequestDto {
     data['jsonrpc'] = this.jsonrpc;
     data['method'] = this.method;
     data['id'] = this.id;
-    data['params'] = this.params.toJsonChangeMedicalOrganization();
+    data['params'] = this.params.toJsonWithFilter();
     return data;
   }
 

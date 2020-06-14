@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
+import 'package:mvp_platform/providers/request/birth_smo_insured_infant_provider.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_data.dart';
 import 'package:mvp_platform/providers/visits_info/visits_info_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
@@ -51,11 +52,16 @@ class _CalendarScreenState extends State<CalendarScreen>
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
+    final birthSmo = BirthSmoProvider();
+    if (birthSmo.client == null) {
+      birthSmo.fetchData();
+    }
     final visitsInfo = VisitsInfoProvider();
     return MultiProvider(
       providers: [
         FutureProvider(create: (_) => visitsInfo.fetchData()),
         ChangeNotifierProvider.value(value: visitsInfo.data),
+        ChangeNotifierProvider.value(value: birthSmo),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -68,13 +74,6 @@ class _CalendarScreenState extends State<CalendarScreen>
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: const Text(
-                'Богатырев Иван Иванович',
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
             Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
               if (visitsInfo == null) {
                 return Container(
@@ -84,40 +83,55 @@ class _CalendarScreenState extends State<CalendarScreen>
               } else {
                 switch (visitsInfo.data.requestStatus) {
                   case RequestStatus.success:
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: TableCalendar(
-                        onDaySelected: (day, visits) {
-                          if (visits.isNotEmpty) {
-                            Navigator.pushNamed(
-                              context,
-                              DoctorVisitDetailsScreen.routeName,
-                              arguments: DoctorVisitDetailsScreenArguments(
-                                visitsInfo.data.client,
-                                visits[0],
-                              ),
-                            );
-                          }
-                        },
-                        locale: locale,
-                        visits: visitsInfo.data,
-                        client: visitsInfo.data.client,
-                        calendarController: calendarController,
-                        daysOfWeekStyle: DaysOfWeekStyle(
-                          weekdayStyle: defaultTextStyle,
-                          weekendStyle: defaultTextStyle,
+                    return Column(
+                      children: <Widget>[
+                        birthSmo.requestStatus == RequestStatus.success ?
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              birthSmo.client.fullName,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ) : Container(),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: TableCalendar(
+                            onDaySelected: (day, visits) {
+                              if (visits.isNotEmpty) {
+                                Navigator.pushNamed(
+                                  context,
+                                  DoctorVisitDetailsScreen.routeName,
+                                  arguments: DoctorVisitDetailsScreenArguments(
+                                    visitsInfo.data.client,
+                                    visits[0],
+                                  ),
+                                );
+                              }
+                            },
+                            locale: locale,
+                            visits: visitsInfo.data,
+                            client: visitsInfo.data.client,
+                            calendarController: calendarController,
+                            daysOfWeekStyle: DaysOfWeekStyle(
+                              weekdayStyle: defaultTextStyle,
+                              weekendStyle: defaultTextStyle,
+                            ),
+                            calendarStyle: CalendarStyle(
+                              highlightToday: false,
+                              selectedColor: null,
+                              selectedStyle: defaultTextStyle,
+                              outsideDaysVisible: true,
+                              highlightSelected: false,
+                              weekdayStyle: defaultTextStyle,
+                              weekendStyle: defaultTextStyle,
+                            ),
+                            headerStyle: HeaderStyle(
+                              headerPadding: const EdgeInsets.all(0.0),
+                              headerMargin: const EdgeInsets.all(0.0),
+                            ),
+                          ),
                         ),
-                        calendarStyle: CalendarStyle(
-                          highlightToday: false,
-                          selectedColor: null,
-                          selectedStyle: defaultTextStyle,
-                          outsideDaysVisible: true,
-                          highlightSelected: false,
-                          weekdayStyle: defaultTextStyle,
-                          weekendStyle: defaultTextStyle,
-                        ),
-                        headerStyle: HeaderStyle(),
-                      ),
+                      ],
                     );
                   case RequestStatus.error:
                     return Center(

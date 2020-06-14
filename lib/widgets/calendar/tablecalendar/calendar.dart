@@ -443,7 +443,7 @@ class _TableCalendarState extends State<TableCalendar>
   Widget _buildCalendarContent() {
     return AnimatedSize(
       duration: Duration(milliseconds: 220),
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.ease,
       alignment: Alignment(0, -1),
       vsync: this,
       child: _buildWrapper(),
@@ -466,7 +466,7 @@ class _TableCalendarState extends State<TableCalendar>
   Widget _buildHorizontalSwipeWrapper({Widget child}) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 350),
-      switchInCurve: Curves.decelerate,
+      switchInCurve: Curves.ease,
       transitionBuilder: (child, animation) {
         return SlideTransition(
           position: Tween<Offset>(

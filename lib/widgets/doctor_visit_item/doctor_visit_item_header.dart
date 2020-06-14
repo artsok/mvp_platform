@@ -98,7 +98,7 @@ class DoctorVisitItemHeader extends StatelessWidget {
                                       .item3,
                                 ),
                               ),
-                              if (visit.rating != null && visit.rating != 0.0)
+                              if (visit.rating != null && visit.rating != 0)
                                 Icon(
                                   Rate.values[visit.rating - 1].icon,
                                   color: Rate.values[visit.rating - 1].color,

@@ -325,6 +325,7 @@ class _TableCalendarState extends State<TableCalendar>
                 children: <Widget>[
                   AnimatedOpacity(
                     duration: const Duration(seconds: 1),
+                    curve: Curves.ease,
                     opacity: opacity,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

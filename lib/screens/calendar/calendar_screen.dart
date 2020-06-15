@@ -47,9 +47,7 @@ class _CalendarScreenState extends State<CalendarScreen>
   Widget build(BuildContext context) {
     initializeDateFormatting(locale);
     final visitsInfo = VisitsInfoProvider();
-    if (visitsInfo.visits.isEmpty) {
-      visitsInfo.fetchData();
-    }
+    visitsInfo.fetchData();
 
     return ChangeNotifierProvider.value(
       value: visitsInfo,
@@ -57,7 +55,13 @@ class _CalendarScreenState extends State<CalendarScreen>
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(CupertinoIcons.back),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              Future.delayed(
+                const Duration(milliseconds: 400),
+                () => visitsInfo.setActiveMonth(DateTime.now()),
+              );
+              Navigator.of(context).pop();
+            },
           ),
           title: const Text('Диспансерный учет'),
         ),

@@ -14,7 +14,7 @@ class VisitsInfoProvider extends ChangeNotifier {
   List<VisitExt> visits = [];
   List<VisitExt> visitsOfMonth = [];
   RequestStatus requestStatus = RequestStatus.ready;
-  DateTime activeMonth = DateTime.now();
+  DateTime activeMonth;
   String errorMessage;
 
   VisitsInfoProvider._();
@@ -35,8 +35,13 @@ class VisitsInfoProvider extends ChangeNotifier {
       List<VisitInfo> allVisitsInfo = jsonMap['result']['visitInfos']
           .map<VisitInfo>((visitInfo) => VisitInfo.fromJson(visitInfo))
           .toList();
+      visits.clear();
       allVisitsInfo.forEach((visitInfo) => visits.addAll(visitInfo.visits));
-      setActiveMonth(DateTime.now());
+      if (activeMonth == null) {
+        setActiveMonth(DateTime.now());
+      } else {
+        setActiveMonth(activeMonth);
+      }
       log('Received visits: $visits');
       Client client = allVisitsInfo
           .firstWhere((visitInfo) => visitInfo.client?.id == null,
@@ -57,26 +62,24 @@ class VisitsInfoProvider extends ChangeNotifier {
   }
 
   void setActiveMonth(DateTime date) {
-    if (date.roundToMonth() != activeMonth) {
-      activeMonth = date.roundToMonth();
-      visitsOfMonth.clear();
-      visits.forEach((visit) {
-        if (visit.planDate != null &&
-            visit.planDate.year == date.year &&
-            visit.planDate.month == date.month) {
-          visitsOfMonth.add(visit);
-        }
-      });
-      visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
-      notifyListeners();
-    }
+    activeMonth = date.roundToMonth();
+    visitsOfMonth.clear();
+    visits.forEach((visit) {
+      if (visit.planDate != null &&
+          visit.planDate.year == date.year &&
+          visit.planDate.month == date.month) {
+        visitsOfMonth.add(visit);
+      }
+    });
+    visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
+    notifyListeners();
   }
 
   List<VisitExt> getVisitsOfMonth(DateTime dateTime) {
     List<VisitExt> visitsOfMonth = visits
         .where((visit) =>
-            visit.planDate.year == dateTime.year &&
-            visit.planDate.month == dateTime.month)
+    visit.planDate.year == dateTime.year &&
+        visit.planDate.month == dateTime.month)
         .toList();
     visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
     return visitsOfMonth;

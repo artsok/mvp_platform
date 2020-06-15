@@ -34,33 +34,38 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
           'Подача заявления о выборе страховой и медицнской организации для ребёнка',
         ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: <Widget>[
-            WizardHeader(
-              'assets/icons/notificationIcon.png',
-              'Выбор страховой и медицнской организации для ребёнка',
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Сроки оказания услуги:",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Text("В соответствии с регламентом оказания услуги."),
-                ),
-              ],
-            ),
-            UnfoldedStepper(
-              physics: ClampingScrollPhysics(),
-              controlsBuilder: (BuildContext context,
-                      {VoidCallback onStepContinue,
-                      VoidCallback onStepCancel}) =>
-                  Container(),
-              steps: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    WizardHeader(
+                      'assets/icons/notificationIcon.png',
+                      'Выбор страховой и медицнской организации для ребёнка',
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Сроки оказания услуги:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 8),
+                          child: Text(
+                              "В соответствии с регламентом оказания услуги."),
+                        ),
+                      ],
+                    ),
+                    UnfoldedStepper(
+                      physics: ClampingScrollPhysics(),
+                      controlsBuilder: (BuildContext context,
+                              {VoidCallback onStepContinue,
+                              VoidCallback onStepCancel}) =>
+                          Container(),
+                      steps: [
 //                UnfoldedStep(
 //                  title: Container(
 //                    width: 290,
@@ -88,68 +93,71 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
 //                  ),
 //                  isActive: true,
 //                ),
-                UnfoldedStep(
-                  title: Container(
-                    width: 290,
-                    child: const Text(
-                      'Выберите страховую медицинскую организацию для вашего ребенка',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  content: Text(SmoWizard.steps[3]),
-                  isActive: true,
-                ),
-                UnfoldedStep(
-                  title: Container(
-                    width: 290,
-                    child: const Text(
-                      'Выберите форму получаемого полиса ОМС',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  content: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Radio(
-                            value: InsuranceType.digital,
-                            groupValue: insuranceType,
-                            onChanged: (type) =>
-                                setState(() => insuranceType = type),
+                        UnfoldedStep(
+                          title: Container(
+                            width: 290,
+                            child: const Text(
+                              'Выберите страховую медицинскую организацию для вашего ребенка',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          const Text('Цифровой'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: InsuranceType.material,
-                            groupValue: insuranceType,
-                            onChanged: (type) =>
-                                setState(() => insuranceType = type),
+                          content: Text(SmoWizard.steps[3]),
+                          isActive: true,
+                        ),
+                        UnfoldedStep(
+                          title: Container(
+                            width: 290,
+                            child: const Text(
+                              'Выберите форму получаемого полиса ОМС',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Container(
-                              width: 240, child: const Text('Электронный')),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Radio(
-                            value: InsuranceType.paper,
-                            groupValue: insuranceType,
-                            onChanged: (type) =>
-                                setState(() => insuranceType = type),
+                          content: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: [
+                                  Radio(
+                                    value: InsuranceType.digital,
+                                    groupValue: insuranceType,
+                                    onChanged: (type) =>
+                                        setState(() => insuranceType = type),
+                                  ),
+                                  const Text('Цифровой'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio(
+                                    value: InsuranceType.material,
+                                    groupValue: insuranceType,
+                                    onChanged: (type) =>
+                                        setState(() => insuranceType = type),
+                                  ),
+                                  Container(
+                                      width: 240,
+                                      child: const Text('Электронный')),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio(
+                                    value: InsuranceType.paper,
+                                    groupValue: insuranceType,
+                                    onChanged: (type) =>
+                                        setState(() => insuranceType = type),
+                                  ),
+                                  Container(
+                                      width: 240,
+                                      child: const Text('Бумажный')),
+                                ],
+                              )
+                            ],
                           ),
-                          Container(width: 240, child: const Text('Бумажный')),
-                        ],
-                      )
-                    ],
-                  ),
-                  isActive: true,
-                ),
+                          isActive: true,
+                        ),
 //                UnfoldedStep(
 //                  title: Container(
 //                    width: 290,
@@ -158,38 +166,43 @@ class _SmoInfoScreenState extends State<SmoInfoScreen> {
 //                  content: Text(SmoWizard.steps[4]),
 //                  isActive: true,
 //                ),
-                UnfoldedStep(
-                  title: Container(
-                    width: 290,
-                    child: const Text(
-                      'Выберите удобное для вас медицинское учреждение',
-                    ),
-                  ),
-                  content: Text(SmoWizard.steps[5]),
-                  isActive: true,
-                ),
+                        UnfoldedStep(
+                          title: Container(
+                            width: 290,
+                            child: const Text(
+                              'Выберите удобное для вас медицинское учреждение',
+                            ),
+                          ),
+                          content: Text(SmoWizard.steps[5]),
+                          isActive: true,
+                        ),
 //                UnfoldedStep(
 //                  title: const Text('Будьте здоровы!'),
 //                  state: UnfoldedStepState.complete,
 //                  isActive: true,
 //                ),
-              ],
-            ),
-            Column(
-              children: [
-                GosFlatButton(
-                  textColor: Colors.white,
-                  backgroundColor: '#2763AA'.colorFromHex(),
-                  onPressed: () =>
-                      Navigator.pushNamed(context, SmoFormScreen.routeName),
-                  text: 'Подать заявление >',
-                  width: 320,
+                      ],
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 56.0),
-                  child: Text("Это займет у вас не более 2 минут"),
-                )
-              ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
+              child: Column(
+                children: [
+                  GosFlatButton(
+                    textColor: Colors.white,
+                    backgroundColor: '#2763AA'.colorFromHex(),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, SmoFormScreen.routeName),
+                    text: 'Подать заявление >',
+                    width: 320,
+                  ),
+                  SizedBox(height: 4.0),
+                  const Text("Это займет у вас не более 2 минут"),
+                ],
+              ),
             ),
           ],
         ),

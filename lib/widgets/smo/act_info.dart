@@ -36,7 +36,6 @@ class ActInfo extends StatelessWidget {
           SingleInfoItem(
             'Номер полиса ОМС',
             client.getPolicy()?.getNumber() ?? '',
-            last: true,
           ),
           SingleInfoItem(
             'Фамилия, имя, отество',

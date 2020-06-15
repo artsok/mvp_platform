@@ -149,6 +149,15 @@ class _TableCalendarState extends State<TableCalendar>
     with TickerProviderStateMixin {
   AnimationController animationController;
   CalendarState calendarState = CalendarState.opened;
+  double calendarHeight;
+  double opacity = 1.0;
+  double position;
+
+  double appBarHeight = AppBar().preferredSize.height;
+  double paddingTop;
+  double paddingBottom;
+
+  GlobalKey calendarKey = GlobalKey();
 
   @override
   void initState() {
@@ -277,19 +286,15 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
-  double heihgt;
-  double opacity = 1.0;
-  double position;
-
   void onPinTap() {
     print('Pin tapped');
     setState(() {
       if (calendarState == CalendarState.opened) {
-        heihgt = 9.0;
+        calendarHeight = 9.0;
         opacity = 0.0;
         calendarState = CalendarState.closed;
       } else {
-        heihgt = null;
+        calendarHeight = null;
         calendarState = CalendarState.opened;
         opacity = 1.0;
       }
@@ -298,6 +303,8 @@ class _TableCalendarState extends State<TableCalendar>
 
   @override
   Widget build(BuildContext context) {
+    paddingTop = MediaQuery.of(context).padding.top;
+    paddingBottom = MediaQuery.of(context).padding.bottom;
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget child) {
@@ -317,42 +324,66 @@ class _TableCalendarState extends State<TableCalendar>
         ),
         child: StreamBuilder(
           stream: controller.stream,
-          builder: (ctx, AsyncSnapshot<dynamic> snapshot) => GestureDetector(
+          builder: (ctx, snapshot) => GestureDetector(
             onVerticalDragUpdate: (details) {
-//              print('On drag happened:');
-//              position = MediaQuery.of(context).size.height -
-//                  details.globalPosition.dy;
-//              if (!position.isNegative) {
-//                print('Position: $position');
-//                controller.add(position);
-//              }
+              print('On drag happened:');
+              print(
+                  'MediaQuery.of(ctx).size.height: ${MediaQuery.of(ctx).size.height}');
+              position = details.globalPosition.dy -
+                  paddingTop -
+                  paddingBottom -
+                  appBarHeight;
+              if (!position.isNegative) {
+                print('Position: $position');
+                calendarHeight = position;
+                controller.add(calendarHeight);
+              }
             },
-            child: Container(
-              height: snapshot.hasData ? snapshot.data : null,
-              child: LayoutBuilder(
-                builder: (ctx, constraints) => Stack(
-                  overflow: Overflow.visible,
+            child: LayoutBuilder(builder: (ctx, constraints) {
+              calendarHeight = null;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                return Overlay.of(context).insert(
+                  OverlayEntry(builder: (context) {
+                    final size = MediaQuery.of(context).size;
+                    return Positioned(
+                      width: 100.0,
+                      height: 100.0,
+                      child: Container(color: Colors.blue),
+                    );
+                  }),
+                );
+              });
+              return MeasureSize(
+                onChange: (Size size) {
+                  print('Calendar height: ${size.height}');
+                  calendarHeight = size.height;
+                },
+                child: Container(
+                  height: snapshot.hasData ? snapshot.data : calendarHeight,
+                  child: SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Stack(
+                      overflow: Overflow.visible,
 //                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        if (widget.headerVisible) _buildHeader(),
-                        _buildCalendarContent(),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            if (widget.headerVisible) _buildHeader(),
+                            _buildCalendarContent(),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: -9,
+                          left: constraints.maxWidth / 2 - 25,
+                          child: Pin(),
+                        ),
                       ],
                     ),
-                    Positioned(
-                      bottom: -9,
-                      left: constraints.maxWidth / 2 - 25,
-                      child: GestureDetector(
-                        onTap: () => onPinTap(),
-                        child: Pin(),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           ),
         ),
       ),
@@ -662,4 +693,45 @@ class _TableCalendarState extends State<TableCalendar>
 enum CalendarState {
   closed,
   opened,
+}
+
+typedef void OnWidgetSizeChange(Size size);
+
+class MeasureSize extends StatefulWidget {
+  final Widget child;
+  final OnWidgetSizeChange onChange;
+
+  const MeasureSize({
+    Key key,
+    @required this.onChange,
+    @required this.child,
+  }) : super(key: key);
+
+  @override
+  _MeasureSizeState createState() => _MeasureSizeState();
+}
+
+class _MeasureSizeState extends State<MeasureSize> {
+  @override
+  Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback(postFrameCallback);
+    return Container(
+      key: widgetKey,
+      child: widget.child,
+    );
+  }
+
+  var widgetKey = GlobalKey();
+  var oldSize;
+
+  void postFrameCallback(_) {
+    var context = widgetKey.currentContext;
+    if (context == null) return;
+
+    var newSize = context.size;
+    if (oldSize == newSize) return;
+
+    oldSize = newSize;
+    widget.onChange(newSize);
+  }
 }

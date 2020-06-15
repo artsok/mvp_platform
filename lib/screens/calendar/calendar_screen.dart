@@ -61,120 +61,122 @@ class _CalendarScreenState extends State<CalendarScreen>
           ),
           title: const Text('Диспансерный учет'),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
-              return Column(
-                children: <Widget>[
-                  visitsInfo.client == null
-                      ? Container()
-                      : Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            visitsInfo.client.fullName,
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
-                    child: TableCalendar(
-                      onDaySelected: (day, visits) {
-                        if (visits.isNotEmpty) {
-                          Navigator.pushNamed(
-                            context,
-                            DoctorVisitDetailsScreen.routeName,
-                            arguments: DoctorVisitDetailsScreenArguments(
-                              visitsInfo.client,
-                              visits[0],
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Consumer<VisitsInfoProvider>(builder: (_, visitsInfo, __) {
+                return Column(
+                  children: <Widget>[
+                    visitsInfo.client == null
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Text(
+                              visitsInfo.client.fullName,
+                              style: TextStyle(fontSize: 20),
                             ),
-                          );
-                        }
-                      },
-                      locale: locale,
-                      visitsInfo: visitsInfo,
-                      calendarController: calendarController,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: defaultTextStyle,
-                        weekendStyle: defaultTextStyle,
-                      ),
-                      calendarStyle: CalendarStyle(
-                        highlightToday: false,
-                        selectedColor: null,
-                        selectedStyle: defaultTextStyle,
-                        outsideDaysVisible: true,
-                        highlightSelected: false,
-                        weekdayStyle: defaultTextStyle,
-                        weekendStyle: defaultTextStyle,
-                      ),
-                      headerStyle: HeaderStyle(
-                        headerPadding: const EdgeInsets.all(0.0),
-                        headerMargin: const EdgeInsets.all(0.0),
+                          ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: TableCalendar(
+                        onDaySelected: (day, visits) {
+                          if (visits.isNotEmpty) {
+                            Navigator.pushNamed(
+                              context,
+                              DoctorVisitDetailsScreen.routeName,
+                              arguments: DoctorVisitDetailsScreenArguments(
+                                visitsInfo.client,
+                                visits[0],
+                              ),
+                            );
+                          }
+                        },
+                        locale: locale,
+                        visitsInfo: visitsInfo,
+                        calendarController: calendarController,
+                        daysOfWeekStyle: DaysOfWeekStyle(
+                          weekdayStyle: defaultTextStyle,
+                          weekendStyle: defaultTextStyle,
+                        ),
+                        calendarStyle: CalendarStyle(
+                          highlightToday: false,
+                          selectedColor: null,
+                          selectedStyle: defaultTextStyle,
+                          outsideDaysVisible: true,
+                          highlightSelected: false,
+                          weekdayStyle: defaultTextStyle,
+                          weekendStyle: defaultTextStyle,
+                        ),
+                        headerStyle: HeaderStyle(
+                          headerPadding: const EdgeInsets.all(0.0),
+                          headerMargin: const EdgeInsets.all(0.0),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            }),
-            Expanded(
-              child: Consumer<VisitsInfoProvider>(
-                builder: (_, visitsInfoData, __) {
-                  if (visitsInfoData == null) {
-                    return CupertinoActivityIndicator(radius: 25.0);
-                  } else {
-                    switch (visitsInfoData.requestStatus) {
-                      case RequestStatus.success:
-                        return ListView.builder(
-                          key: listKey,
-                          itemCount: visitsInfoData.visitsOfMonth.length,
-                          itemBuilder: (context, i) =>
-                              ChangeNotifierProvider.value(
-                            value: visitsInfoData.visitsOfMonth[i],
-                            child: DoctorVisitItem(
-                              visitsInfoData.client,
-                              visitsInfoData.visitsOfMonth[i],
+                  ],
+                );
+              }),
+              Expanded(
+                child: Consumer<VisitsInfoProvider>(
+                  builder: (_, visitsInfoData, __) {
+                    if (visitsInfoData == null) {
+                      return CupertinoActivityIndicator(radius: 25.0);
+                    } else {
+                      switch (visitsInfoData.requestStatus) {
+                        case RequestStatus.success:
+                          return ListView.builder(
+                            key: listKey,
+                            itemCount: visitsInfoData.visitsOfMonth.length,
+                            itemBuilder: (context, i) =>
+                                ChangeNotifierProvider.value(
+                              value: visitsInfoData.visitsOfMonth[i],
+                              child: DoctorVisitItem(
+                                visitsInfoData.client,
+                                visitsInfoData.visitsOfMonth[i],
+                              ),
                             ),
-                          ),
-                        );
-                      case RequestStatus.error:
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              const Text(
-                                'Возникла ошибка',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
+                          );
+                        case RequestStatus.error:
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  'Возникла ошибка',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4.0),
-                              Text(
-                                visitsInfoData.errorMessage,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black54,
+                                SizedBox(height: 4.0),
+                                Text(
+                                  visitsInfoData.errorMessage,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.black54,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4.0),
-                              GosFlatButton(
-                                textColor: Colors.white,
-                                backgroundColor: getGosBlueColor(),
-                                onPressed: () => visitsInfoData.fetchData(),
-                                text: 'Попробовать снова',
-                                width: 320,
-                              ),
-                            ],
-                          ),
-                        );
-                      default:
-                        return const GosCupertinoLoadingIndicator();
+                                SizedBox(height: 4.0),
+                                GosFlatButton(
+                                  textColor: Colors.white,
+                                  backgroundColor: getGosBlueColor(),
+                                  onPressed: () => visitsInfoData.fetchData(),
+                                  text: 'Попробовать снова',
+                                  width: 320,
+                                ),
+                              ],
+                            ),
+                          );
+                        default:
+                          return const GosCupertinoLoadingIndicator();
+                      }
                     }
-                  }
-                },
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

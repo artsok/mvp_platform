@@ -12,6 +12,7 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/calendar/widgets/pin.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:flutter/scheduler.dart';
 
 part 'calendar.dart';
 part 'calendar_controller.dart';

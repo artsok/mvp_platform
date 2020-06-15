@@ -153,23 +153,15 @@ class CalendarController {
   }
 
   void _selectPrevious() {
-    _selectPreviousMonth();
+    _focusedDay = _previousMonth(_focusedDay);
     _visibleDays.value = _getVisibleDays();
     _decrementPage();
   }
 
   void _selectNext() {
-    _selectNextMonth();
+    _focusedDay = _nextMonth(_focusedDay);
     _visibleDays.value = _getVisibleDays();
     _incrementPage();
-  }
-
-  void _selectPreviousMonth() {
-    _focusedDay = _previousMonth(_focusedDay);
-  }
-
-  void _selectNextMonth() {
-    _focusedDay = _nextMonth(_focusedDay);
   }
 
   DateTime _getFirstDay({@required bool includeInvisible}) {

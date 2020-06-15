@@ -73,13 +73,6 @@ class _CellWidget extends StatelessWidget {
               : Radius.circular(constraints.maxWidth / 2),
         ),
         color: status.colors().item2,
-        boxShadow: <BoxShadow>[
-//          BoxShadow(
-//            color: Colors.black12,
-//            blurRadius: constraints.maxWidth / 2,
-//            offset: Offset(0.0, constraints.maxWidth / 2),
-//          ),
-        ],
       );
     }
     if (isSelected &&

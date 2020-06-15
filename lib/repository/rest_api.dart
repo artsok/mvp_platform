@@ -1,16 +1,13 @@
-import 'dart:convert';
+import 'dart:async' show Future;
 import 'dart:core';
+import 'dart:developer';
 import 'dart:io';
+
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:http/http.dart' as http;
 import 'package:mvp_platform/repository/request/request_dto.dart';
-import 'package:mvp_platform/utils/app_exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:developer';
 
 class URLS {
   static const String BASE_URL =
@@ -253,15 +250,11 @@ class Service {
                 clientId: await getClientId(),
                 startDate: "2020-05-01T14:00:00",
                 endDate: "2020-06-30T14:00:00")));
-    try {
-      Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
-          data: requestDto.toJsonGetVisitsByClient());
-      log("${response.data}");
-      return response.data;
-    } catch (e) {
-      return "No Internet connection (getVisitsByClient)";
-    }
+    Response response = await dio.post(
+        "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
+        data: requestDto.toJsonGetVisitsByClient());
+    log("${response.data}");
+    return response.data;
   }
 
   ///Получение сведений о новорожденном для показа в мобильном приложении
@@ -331,8 +324,10 @@ class Service {
       };
       return httpClient;
     };
-    var requestDto =
-        RequestDto(method: "getMedicalOrganizations", id: 1, params: Params.withFilter(filter: Filter.all(null, null, null)));
+    var requestDto = RequestDto(
+        method: "getMedicalOrganizations",
+        id: 1,
+        params: Params.withFilter(filter: Filter.all(null, null, null)));
     try {
       Response response = await dio.post(
           "${URLS.BASE_URL}/${URLS.PATH}/infoService",
@@ -371,8 +366,11 @@ class Service {
         return true;
       };
       return httpClient;
-    };var requestDto = RequestDto(
-        method: "getMedicalInsuranceOrganizations", id: 1, params: Params.withFilter(filter: Filter.all(null, null, null)));
+    };
+    var requestDto = RequestDto(
+        method: "getMedicalInsuranceOrganizations",
+        id: 1,
+        params: Params.withFilter(filter: Filter.all(null, null, null)));
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/infoService",
         data: requestDto.toJsonWithFilter());

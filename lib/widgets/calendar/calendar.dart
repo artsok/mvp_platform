@@ -18,6 +18,8 @@ typedef String TextBuilder(DateTime date, dynamic locale);
 /// Signature for enabling days.
 typedef bool EnabledDayPredicate(DateTime day);
 
+StreamController<double> controller = StreamController.broadcast();
+
 /// Highly customizable, feature-packed Flutter Calendar with gestures, animations and multiple formats.
 class TableCalendar extends StatefulWidget {
   /// Controller required for `TableCalendar`.
@@ -275,6 +277,25 @@ class _TableCalendarState extends State<TableCalendar>
     return widget.calendarController._getHolidayKey(day);
   }
 
+  double heihgt;
+  double opacity = 1.0;
+  double position;
+
+  void onPinTap() {
+    print('Pin tapped');
+    setState(() {
+      if (calendarState == CalendarState.opened) {
+        heihgt = 9.0;
+        opacity = 0.0;
+        calendarState = CalendarState.closed;
+      } else {
+        heihgt = null;
+        calendarState = CalendarState.opened;
+        opacity = 1.0;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
@@ -294,31 +315,44 @@ class _TableCalendarState extends State<TableCalendar>
             ),
           ],
         ),
-        child: LayoutBuilder(
-          builder: (_, constraints) => Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  if (widget.headerVisible) _buildHeader(),
-//                Padding(
-//                  padding: widget.calendarStyle.contentPadding,
-//                  child:
-                  _buildCalendarContent(),
-//                ),
-                ],
+        child: StreamBuilder(
+          stream: controller.stream,
+          builder: (ctx, AsyncSnapshot<dynamic> snapshot) => GestureDetector(
+            onVerticalDragUpdate: (details) {
+//              print('On drag happened:');
+//              position = MediaQuery.of(context).size.height -
+//                  details.globalPosition.dy;
+//              if (!position.isNegative) {
+//                print('Position: $position');
+//                controller.add(position);
+//              }
+            },
+            child: Container(
+              height: snapshot.hasData ? snapshot.data : null,
+              child: LayoutBuilder(
+                builder: (ctx, constraints) => Stack(
+                  overflow: Overflow.visible,
+//                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        if (widget.headerVisible) _buildHeader(),
+                        _buildCalendarContent(),
+                      ],
+                    ),
+                    Positioned(
+                      bottom: -9,
+                      left: constraints.maxWidth / 2 - 25,
+                      child: GestureDetector(
+                        onTap: () => onPinTap(),
+                        child: Pin(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Positioned(
-                bottom: -9,
-                left: constraints.maxWidth / 2 - 25,
-                child: GestureDetector(
-                    onTap: () {
-                      print('Pin tapped');
-                    },
-                    child: Pin()),
-              ),
-            ],
+            ),
           ),
         ),
       ),

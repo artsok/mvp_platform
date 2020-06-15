@@ -146,68 +146,67 @@ class _MedicalOrganizationFormScreenState
           'Подача заявления о выборе страховой и медицнской организации для ребёнка',
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            WizardHeader(
-              'assets/icons/notificationIcon.png',
-              'Прикрепление ребёнка к медицинской организации',
-            ),
-            UnfoldedStepper(
-              physics: ClampingScrollPhysics(),
-              controlsBuilder: (BuildContext context,
-                      {VoidCallback onStepContinue,
-                      VoidCallback onStepCancel}) =>
-                  Container(),
-              steps: steps,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider(
-                        create: (_) => SelectMedOrganizationActionProvider()),
-                    ChangeNotifierProvider.value(value: BirthSmoProvider()),
-                  ],
-                  child: Consumer2<SelectMedOrganizationActionProvider,
-                      BirthSmoProvider>(
-                    builder: (_, medOrganizationSelect, birthInfo, __) {
-                      return GosFlatButton(
-                        width: 320,
-                        textColor: Colors.white,
-                        backgroundColor: '#2763AA'.colorFromHex(),
-                        onPressed: medOrganizationSelect.processStatus ==
-                                RequestStatus.processing
-                            ? () {}
-                            : () {
-                                medOrganizationSelect
-                                    .selectMedicalOrganization(
-                                        birthInfo.client
-                                            .getPolicy()
-                                            .getNumber(),
-                                        selectedOrganization.id)
-                                    .then(
-                                      (_) => Navigator.of(context).pushNamed(
-                                        MedicalOrganizationSuccessScreen
-                                            .routeName,
-                                        arguments:
-                                            MedicalOrganizationSuccessScreenArguments(
-                                          birthInfo.client,
-                                          selectedOrganization,
-                                        ),
-                                      ),
-                                    );
-                              },
-                        text: 'Выбрать >',
-                      );
-                    },
-                  ),
-                ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              WizardHeader(
+                'assets/icons/notificationIcon.png',
+                'Прикрепление ребёнка к медицинской организации',
               ),
-            ),
-          ],
+              UnfoldedStepper(
+                physics: ClampingScrollPhysics(),
+                controlsBuilder: (BuildContext context,
+                        {VoidCallback onStepContinue,
+                        VoidCallback onStepCancel}) =>
+                    Container(),
+                steps: steps,
+              ),
+              Align(
+                alignment: Alignment.center,
+                  child: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                          create: (_) => SelectMedOrganizationActionProvider()),
+                      ChangeNotifierProvider.value(value: BirthSmoProvider()),
+                    ],
+                    child: Consumer2<SelectMedOrganizationActionProvider,
+                        BirthSmoProvider>(
+                      builder: (_, medOrganizationSelect, birthInfo, __) {
+                        return GosFlatButton(
+                          width: 320,
+                          textColor: Colors.white,
+                          backgroundColor: '#2763AA'.colorFromHex(),
+                          onPressed: medOrganizationSelect.processStatus ==
+                                  RequestStatus.processing
+                              ? () {}
+                              : () {
+                                  medOrganizationSelect
+                                      .selectMedicalOrganization(
+                                          birthInfo.client
+                                              .getPolicy()
+                                              .getNumber(),
+                                          selectedOrganization.id)
+                                      .then(
+                                        (_) => Navigator.of(context).pushNamed(
+                                          MedicalOrganizationSuccessScreen
+                                              .routeName,
+                                          arguments:
+                                              MedicalOrganizationSuccessScreenArguments(
+                                            birthInfo.client,
+                                            selectedOrganization,
+                                          ),
+                                        ),
+                                      );
+                                },
+                          text: 'Выбрать >',
+                        );
+                      },
+                    ),
+                  ),
+              ),
+            ],
+          ),
         ),
       ),
     );

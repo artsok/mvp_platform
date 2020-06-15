@@ -27,7 +27,7 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(CupertinoIcons.back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop("I love Nutella"),
         ),
         title: const Text('Запись на прием'),
       ),

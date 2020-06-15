@@ -40,14 +40,14 @@ class DoctorVisitItemDetails extends StatelessWidget {
                                   Text(
                                     visit.doctor.lastName.toUpperCase(),
                                     style: TextStyle(
-                                      fontSize: 26.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 Text(
                                   '${visit.doctor.firstName == null ? '' : '${visit.doctor.firstName} '}${visit.doctor.midName == null ? '' : visit.doctor.midName}',
                                   style: TextStyle(
-                                    fontSize: 24.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -76,7 +76,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                       Expanded(
                         child: Text(
                           visit.service.name ?? '',
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(fontSize: 14.0),
                         ),
                       ),
                       if (visit.status.toVisitStatus() ==
@@ -95,6 +95,7 @@ class DoctorVisitItemDetails extends StatelessWidget {
                                     child: Text(
                                       'Оцените услугу',
                                       style: TextStyle(
+                                        fontSize: 12.0,
                                         color: Colors.blue[600],
                                         fontWeight: FontWeight.bold,
                                       ),

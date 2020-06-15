@@ -6,7 +6,7 @@ import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/providers/request/visits_info_provider.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
-import 'package:mvp_platform/widgets/calendar/tablecalendar/table_calendar.dart';
+import 'package:mvp_platform/widgets/calendar/table_calendar.dart';
 import 'package:mvp_platform/widgets/common/buttons/gos_flat_button.dart';
 import 'package:mvp_platform/widgets/common/gos_cupertino_loading_indicator.dart';
 import 'package:mvp_platform/widgets/doctor_visit_item/doctor_visit_item.dart';

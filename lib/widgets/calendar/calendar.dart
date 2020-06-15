@@ -18,6 +18,8 @@ typedef String TextBuilder(DateTime date, dynamic locale);
 /// Signature for enabling days.
 typedef bool EnabledDayPredicate(DateTime day);
 
+StreamController<double> controller = StreamController.broadcast();
+
 /// Highly customizable, feature-packed Flutter Calendar with gestures, animations and multiple formats.
 class TableCalendar extends StatefulWidget {
   /// Controller required for `TableCalendar`.
@@ -277,6 +279,7 @@ class _TableCalendarState extends State<TableCalendar>
 
   double heihgt;
   double opacity = 1.0;
+  double position;
 
   void onPinTap() {
     print('Pin tapped');
@@ -312,42 +315,42 @@ class _TableCalendarState extends State<TableCalendar>
             ),
           ],
         ),
-        child: AnimatedSize(
-          curve: Curves.ease,
-          vsync: this,
-          duration: Duration(seconds: 1),
-          child: Container(
-            height: heihgt,
-            child: LayoutBuilder(
-              builder: (_, constraints) => Stack(
-                overflow: Overflow.visible,
-//                fit: StackFit.expand,
-                children: <Widget>[
-                  AnimatedOpacity(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.ease,
-                    opacity: opacity,
-                    child: Column(
+        child: StreamBuilder(
+          stream: controller.stream,
+          builder: (ctx, AsyncSnapshot<dynamic> snapshot) => GestureDetector(
+            onVerticalDragUpdate: (details) {
+//              print('On drag happened:');
+//              position = MediaQuery.of(context).size.height -
+//                  details.globalPosition.dy;
+//              if (!position.isNegative) {
+//                print('Position: $position');
+//                controller.add(position);
+//              }
+            },
+            child: Container(
+              height: snapshot.hasData ? snapshot.data : null,
+              child: LayoutBuilder(
+                builder: (ctx, constraints) => Stack(
+                  overflow: Overflow.visible,
+//                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         if (widget.headerVisible) _buildHeader(),
-//                Padding(
-//                  padding: widget.calendarStyle.contentPadding,
-//                  child:
                         _buildCalendarContent(),
-//                ),
                       ],
                     ),
-                  ),
-                  Positioned(
-                    bottom: -9,
-                    left: constraints.maxWidth / 2 - 25,
-                    child: GestureDetector(
-                      onTap: () => onPinTap(),
-                      child: Pin(),
+                    Positioned(
+                      bottom: -9,
+                      left: constraints.maxWidth / 2 - 25,
+                      child: GestureDetector(
+                        onTap: () => onPinTap(),
+                        child: Pin(),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

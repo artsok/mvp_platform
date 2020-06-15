@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mvp_platform/models/gos_notification.dart';
 import 'package:mvp_platform/providers/gos_notifications_provider.dart';
@@ -27,139 +29,137 @@ class MedicalOrganizationSuccessScreen extends StatelessWidget {
     final client = args.client;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 56,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: Text(
-                'Заявление о прикреплении к медицинской организации № ${medOrganization.ogrn}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24.0,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Text(
+                  'Заявление о прикреплении к медицинской организации № ${Random().nextInt(9000) + 10000}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: 350,
-              child: Card(
-                elevation: 5.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SingleInfoItem(
-                      'Полис ОМС',
-                      client.policy?.number ?? '',
-                    ),
-                    SingleInfoItem(
-                      'Фамилия, имя, отчество',
-                      client.fullName,
-                    ),
-                    SingleInfoItem(
-                      'Дата рождения',
-                      client.birthDate.toDmy(),
-                    ),
-                    SingleInfoItem(
-                        'Адрес проживания',
-                        client.parents.isNotEmpty
-                            ? client.parents[0].registrationAddress
-                            : 'не указан'),
-                    SingleInfoItem(
-                      'Страховая медицинская организация',
-                      medInsuranceProvider.selectedOrganization.code ??
-                          'не выбрана',
-                    ),
-                    SingleInfoItem(
-                      'Прикреплен к',
-                      medOrganization.code ?? '',
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8),
-                        child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: 400,
-                            maxHeight: 400,
-                          ),
-                          child: Image.asset(
-                            medOrganization.photoPath,
-                            fit: BoxFit.fitWidth,
+              Container(
+                width: 350,
+                child: Card(
+                  elevation: 5.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SingleInfoItem(
+                        'Полис ОМС',
+                        client.policy?.number ?? '',
+                      ),
+                      SingleInfoItem(
+                        'Фамилия, имя, отчество',
+                        client.fullName,
+                      ),
+                      SingleInfoItem(
+                        'Дата рождения',
+                        client.birthDate.toDmy(),
+                      ),
+                      SingleInfoItem(
+                          'Адрес проживания',
+                          client.parents.isNotEmpty
+                              ? client.parents[0].registrationAddress
+                              : 'не указан'),
+                      SingleInfoItem(
+                        'Страховая медицинская организация',
+                        medInsuranceProvider.selectedOrganization.code ??
+                            'не выбрана',
+                      ),
+                      SingleInfoItem(
+                        'Прикреплен к',
+                        medOrganization.code ?? '',
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: 400,
+                              maxHeight: 400,
+                            ),
+                            child: Image.asset(
+                              medOrganization.photoPath,
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: SingleInfoItem(
-                        'Адрес пордазделения',
-                        medOrganization.address,
-                        last: true,
+                      Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: SingleInfoItem(
+                          'Адрес пордазделения',
+                          medOrganization.address,
+                          last: true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 8.0),
-            GosFlatButton(
-              backgroundColor: '#2763AA'.colorFromHex(),
-              textColor: Colors.white,
-              text: 'Готово',
-              width: 350.0,
-              onPressed: () {
-                notifications.addNotification(
-                  GosNotification(
-                    date: DateTime.now().add(new Duration(minutes: 1)),
-                    message:
-                        'Полис ОМС для ребенка Богатырев Иван Иванович № 6351240828000236 выпущен',
-                  ),
-                );
-                notifications.addNotification(
-                  GosNotification(
-                    date: DateTime.now().add(new Duration(minutes: 4)),
-                    message:
-                        'Богатырев Иван Иванович застрахован в страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
-                  ),
-                );
-                notifications.addNotification(
-                  GosNotification(
-                    date: DateTime.now().add(new Duration(minutes: 5)),
-                    message:
-                        'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ г.Калининград "Городская детская больница № 4"',
-                  ),
-                );
-                notifications.addNotification(
-                  GosNotification(
-                      date: DateTime.now().add(new Duration(minutes: 10)),
+              SizedBox(height: 8.0),
+              GosFlatButton(
+                backgroundColor: '#2763AA'.colorFromHex(),
+                textColor: Colors.white,
+                text: 'Готово',
+                width: 350.0,
+                onPressed: () {
+                  notifications.addNotification(
+                    GosNotification(
+                      date: DateTime.now().add(new Duration(minutes: 1)),
                       message:
-                          'Городская детская поликлиника № 4 приглашает вашего ребенка на плановый профилактический осмотр, 02.05.2020',
-                      callback: (context) => Navigator.of(context)
-                          .pushNamed(DoctorInfoScreen.routeName)),
-                );
-                notifications.addNotification(
-                  GosNotification(
-                      date: DateTime.now().add(new Duration(minutes: 80)),
+                          'Полис ОМС для ребенка Богатырев Иван Иванович № 6351240828000236 выпущен',
+                    ),
+                  );
+                  notifications.addNotification(
+                    GosNotification(
+                      date: DateTime.now().add(new Duration(minutes: 4)),
                       message:
-                          'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
-                      callback: (context) => Navigator.of(context)
-                          .pushNamed(CalendarScreen.routeName)),
-                );
-                Navigator.of(context)
-                    .popUntil(ModalRoute.withName(HomeScreen.routeName));
-              },
-            ),
-            SizedBox(height: 36.0),
+                          'Богатырев Иван Иванович застрахован в страховой медицинской организации АО «СОГАЗ Мед» СОГАЗ МЕД',
+                    ),
+                  );
+                  notifications.addNotification(
+                    GosNotification(
+                      date: DateTime.now().add(new Duration(minutes: 5)),
+                      message:
+                          'Богатырев Иван Иванович прикреплен к медицинской организации ГБУЗ г.Калининград "Городская детская больница № 4"',
+                    ),
+                  );
+                  notifications.addNotification(
+                    GosNotification(
+                        date: DateTime.now().add(new Duration(minutes: 10)),
+                        message:
+                            'Городская детская поликлиника № 4 приглашает вашего ребенка на плановый профилактический осмотр, 02.05.2020',
+                        callback: (context) => Navigator.of(context)
+                            .pushNamed(DoctorInfoScreen.routeName)),
+                  );
+                  notifications.addNotification(
+                    GosNotification(
+                        date: DateTime.now().add(new Duration(minutes: 80)),
+                        message:
+                            'Ознакомьтесь с вашим календарем посещений плановый профилактических осмотров',
+                        callback: (context) => Navigator.of(context)
+                            .pushNamed(CalendarScreen.routeName)),
+                  );
+                  Navigator.of(context)
+                      .popUntil(ModalRoute.withName(HomeScreen.routeName));
+                },
+              ),
 //            GosFlatButton(
 //              text: 'Отменить',
 //              backgroundColor: Colors.white,
 //              onPressed: () => Navigator.of(context).pop(),
 //            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

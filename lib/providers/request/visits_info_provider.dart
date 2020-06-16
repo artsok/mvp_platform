@@ -25,6 +25,11 @@ class VisitsInfoProvider extends ChangeNotifier {
     return _instance;
   }
 
+  void updateRequestStatus(RequestStatus status) {
+    requestStatus = status;
+    notifyListeners();
+  }
+
   void fetchData() {
     requestStatus = RequestStatus.processing;
     notifyListeners();

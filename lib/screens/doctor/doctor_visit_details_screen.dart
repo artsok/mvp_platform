@@ -43,7 +43,7 @@ class DoctorVisitDetailsScreen extends StatelessWidget {
               VisitDateTime(visit),
               PatientInfo(),
               DoctorInfo(),
-              HospitalInfo(),
+              MedOrganizationInfo(visit),
               SizedBox(height: 8.0),
               AvailableActions(),
             ],
@@ -260,14 +260,16 @@ class DoctorInfo extends StatelessWidget {
   }
 }
 
-class HospitalInfo extends StatelessWidget {
-  final hospital = Hospital(
-    'ГБУЗ "Городская детская поликлиника №4"',
-    'г.Калининград, ул.Садовая д.7/13',
-    'assets/map/dekabristov-24.png',
-  );
+class MedOrganizationInfo extends StatelessWidget {
+//  final hospital = Hospital(
+//    'ГБУЗ "Городская детская поликлиника №4"',
+//    'г.Калининград, ул.Садовая д.7/13',
+//    'assets/map/dekabristov-24.png',
+//  );
 
-  HospitalInfo({Key key}) : super(key: key);
+  final VisitExt visit;
+
+  MedOrganizationInfo(this.visit, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -291,7 +293,7 @@ class HospitalInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      hospital.name,
+                      visit.,
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

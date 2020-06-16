@@ -133,7 +133,7 @@ class Service {
   }
 
   ///Оценка посещения. Id - visits.id (берем из метода getVisitsByClient), rating on 1-5
-  void setRating(String id, String rating) async {
+  Future<dynamic> setRating(String id, String rating) async {
     log("Оценка посещения");
     var dio = new Dio();
     final List<int> certClient =
@@ -164,18 +164,15 @@ class Service {
         method: "setRating",
         id: 1,
         params: Params.setRating(id: id, rating: rating));
-    try {
-      Response response = await dio.post(
-          "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
-          data: requestDto.toJsonSetRating());
-      log('${response.data}');
-    } catch (e) {
-      log('No Internet connection(setRating)');
-    }
+    Response response = await dio.post(
+        "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
+        data: requestDto.toJsonSetRating());
+    log('Set rating response: ${response.data}');
+    return response.data;
   }
 
   //Отмена посещения
-  void cancelVisit(String visitId) async {
+  Future<dynamic> cancelVisit(String visitId) async {
     var dio = new Dio();
     final List<int> certClient =
         (await rootBundle.load('assets/cert/client.example.crt'))

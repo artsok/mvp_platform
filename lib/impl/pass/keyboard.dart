@@ -138,11 +138,12 @@ class Keyboard extends StatelessWidget {
           child: InkWell(
             highlightColor: keyboardUIConfig.primaryColor,
             splashColor: keyboardUIConfig.primaryColor.withOpacity(0.4),
-            onTap: () {
-              Scaffold.of(context).showSnackBar(SnackBar(
-                content: Text("Авторизация по отпечатку пальца не работает в демо приложении"),
-              ));
-            },
+            onTap: () => Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                    "Авторизация по отпечатку пальца не работает в демо приложении"),
+              ),
+            ),
             child: Center(
               child: IconSvg('assets/svg/fingerprint.svg'),
             ),

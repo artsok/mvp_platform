@@ -91,7 +91,7 @@ class VisitStatusHeader extends StatelessWidget {
                     ),
                     SizedBox(height: 4.0),
                     Text(
-                      '${DateTime.now().toDmyHm()}',
+                      '${visit.planDate.toDmyHm()}',
                       style: TextStyle(color: Colors.black54),
                     )
                   ],

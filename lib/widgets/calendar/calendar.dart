@@ -324,71 +324,78 @@ class _TableCalendarState extends State<TableCalendar>
             ),
           ],
         ),
-        child: StreamBuilder(
-          stream: controller.stream,
-          builder: (ctx, snapshot) => GestureDetector(
-            onVerticalDragUpdate: (details) {
-              print('On drag happened:');
-              print(
-                  'MediaQuery.of(ctx).size.height: ${MediaQuery.of(ctx).size.height}');
-              position = details.globalPosition.dy -
-                  paddingTop -
-                  paddingBottom -
-                  appBarHeight;
-              if (!position.isNegative) {
-                print('Position: $position');
-                calendarHeight = position;
-                controller.add(calendarHeight);
-              }
-            },
-            child: LayoutBuilder(builder: (ctx, constraints) {
+//        child: StreamBuilder(
+//          stream: controller.stream,
+//          builder: (ctx, snapshot) => GestureDetector(
+//            onVerticalDragUpdate: (details) {
+//              print('On drag happened:');
+//              print(
+//                  'MediaQuery.of(ctx).size.height: ${MediaQuery.of(ctx).size.height}');
+//              position = details.globalPosition.dy -
+//                  paddingTop -
+//                  paddingBottom -
+//                  appBarHeight;
+//              if (!position.isNegative) {
+//                print('Position: $position');
+//                calendarHeight = position;
+//                controller.add(calendarHeight);
+//              }
+//            },
+        child: LayoutBuilder(builder: (ctx, constraints) {
 //              calendarHeight = null;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                return calendarHeight != null ? Overlay.of(context).insert(
-                  OverlayEntry(builder: (context) {
-                    return Positioned(
-                      top: calendarHeight + paddingTop + appBarHeight + 9.0,
-                      left: calendarWidth / 2 - 25,
-                      width: 50,
-                      height: 18,
-                      child: Pin(),
-                    );
-                  }),
-                ) : Container();
-              });
-              return MeasureSize(
-                onChange: (Size size) {
-                  print('Calendar height: ${size.height}');
-                  calendarHeight = size.height;
-                },
-                child: Container(
-                  height: snapshot.hasData ? snapshot.data : calendarHeight,
-                  child: SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
-                    child: Stack(
-                      overflow: Overflow.visible,
+//              WidgetsBinding.instance.addPostFrameCallback(
+//                (_) {
+//                  return calendarHeight != null
+//                      ? Overlay.of(context).insert(
+//                          OverlayEntry(builder: (context) {
+//                            return Positioned(
+//                              top: calendarHeight +
+//                                  paddingTop +
+//                                  appBarHeight +
+//                                  9.0,
+//                              left: calendarWidth / 2 - 25,
+//                              width: 50,
+//                              height: 18,
+//                              child: Pin(),
+//                            );
+//                          }),
+//                        )
+//                      : Container();
+//                },
+//              );
+//          return MeasureSize(
+//            onChange: (Size size) {
+//              print('Calendar height: ${size.height}');
+//              calendarHeight = size.height;
+//            },
+//            child: Container(
+//              height: snapshot.hasData ? snapshot.data : calendarHeight,
+//              child: SingleChildScrollView(
+//                physics: NeverScrollableScrollPhysics(),
+                return Stack(
+                  overflow: Overflow.visible,
 //                  fit: StackFit.expand,
+                  children: <Widget>[
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            if (widget.headerVisible) _buildHeader(),
-                            _buildCalendarContent(),
-                          ],
-                        ),
-                        Positioned(
-                          bottom: -9,
-                          left: constraints.maxWidth / 2 - 25,
-                          child: Pin(),
-                        ),
+                        if (widget.headerVisible) _buildHeader(),
+                        _buildCalendarContent(),
                       ],
                     ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
+                    Positioned(
+                      bottom: -9,
+                      left: constraints.maxWidth / 2 - 25,
+                      child: Pin(),
+                    ),
+                  ],
+//                ),
+//              ),
+//            ),
+          );
+        }),
+//          ),
+//        ),
       ),
     );
   }

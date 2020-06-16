@@ -22,8 +22,9 @@ class VisitExtProvider extends ChangeNotifier {
 
   void fetchData(String visitId) {
     requestStatus = RequestStatus.processing;
+    visitExt = null;
+    errorMessage = null;
     notifyListeners();
-
     Service().getVisitExtById(visitId).then((result) {
       final jsonData = json.decode(result);
       var jsonMap = Map<String, dynamic>.from(jsonData);

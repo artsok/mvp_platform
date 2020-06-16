@@ -284,7 +284,7 @@ class Service {
     };
 
     final requestDto = RequestDto(
-      method: "controlCardVisitInfo",
+      method: "getVisit",
       id: 1,
       params: Params.getVisitExtParams(visitId),
     );

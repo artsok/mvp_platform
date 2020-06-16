@@ -524,17 +524,6 @@ class Comment extends StatelessWidget {
             return _buildCommentTextField(visitExt.visitExt);
           }
         } else {
-          if (visitExt.visitExt.ratingComment == null ||
-              visitExt.visitExt.ratingComment.isEmpty) {
-            return TextField(
-              maxLines: 3,
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(visitExt.visitExt.ratingComment),
-            );
-          }
         }
         return Container();
       },

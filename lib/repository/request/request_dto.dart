@@ -53,7 +53,7 @@ class RequestDto {
     data['jsonrpc'] = this.jsonrpc;
     data['method'] = this.method;
     data['id'] = this.id;
-    data['params'] = null;
+    data['params'] = this.params.toJsonGetVisitExtById();
     return data;
   }
 
@@ -113,7 +113,6 @@ class Params {
   String birthActId;
   ChangeControlCardVisitParams changeControlCardVisitParams;
   GetVisitsParams getVisitsParams;
-  GetVisitExtParams getVisitExtParams;
   InsuranceApplicationDetails insuranceApplicationDetails;
   Assignment assignment;
   Filter filter;
@@ -152,9 +151,9 @@ class Params {
     return data;
   }
 
-  Map<String, dynamic> toJsonGetVisitById() {
+  Map<String, dynamic> toJsonGetVisitExtById() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['getVisitExtParams'] = this.getVisitExtParams;
+    data['id'] = this.id;
     return data;
   }
 

@@ -48,6 +48,15 @@ class RequestDto {
     return data;
   }
 
+  Map<String, dynamic> toJsonGetVisitExtParams() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['jsonrpc'] = this.jsonrpc;
+    data['method'] = this.method;
+    data['id'] = this.id;
+    data['params'] = null;
+    return data;
+  }
+
   Map<String, dynamic> toJsonChangeVisit() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['jsonrpc'] = this.jsonrpc;
@@ -92,7 +101,6 @@ class RequestDto {
     data['params'] = this.params.toJsonWithFilter();
     return data;
   }
-
 }
 
 class Params {
@@ -101,9 +109,11 @@ class Params {
   String clientId;
   DateTime planDate;
   String rating;
+  String ratingComment;
   String birthActId;
   ChangeControlCardVisitParams changeControlCardVisitParams;
-  GetVisitParams getVisitParams;
+  GetVisitsParams getVisitsParams;
+  GetVisitExtParams getVisitExtParams;
   InsuranceApplicationDetails insuranceApplicationDetails;
   Assignment assignment;
   Filter filter;
@@ -114,11 +124,13 @@ class Params {
 
   Params.withBirthActId({this.birthActId});
 
-  Params.setRating({this.id, this.rating});
+  Params.setRating({this.id, this.rating, this.ratingComment});
 
   Params.changeVisit({this.changeControlCardVisitParams});
 
-  Params.getVisitParams({this.getVisitParams});
+  Params.getVisitsParams({this.getVisitsParams});
+
+  Params.getVisitExtParams(this.id);
 
   Params.cancelVisit({this.visitId});
 
@@ -136,7 +148,13 @@ class Params {
 
   Map<String, dynamic> toJsonGetVisitsByClient() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['getVisitParams'] = this.getVisitParams;
+    data['getVisitParams'] = this.getVisitsParams;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonGetVisitById() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['getVisitExtParams'] = this.getVisitExtParams;
     return data;
   }
 
@@ -144,6 +162,9 @@ class Params {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['rating'] = this.rating;
+    if (this.ratingComment != null) {
+      data['ratingComment'] = ratingComment;
+    }
     return data;
   }
 
@@ -199,18 +220,30 @@ class ChangeControlCardVisitParams {
   }
 }
 
-class GetVisitParams {
+class GetVisitsParams {
   String clientId;
   String startDate;
   String endDate;
 
-  GetVisitParams({this.clientId, this.startDate, this.endDate});
+  GetVisitsParams({this.clientId, this.startDate, this.endDate});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['clientId'] = this.clientId;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
+    return data;
+  }
+}
+
+class GetVisitExtParams {
+  String id;
+
+  GetVisitExtParams(this.id);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     return data;
   }
 }
@@ -247,7 +280,6 @@ class Assignment {
     return data;
   }
 }
-
 
 class Filter {
   String id;

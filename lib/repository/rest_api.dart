@@ -133,7 +133,7 @@ class Service {
   }
 
   ///Оценка посещения. Id - visits.id (берем из метода getVisitsByClient), rating on 1-5
-  Future<dynamic> setRating(String id, String rating) async {
+  Future<dynamic> setRating(String id, String rating, {String comment}) async {
     log("Оценка посещения");
     var dio = new Dio();
     final List<int> certClient =
@@ -163,7 +163,7 @@ class Service {
     var requestDto = RequestDto(
         method: "setRating",
         id: 1,
-        params: Params.setRating(id: id, rating: rating));
+        params: Params.setRating(id: id, rating: rating, ratingComment: comment));
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
         data: requestDto.toJsonSetRating());
@@ -242,14 +242,58 @@ class Service {
     var requestDto = RequestDto(
         method: "getVisitsByClient",
         id: 1,
-        params: Params.getVisitParams(
-            getVisitParams: GetVisitParams(
+        params: Params.getVisitsParams(
+            getVisitsParams: GetVisitsParams(
                 clientId: await getClientId(),
                 startDate: "2020-05-01T14:00:00",
                 endDate: "2020-06-30T14:00:00")));
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
         data: requestDto.toJsonGetVisitsByClient());
+    log("${response.data}");
+    return response.data;
+  }
+
+  ///Получение информации о посещении по id
+  Future<dynamic> getVisitExtById(String visitId) async {
+    log("Получение информации о посещении клиента");
+    var dio = new Dio();
+    final List<int> certClient =
+        (await rootBundle.load('assets/cert/client.example.crt'))
+            .buffer
+            .asInt8List();
+    final List<int> keyClient =
+        (await rootBundle.load('assets/cert/client.example.key'))
+            .buffer
+            .asInt8List();
+    final List<int> rootCA =
+        (await rootBundle.load('assets/cert/rootCA.crt')).buffer.asInt8List();
+
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      SecurityContext sc = new SecurityContext(withTrustedRoots: true);
+      sc.setTrustedCertificatesBytes(rootCA);
+      sc.useCertificateChainBytes(certClient);
+      sc.usePrivateKeyBytes(keyClient);
+      HttpClient httpClient = new HttpClient(context: sc);
+      httpClient.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      return httpClient;
+    };
+
+    final requestDto = RequestDto(
+      method: "controlCardVisitInfo",
+      id: 1,
+      params: Params.getVisitExtParams(visitId),
+    );
+
+    Map<String, dynamic> finalDto = requestDto.toJsonGetVisitExtParams();
+    Response response = await dio.post(
+      "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
+      data: finalDto,
+    );
     log("${response.data}");
     return response.data;
   }

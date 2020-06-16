@@ -149,6 +149,7 @@ class _TableCalendarState extends State<TableCalendar>
     with TickerProviderStateMixin {
   AnimationController animationController;
   CalendarState calendarState = CalendarState.opened;
+  double calendarWidth;
   double calendarHeight;
   double opacity = 1.0;
   double position;
@@ -305,6 +306,7 @@ class _TableCalendarState extends State<TableCalendar>
   Widget build(BuildContext context) {
     paddingTop = MediaQuery.of(context).padding.top;
     paddingBottom = MediaQuery.of(context).padding.bottom;
+    calendarWidth = MediaQuery.of(context).size.width;
     return AnimatedBuilder(
       animation: animationController,
       builder: (BuildContext context, Widget child) {
@@ -340,18 +342,19 @@ class _TableCalendarState extends State<TableCalendar>
               }
             },
             child: LayoutBuilder(builder: (ctx, constraints) {
-              calendarHeight = null;
+//              calendarHeight = null;
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                return Overlay.of(context).insert(
+                return calendarHeight != null ? Overlay.of(context).insert(
                   OverlayEntry(builder: (context) {
-                    final size = MediaQuery.of(context).size;
                     return Positioned(
-                      width: 100.0,
-                      height: 100.0,
-                      child: Container(color: Colors.blue),
+                      top: calendarHeight + paddingTop + appBarHeight + 9.0,
+                      left: calendarWidth / 2 - 25,
+                      width: 50,
+                      height: 18,
+                      child: Pin(),
                     );
                   }),
-                );
+                ) : Container();
               });
               return MeasureSize(
                 onChange: (Size size) {

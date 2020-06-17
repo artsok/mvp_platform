@@ -383,6 +383,11 @@ class AvailableActions extends StatelessWidget {
           ),
           child: Consumer2<VisitExt, RatingProvider>(
               builder: (_, visit, rating, __) {
+//                  Scaffold.of(context).showSnackBar(
+//                    SnackBar(
+//                      content: Text('Ошибка: ${rating.errorMessage}'),
+//                    ),
+//                  );
             if (visit.status.toVisitStatus() == VisitStatus.serviceCompleted) {
               if (visit.rating != null) {
 //                return Container();
@@ -523,8 +528,7 @@ class Comment extends StatelessWidget {
 //            );
             return _buildCommentTextField(visitExt.visitExt);
           }
-        } else {
-        }
+        } else {}
         return Container();
       },
     );

@@ -161,12 +161,19 @@ class Service {
       return httpClient;
     };
     var requestDto = RequestDto(
-        method: "setRating",
-        id: 1,
-        params: Params.setRating(id: id, rating: rating, ratingComment: comment));
+      method: "setRating",
+      id: 1,
+      params: Params.setRating(
+        id: id,
+        rating: rating,
+        ratingComment: comment,
+      ),
+    );
+    final finalRequestDto = requestDto.toJsonSetRating();
     Response response = await dio.post(
-        "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
-        data: requestDto.toJsonSetRating());
+      "${URLS.BASE_URL}/${URLS.PATH}/changeControlCardVisit",
+      data: finalRequestDto,
+    );
     log('Set rating response: ${response.data}');
     return response.data;
   }
@@ -240,13 +247,16 @@ class Service {
     };
 
     var requestDto = RequestDto(
-        method: "getVisitsByClient",
-        id: 1,
-        params: Params.getVisitsParams(
-            getVisitsParams: GetVisitsParams(
-                clientId: await getClientId(),
-                startDate: "2020-05-01T14:00:00",
-                endDate: "2020-06-30T14:00:00")));
+      method: "getVisitsByClient",
+      id: 1,
+      params: Params.getVisitsParams(
+        getVisitsParams: GetVisitsParams(
+          clientId: await getClientId(),
+          startDate: "2020-04-01T14:00:00",
+          endDate: "2020-07-30T14:00:00",
+        ),
+      ),
+    );
     Response response = await dio.post(
         "${URLS.BASE_URL}/${URLS.PATH}/controlCardVisitInfo",
         data: requestDto.toJsonGetVisitsByClient());

@@ -9,7 +9,7 @@ import 'package:mvp_platform/repository/rest_api.dart';
 
 class VisitExtProvider extends ChangeNotifier {
   VisitExt visitExt;
-  RequestStatus requestStatus = RequestStatus.ready;
+  RequestStatus _requestStatus = RequestStatus.ready;
   String errorMessage;
 
   VisitExtProvider._();
@@ -20,11 +20,17 @@ class VisitExtProvider extends ChangeNotifier {
     return _instance;
   }
 
+  RequestStatus get requestStatus => _requestStatus;
+
+  set requestStatus(RequestStatus status) {
+    _requestStatus = status;
+    notifyListeners();
+  }
+
   void fetchData(String visitId) {
-    requestStatus = RequestStatus.processing;
     visitExt = null;
     errorMessage = null;
-    notifyListeners();
+    requestStatus = RequestStatus.processing;
     Service().getVisitExtById(visitId).then((result) {
       final jsonData = json.decode(result);
       var jsonMap = Map<String, dynamic>.from(jsonData);
@@ -32,14 +38,12 @@ class VisitExtProvider extends ChangeNotifier {
       log('Received visitInfo: $visitExt');
       this.visitExt = visitExt;
       requestStatus = RequestStatus.success;
-      notifyListeners();
     }).catchError((error) {
       errorMessage = 'Unknown error';
       if (error is DioError) {
         errorMessage = error.message;
       }
       requestStatus = RequestStatus.error;
-      notifyListeners();
     });
   }
 }

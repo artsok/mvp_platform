@@ -12,7 +12,7 @@ class RatingProvider extends ChangeNotifier {
 
   VisitsInfoProvider visitsInfo = VisitsInfoProvider();
   VisitExtProvider visitExt = VisitExtProvider();
-  RequestStatus requestStatus = RequestStatus.ready;
+  RequestStatus _requestStatus = RequestStatus.ready;
   String errorMessage;
 
   RatingProvider._();
@@ -23,22 +23,28 @@ class RatingProvider extends ChangeNotifier {
     return _instance;
   }
 
-  void setRating(String id, int rate, {String comment}) {
-    requestStatus = RequestStatus.processing;
+  set requestStatus(RequestStatus status) {
+    _requestStatus = status;
     notifyListeners();
+  }
+
+  RequestStatus get requestStatus => _requestStatus;
+
+  void setRating(String id, int rate, {String comment}) {
+    errorMessage = null;
+    visitExt = null;
+    requestStatus = RequestStatus.processing;
     Service().setRating(id, rate.toString(), comment: comment).then((result) {
       final jsonData = json.decode(result);
       visitsInfo.fetchData();
       visitExt.fetchData(id);
       requestStatus = RequestStatus.success;
-      notifyListeners ();
     }).catchError((e) {
       errorMessage = 'Unknown error';
       if (e is DioError) {
         errorMessage = e.message;
       }
       requestStatus = RequestStatus.error;
-      notifyListeners();
     });
   }
 }

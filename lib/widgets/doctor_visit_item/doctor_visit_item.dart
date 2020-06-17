@@ -21,7 +21,7 @@ class DoctorVisitItem extends StatelessWidget {
       onTap: () => Navigator.pushNamed(
         context,
         DoctorVisitDetailsScreen.routeName,
-        arguments: DoctorVisitDetailsScreenArguments(client, visit),
+        arguments: DoctorVisitDetailsScreenArguments(client, visit.id),
       ),
       child: MultiProvider(
         providers: [

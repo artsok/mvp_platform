@@ -60,7 +60,8 @@ class _SmoBirthInfoScreenState extends State<SmoBirthInfoScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0, top: 16.0),
+                          padding:
+                              const EdgeInsets.only(bottom: 8.0, top: 16.0),
                           child: GosFlatButton(
                             textColor: Colors.white,
                             backgroundColor: getGosBlueColor(),

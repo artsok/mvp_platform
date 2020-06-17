@@ -86,30 +86,29 @@ class _DoctorVisitItemDetailsState extends State<DoctorVisitItemDetails> {
                         ),
                       ),
                       Consumer<RatingProvider>(
-                        builder: (_, rating, __) {
+                        builder: (ctx, rating, __) {
                           if (visit.status.toVisitStatus() !=
                                   VisitStatus.serviceCompleted ||
                               visit.rating != null) {
                             return Container();
                           }
-                          if (rating.requestStatus == RequestStatus.error ||
-                              rating.requestStatus == RequestStatus.ready) {
-                            if (rating.requestStatus == RequestStatus.error) {
-                              Scaffold.of(context).showSnackBar(
-                                SnackBar(
-                                  content:
-                                      Text('Ошибка: ${rating.errorMessage}'),
-                                ),
-                              );
-                            }
+                          if (rating.requestStatus == RequestStatus.ready) {
                             return _buildRateButton(visit, rating);
-                          } else if (rating.requestStatus ==
-                              RequestStatus.success) {
-                            return Container();
-                          } else {
-                            return const CupertinoActivityIndicator(
-                                radius: 10.0);
                           }
+                          if (rating.requestStatus == RequestStatus.error) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
+                              Scaffold.of(ctx).showSnackBar(SnackBar(
+                                  content: Text(
+                                'Ошибка: ${rating.errorMessage}',
+                              )));
+                            });
+                            rating.requestStatus = RequestStatus.ready;
+                          }
+                          if (rating.requestStatus == RequestStatus.success) {
+                            return Container();
+                          }
+                          return const CupertinoActivityIndicator(radius: 10.0);
                         },
                       ),
                     ],

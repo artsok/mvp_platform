@@ -75,7 +75,7 @@ class VisitInfo {
 
 class VisitExt extends VisitBase {
   int _rating;
-  String ratingComment;
+  String _ratingComment;
   String status;
   Doctor doctor;
   Service service;
@@ -93,6 +93,13 @@ class VisitExt extends VisitBase {
 
   set rating(int rating) {
     _rating = rating;
+    notifyListeners();
+  }
+
+  String get ratingComment => _ratingComment;
+
+  set ratingComment(String ratingComment) {
+    _ratingComment = ratingComment;
     notifyListeners();
   }
 

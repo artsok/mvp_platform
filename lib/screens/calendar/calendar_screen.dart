@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:mvp_platform/main.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/providers/request/visits_info_provider.dart';
+import 'package:mvp_platform/repository/response/dto/visit_info.dart';
 import 'package:mvp_platform/screens/doctor/doctor_visit_details_screen.dart';
 import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:mvp_platform/widgets/calendar/table_calendar.dart';
@@ -91,7 +92,7 @@ class _CalendarScreenState extends State<CalendarScreen>
                               DoctorVisitDetailsScreen.routeName,
                               arguments: DoctorVisitDetailsScreenArguments(
                                 visitsInfo.client,
-                                visits[0],
+                                (visits[0] as VisitExt).id,
                               ),
                             );
                           }

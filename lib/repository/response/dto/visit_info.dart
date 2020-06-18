@@ -84,7 +84,7 @@ class VisitExt extends VisitBase {
     _rating = json['rating'];
     status = json['status'];
     doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
-    ratingComment = json['visit'];
+    ratingComment = json['ratingComment'];
     service =
         json['service'] != null ? Service.fromJson(json['service']) : null;
   }

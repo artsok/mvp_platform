@@ -163,11 +163,11 @@ class Service {
     var requestDto = RequestDto(
       method: "setRating",
       id: 1,
-      params: Params.setRating(
-        id: id,
-        rating: rating,
+      params: Params.setRating(RatingParams(
+        id,
+        rating,
         ratingComment: comment,
-      ),
+      )),
     );
     final finalRequestDto = requestDto.toJsonSetRating();
     Response response = await dio.post(

@@ -108,8 +108,7 @@ class Params {
   String visitId;
   String clientId;
   DateTime planDate;
-  String rating;
-  String ratingComment;
+  RatingParams ratingParams;
   String birthActId;
   ChangeControlCardVisitParams changeControlCardVisitParams;
   GetVisitsParams getVisitsParams;
@@ -123,7 +122,7 @@ class Params {
 
   Params.withBirthActId({this.birthActId});
 
-  Params.setRating({this.id, this.rating, this.ratingComment});
+  Params.setRating(this.ratingParams);
 
   Params.changeVisit({this.changeControlCardVisitParams});
 
@@ -159,11 +158,13 @@ class Params {
 
   Map<String, dynamic> toJsonSetRating() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['rating'] = this.rating;
-    if (this.ratingComment != null) {
-      data['ratingComment'] = ratingComment;
+    final ratingParamsMap = Map<String, dynamic>();
+    ratingParamsMap['id'] = ratingParams.id;
+    ratingParamsMap['rating'] = ratingParams.rating;
+    if (ratingParams.ratingComment != null) {
+      ratingParamsMap['ratingComment'] = ratingParams.ratingComment;
     }
+    data['ratingParams'] = ratingParamsMap;
     return data;
   }
 
@@ -215,6 +216,22 @@ class ChangeControlCardVisitParams {
     data['doctorId'] = this.doctorId;
     data['serviceId'] = this.serviceId;
     data['status'] = this.status;
+    return data;
+  }
+}
+
+class RatingParams {
+  String id;
+  String rating;
+  String ratingComment;
+
+  RatingParams(this.id, this.rating, {this.ratingComment});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['rating'] = this.rating;
+    data['ratingComment'] = this.ratingComment;
     return data;
   }
 }

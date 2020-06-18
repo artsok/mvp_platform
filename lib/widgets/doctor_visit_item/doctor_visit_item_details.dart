@@ -92,22 +92,24 @@ class _DoctorVisitItemDetailsState extends State<DoctorVisitItemDetails> {
                               visit.rating != null) {
                             return Container();
                           }
-                          if (rating.requestStatus == RequestStatus.ready) {
+                          if (rating.requestStatus == RequestStatus.ready ||
+                              rating.requestStatus == RequestStatus.error ||
+                              rating.requestStatus == RequestStatus.success) {
                             return _buildRateButton(visit, rating);
                           }
-                          if (rating.requestStatus == RequestStatus.error) {
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((timeStamp) {
-                              Scaffold.of(ctx).showSnackBar(SnackBar(
-                                  content: Text(
-                                'Ошибка: ${rating.errorMessage}',
-                              )));
-                            });
-                            rating.requestStatus = RequestStatus.ready;
-                          }
-                          if (rating.requestStatus == RequestStatus.success) {
-                            return Container();
-                          }
+//                          if (rating.requestStatus == RequestStatus.error) {
+//                            WidgetsBinding.instance
+//                                .addPostFrameCallback((timeStamp) {
+//                              rating.requestStatus = RequestStatus.ready;
+//                              Scaffold.of(ctx).showSnackBar(SnackBar(
+//                                  content: Text(
+//                                'Ошибка: ${rating.errorMessage}',
+//                              )));
+//                            });
+//                          }
+//                          if (rating.requestStatus == RequestStatus.success) {
+//                            return Container();
+//                          }
                           return const CupertinoActivityIndicator(radius: 10.0);
                         },
                       ),

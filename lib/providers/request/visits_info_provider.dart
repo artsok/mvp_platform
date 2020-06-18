@@ -45,7 +45,7 @@ class VisitsInfoProvider extends ChangeNotifier {
       log('Received visits: $visits');
       Client client = allVisitsInfo
           .firstWhere((visitInfo) => visitInfo.client?.id == null,
-          orElse: () => null)
+              orElse: () => null)
           ?.client;
       this.client = client;
       log('Received client: $client');
@@ -71,17 +71,45 @@ class VisitsInfoProvider extends ChangeNotifier {
         visitsOfMonth.add(visit);
       }
     });
-    visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
+    visitsOfMonth.sort((v1, v2) {
+      int compareResult = v1.planDate.compareTo(v2.planDate);
+      if (compareResult == 0) {
+        if (v1.rating == null && v2.rating == null) {
+          compareResult = 0;
+        } else if (v1.rating != null && v2.rating == null) {
+          compareResult = -1;
+        } else if (v1.rating == null && v2.rating != null) {
+          compareResult = 1;
+        } else {
+          compareResult = v2.rating.compareTo(v1.rating);
+        }
+      }
+      return compareResult;
+    });
     notifyListeners();
   }
 
   List<VisitExt> getVisitsOfMonth(DateTime dateTime) {
     List<VisitExt> visitsOfMonth = visits
         .where((visit) =>
-    visit.planDate.year == dateTime.year &&
-        visit.planDate.month == dateTime.month)
+            visit.planDate.year == dateTime.year &&
+            visit.planDate.month == dateTime.month)
         .toList();
-    visitsOfMonth.sort((v1, v2) => v1.planDate.compareTo(v2.planDate));
+    visitsOfMonth.sort((v1, v2) {
+      int compareResult = v1.planDate.compareTo(v2.planDate);
+      if (compareResult == 0) {
+        if (v1.rating == null && v2.rating == null) {
+          compareResult = 0;
+        } else if (v1.rating != null && v2.rating == null) {
+          compareResult = -1;
+        } else if (v1.rating == null && v2.rating != null) {
+          compareResult = 1;
+        } else {
+          compareResult = v2.rating.compareTo(v1.rating);
+        }
+      }
+      return compareResult;
+    });
     return visitsOfMonth;
   }
 

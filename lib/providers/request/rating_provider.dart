@@ -32,12 +32,10 @@ class RatingProvider extends ChangeNotifier {
 
   void setRating(String id, int rate, {String comment}) {
     errorMessage = null;
-    visitExt = null;
     requestStatus = RequestStatus.processing;
     Service().setRating(id, rate.toString(), comment: comment).then((result) {
       final jsonData = json.decode(result);
-      visitsInfo.fetchData();
-      visitExt.fetchData(id);
+      final visitData = visitExt.fetchData(id);
       requestStatus = RequestStatus.success;
     }).catchError((e) {
       errorMessage = 'Unknown error';

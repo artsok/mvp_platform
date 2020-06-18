@@ -1,4 +1,6 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:mvp_platform/models/enums/rate.dart';
 import 'package:mvp_platform/models/enums/request_status.dart';
 import 'package:mvp_platform/models/enums/visit_status.dart';
@@ -11,6 +13,8 @@ import 'package:mvp_platform/utils/extensions/string_extensions.dart';
 import 'package:provider/provider.dart';
 
 class AvailableActions extends StatelessWidget {
+  AvailableActions({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,16 +46,19 @@ class AvailableActions extends StatelessWidget {
               if (visit.rating != null) {
 //                return Container();
               }
-              if (rating.requestStatus == RequestStatus.error) {
-                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                  Scaffold.of(ctx).showSnackBar(SnackBar(
-                      content: Text(
-                    'Ошибка: ${rating.errorMessage}',
-                  )));
-                });
-                rating.requestStatus = RequestStatus.ready;
-              }
-              if (rating.requestStatus == RequestStatus.ready) {
+//              if (rating.requestStatus == RequestStatus.error) {
+//                SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+//                  Scaffold.of(ctx).showSnackBar(SnackBar(
+//                      content: Text(
+//                    'Ошибка: ${rating.errorMessage}',
+//                  )));
+//                  errorFlushbar(rating.errorMessage);
+//                  rating.requestStatus = RequestStatus.ready;
+//                });
+//              rating.requestStatus = RequestStatus.ready;
+//              }
+              if (rating.requestStatus == RequestStatus.ready ||
+                  rating.requestStatus == RequestStatus.error) {
                 return _buildRateButton(visitExtProvider, rating);
               }
               if (rating.requestStatus == RequestStatus.success) {
@@ -165,5 +172,28 @@ class AvailableActions extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void errorFlushbar(BuildContext context, String errorMessage) {
+    Flushbar(
+      margin: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.red.shade800, Colors.redAccent.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: 'Попробуйте еще раз',
+      message: 'Возникла ошибка [$errorMessage]',
+    )..show(context);
   }
 }
